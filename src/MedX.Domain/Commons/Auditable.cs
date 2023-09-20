@@ -1,6 +1,6 @@
 ﻿namespace MedX.Domain.Commons;
 
-public class Auditalble
+public class Auditable
 {
     public long Id { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

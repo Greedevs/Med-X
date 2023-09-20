@@ -2,8 +2,10 @@
 
 namespace MedX.Domain.Enitities;
 
-public class Room : Auditalble
+public class Room : Auditable
 {
-    public int RoomNumber { get; set; }
+    public long RoomNumber { get; set; }
     public int Quantity { get; set; }
+
+    public ICollection<Patient> Patients { get; set; }
 }

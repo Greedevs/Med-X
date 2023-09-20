@@ -2,7 +2,7 @@
 
 namespace MedX.Domain.Enitities;
 
-public class Treatment : Auditalble
+public class Treatment : Auditable
 {
     public long DoctorId { get; set; }
     public Doctor Doctor { get; set; }
