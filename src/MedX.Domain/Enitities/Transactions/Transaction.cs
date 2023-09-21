@@ -1,7 +1,4 @@
 ﻿using MedX.Domain.Commons;
-using MedX.Domain.Enitities.Doctors;
-using MedX.Domain.Enitities.Patients;
-using MedX.Domain.Enitities.Payments;
 
 namespace MedX.Domain.Enitities;
 
