@@ -7,5 +7,5 @@ public class RoomResultDto
     public long Id { get; set; }
     public int RoomNumber { get; set; }
     public int Quantity { get; set; }
-    public PatientResultDto Patient { get; set; }
+    public ICollection<PatientForRelationDto> Patients { get; set; }
 }
