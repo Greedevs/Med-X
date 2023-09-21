@@ -84,6 +84,12 @@ public class DoctorService : IDoctorService
         var allDoctors = await this.doctorRepository.GetAll(includes: new[] { "Room" })
             .ToPaginate(@params)
             .ToListAsync();
+
+        if (search is not null)
+        {
+            allDoctors = allDoctors.Where(user => user.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+
         return this.mapper.Map<IEnumerable<DoctorResultDto>>(allDoctors);
     }
 }
