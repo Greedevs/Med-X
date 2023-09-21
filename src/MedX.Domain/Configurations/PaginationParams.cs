@@ -7,7 +7,7 @@ public class PaginationParams
     public int PageSize
     {
         get => pageSize == 0 ? maxSize : pageSize;
-        set { pageSize = value > maxSize ? maxSize : value; }
+        set { pageSize = value > maxSize ? maxSize : (value <= 0 ? 1 : value); }
     }
     public int PageIndex { get; set; } = 1;
 }
