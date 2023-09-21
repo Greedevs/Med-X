@@ -1,5 +1,4 @@
 ﻿using MedX.Domain.Commons;
-
 namespace MedX.Domain.Enitities;
 
 public class Room : Auditable
