@@ -6,4 +6,8 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MedX.Domain\MedX.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
