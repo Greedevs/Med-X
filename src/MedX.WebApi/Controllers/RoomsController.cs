@@ -1,27 +1,27 @@
 ﻿using MedX.Domain.Configurations;
-using MedX.Service.DTOs.Doctors;
+using MedX.Service.DTOs.Rooms;
 using MedX.Service.Interfaces;
 using MedX.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MedX.WebApi.Controllers;
 
-public class DoctorsController : BaseController
+public class RoomsController : BaseController
 {
-    private readonly IDoctorService doctorService;
-    public DoctorsController(IDoctorService doctorService)
+    private readonly IRoomService roomService;
+    public RoomsController(IRoomService roomService)
     {
-        this.doctorService = doctorService;
+        this.roomService = roomService;
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> PostAsync(DoctorCreationDto dto)
+    public async Task<IActionResult> PostAsync(RoomCreationDto dto)
     {
         return Ok(new Response
         {
             StatusCode = 200,
             Message = "OK",
-            Data = await doctorService.AddAsync(dto)
+            Data = await roomService.AddAsync(dto)
         });
     }
 
@@ -32,18 +32,18 @@ public class DoctorsController : BaseController
         {
             StatusCode = 200,
             Message = "OK",
-            Data = await doctorService.DeleteAsync(id)
+            Data = await roomService.DeleteAsync(id)
         });
     }
 
     [HttpPut("update")]
-    public async Task<IActionResult> UpdateAsync(DoctorUpdateDto dto)
+    public async Task<IActionResult> UpdateAsync(RoomUpdateDto dto)
     {
         return Ok(new Response
         {
             StatusCode = 200,
             Message = "OK",
-            Data = await doctorService.UpdateAsync(dto)
+            Data = await roomService.UpdateAsync(dto)
         });
     }
 
@@ -54,29 +54,29 @@ public class DoctorsController : BaseController
         {
             StatusCode = 200,
             Message = "OK",
-            Data = await doctorService.GetAsync(id)
+            Data = await roomService.GetAsync(id)
         });
     }
 
     [HttpPut("get-all")]
-    public async Task<IActionResult> GetAllAsync([FromQuery] PaginationParams @params, string search)
+    public async Task<IActionResult> GetAllAsync([FromQuery] PaginationParams @params)
     {
         return Ok(new Response
         {
             StatusCode = 200,
             Message = "OK",
-            Data = await doctorService.GetAllAsync(@params, search)
+            Data = await roomService.GetAllAsync(@params)
         });
     }
 
     [HttpPut("search")]
-    public async Task<IActionResult> SearchAsync(string query)
+    public async Task<IActionResult> SearchAsync(int query)
     {
         return Ok(new Response
         {
             StatusCode = 200,
             Message = "OK",
-            Data = await doctorService.SearchByQueryAsync(query)
+            Data = await roomService.SearchByQueryAsync(query)
         });
     }
 }
