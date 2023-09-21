@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace MedX.Service.Helpers;
 
-namespace MedX.Service.Helpers
+public static class PasswordHash
 {
-    internal class PasswordHash
+    public static string Encrypt(string password)
     {
+        var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
+        return hashedPassword;
+    }
+
+    public static bool Verify(string hashedPassword, string password)
+    {
+        return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
     }
 }
