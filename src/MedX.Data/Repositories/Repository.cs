@@ -31,6 +31,7 @@ public class Repository<T> : IRepository<T> where T : Auditable
     public void Delete(T entity)
     {
         entity.IsDeleted = true;
+        appDbContext.Entry(entity).State = EntityState.Modified;
     }
 
     public void Destroy(T entity)

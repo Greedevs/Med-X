@@ -12,6 +12,7 @@ public static class ServiceCollection
     {
         services.AddAutoMapper(typeof(MappingProfile));
         services.AddScoped<IRoomService, RoomService>();
+        services.AddScoped<IPatientService, PatientService>();
         services.AddScoped<IDoctorService, DoctorService>();
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
     }

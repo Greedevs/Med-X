@@ -39,9 +39,11 @@ public class PatientService : IPatientService
 
     public async Task<bool> DeleteAsync(long id)
     {
-        Patient patient =this.repository.GetAll().FirstOrDefault(p=>p.Id.Equals(id))
-            ?? throw new NotFoundException($"This patient is not found {id}");
+        Patient patient = this.repository.GetAll().FirstOrDefault(p => p.Id.Equals(id));
+        if(patient is not null && patient.IsDeleted==true)
+            throw new NotFoundException($"This patient is not found {id}");
 
+        //patient.IsDeleted = true;
         this.repository.Delete(patient);
         await this.repository.SaveChanges();
         return true;
@@ -53,13 +55,13 @@ public class PatientService : IPatientService
             .ToPaginate(@params)
             .ToList();
 
-        var result = patients.Where(p => p.LastName.Contains(search, StringComparison.OrdinalIgnoreCase));
-        if (result is not null)
+        if (search is not null)
         {
-            var mappedPatients = this.mapper.Map<IEnumerable<PatientResultDto>>(result);
-            return mappedPatients;
+            patients = patients.Where(user => user.LastName.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
         }
+
         return this.mapper.Map<IEnumerable<PatientResultDto>>(patients);
+
     }
 
     public async Task<PatientResultDto> GetAsync(long id)
