@@ -73,11 +73,17 @@ public class RoomService : IRoomService
         return mapper.Map<IEnumerable<RoomResultDto>>(result);
     }
 
-    public async Task<IEnumerable<RoomResultDto>> GetAllAsync(PaginationParams @params)
+    public async Task<IEnumerable<RoomResultDto>> GetAllAsync(PaginationParams @params, int? search = null)
     {
         var allRooms = await this.repository.GetAll(includes: new[] {"Patients"})
             .ToPaginate(@params)
             .ToListAsync();
+
+        if(search != null)
+        {
+            allRooms = allRooms.Where(d => d.RoomNumber.Equals(search) ||
+            d.Quantity.Equals(search)).ToList();
+        }
 
         return this.mapper.Map<IEnumerable<RoomResultDto>>(allRooms);
     }

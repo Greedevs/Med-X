@@ -59,24 +59,13 @@ public class RoomsController : BaseController
     }
 
     [HttpPut("get-all")]
-    public async Task<IActionResult> GetAllAsync([FromQuery] PaginationParams @params)
+    public async Task<IActionResult> GetAllAsync([FromQuery] PaginationParams @params, [FromQuery] int? search)
     {
         return Ok(new Response
         {
             StatusCode = 200,
             Message = "OK",
-            Data = await roomService.GetAllAsync(@params)
-        });
-    }
-
-    [HttpPut("search")]
-    public async Task<IActionResult> SearchAsync(int query)
-    {
-        return Ok(new Response
-        {
-            StatusCode = 200,
-            Message = "OK",
-            Data = await roomService.SearchByQueryAsync(query)
+            Data = await roomService.GetAllAsync(@params, search)
         });
     }
 }

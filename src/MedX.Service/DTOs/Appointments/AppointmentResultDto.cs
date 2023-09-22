@@ -10,5 +10,4 @@ public class AppointmentResultDto
     public string Disease { get; set; }
     public DoctorResultDto Doctor { get; set; }
     public PatientResultDto Patient { get; set; }
-    public PaymentResultDto Payment { get; set; }
 }

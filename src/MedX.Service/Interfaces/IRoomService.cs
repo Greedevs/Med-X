@@ -9,6 +9,5 @@ public interface IRoomService
     Task<RoomResultDto> UpdateAsync(RoomUpdateDto dto);
     Task<bool> DeleteAsync(long id);
     Task<RoomResultDto> GetAsync(long id);
-    Task<IEnumerable<RoomResultDto>> GetAllAsync(PaginationParams @params);
-    Task<IEnumerable<RoomResultDto>> SearchByQueryAsync(int query);
+    Task<IEnumerable<RoomResultDto>> GetAllAsync(PaginationParams @params, int? search = null);
 }

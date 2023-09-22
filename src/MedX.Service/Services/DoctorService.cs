@@ -3,10 +3,11 @@ using MedX.Domain.Enitities;
 using MedX.Service.Exceptions;
 using MedX.Data.IRepositories;
 using MedX.Service.Interfaces;
+using MedX.Service.Extensions;
 using MedX.Service.DTOs.Doctors;
 using MedX.Domain.Configurations;
 using Microsoft.EntityFrameworkCore;
-using MedX.Service.Extensions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace MedX.Service.Services;
 
@@ -31,6 +32,7 @@ public class DoctorService : IDoctorService
             ?? throw new NotFoundException($"This room not found with id: {dto.RoomId}");
 
         var mappedDoctor = this.mapper.Map<Doctor>(dto);
+        mappedDoctor.Room = existRoom;
         await this.doctorRepository.CreateAsync(mappedDoctor);
         await this.doctorRepository.SaveChanges();
 
@@ -66,19 +68,6 @@ public class DoctorService : IDoctorService
         return this.mapper.Map<DoctorResultDto>(existDoctor);
     }
 
-    public async Task<IEnumerable<DoctorResultDto>> SearchByQueryAsync(string query)
-    {
-        var result = await doctorRepository.GetAll(includes: new[] { "Room" })
-            .Where(d => d.Professional.Contains(query) ||
-            d.FirstName.Contains(query) || d.LastName.Contains(query) ||
-            d.SurName.Contains(query) || d.Phone.Contains(query)).ToListAsync();
-
-        if (result is null)
-            return null;
-
-        return mapper.Map<IEnumerable<DoctorResultDto>>(result);
-    }
-
     public async Task<IEnumerable<DoctorResultDto>> GetAllAsync(PaginationParams @params, string search = null)
     {
         var allDoctors = await this.doctorRepository.GetAll(includes: new[] { "Room" })
@@ -87,7 +76,11 @@ public class DoctorService : IDoctorService
 
         if (search is not null)
         {
-            allDoctors = allDoctors.Where(user => user.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+            allDoctors = allDoctors.Where(d => d.Professional.Contains(search, StringComparison.OrdinalIgnoreCase)
+            || d.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)
+            || d.LastName.Contains(search, StringComparison.OrdinalIgnoreCase) 
+            || d.SurName.Contains(search, StringComparison.OrdinalIgnoreCase)
+            || d.Phone.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
         }
 
         return this.mapper.Map<IEnumerable<DoctorResultDto>>(allDoctors);

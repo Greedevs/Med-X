@@ -10,5 +10,4 @@ public interface IAppointmentService
     Task<bool> DeleteAsync(long id);
     Task<AppointmentResultDto> GetAsync(long id);
     Task<IEnumerable<AppointmentResultDto>> GetAllAsync(PaginationParams @params, string search = null);
-    Task<IEnumerable<AppointmentResultDto>> SearchByQuery(string query);
 }
