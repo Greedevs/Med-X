@@ -19,6 +19,8 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Patient>().HasQueryFilter(u => !u.IsDeleted);
+
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<Appointment>()
