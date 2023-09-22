@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MedX.Data.IRepositories;
 using MedX.Domain.Configurations;
-using MedX.Domain.Enitities;
+using MedX.Domain.Entities;
 using MedX.Service.DTOs.Appointments;
 using MedX.Service.Exceptions;
 using MedX.Service.Extensions;

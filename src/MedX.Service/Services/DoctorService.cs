@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MedX.Domain.Enitities;
+using MedX.Domain.Entities;
 using MedX.Service.Exceptions;
 using MedX.Data.IRepositories;
 using MedX.Service.Interfaces;
@@ -31,8 +31,16 @@ public class DoctorService : IDoctorService
         var existRoom = await this.roomRepository.GetAsync(r => r.Id == dto.RoomId)
             ?? throw new NotFoundException($"This room not found with id: {dto.RoomId}");
 
+
         var mappedDoctor = this.mapper.Map<Doctor>(dto);
-        mappedDoctor.Room = existRoom;
+        if (existRoom.IsBusy == false && existRoom.Quantity == 0)
+        {
+            existRoom.IsBusy = true;
+            mappedDoctor.Room = existRoom;
+        }
+        else
+            throw new CustomException(401, "This room is busy");
+
         await this.doctorRepository.CreateAsync(mappedDoctor);
         await this.doctorRepository.SaveChanges();
 

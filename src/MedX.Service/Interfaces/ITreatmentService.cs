@@ -10,5 +10,4 @@ public interface ITreatmentService
     Task<bool> DeleteAsync(long id);
     Task<TreatmentResultDto> GetAsync(long id);
     Task<IEnumerable<TreatmentResultDto>> GetAllAsync(PaginationParams @params, string search = null);
-    Task<IEnumerable<TreatmentResultDto>> SearchByQuery(string query);
 }
