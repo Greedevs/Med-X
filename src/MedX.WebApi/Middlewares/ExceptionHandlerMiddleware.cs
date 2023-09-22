@@ -58,5 +58,4 @@ public class ExceptionHandlerMiddleware
             logger.LogError(ex.ToString());
         }
     }
-
 }
