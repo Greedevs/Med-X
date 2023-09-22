@@ -1,4 +1,5 @@
 ﻿using MedX.Domain.Commons;
+using MedX.Domain.Enums;
 
 namespace MedX.Domain.Entities.Administrators;
 
@@ -9,4 +10,5 @@ public class Administrator : Auditable
     public string Phone { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
+    public AdminRole Role { get; set; }
 }

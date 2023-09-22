@@ -1,4 +1,6 @@
-﻿namespace MedX.Service.DTOs.Administrators;
+﻿using MedX.Domain.Enums;
+
+namespace MedX.Service.DTOs.Administrators;
 
 public class AdminCreationDto
 {
@@ -7,4 +9,5 @@ public class AdminCreationDto
     public string Phone { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
+    public AdminRole Role { get; set; }
 }
