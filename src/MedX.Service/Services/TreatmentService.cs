@@ -106,7 +106,6 @@ public class TreatmentService : ITreatmentService
                 || d.Patient.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)
                 || d.Patient.LastName.Contains(search, StringComparison.OrdinalIgnoreCase)
                 || d.Doctor.LastName.Contains(search, StringComparison.OrdinalIgnoreCase)
-                || d.Doctor.Phone.Contains(search, StringComparison.OrdinalIgnoreCase)
                 || d.Room.RoomNumber.Equals(search)
                 || d.Room.Quantity.Equals(search)).ToList();
         }
