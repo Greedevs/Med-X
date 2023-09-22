@@ -1,4 +1,4 @@
-﻿using MedX.Domain.Enitities;
+﻿using MedX.Domain.Entities;
 using MedX.Domain.Entities.Administrators;
 using Microsoft.EntityFrameworkCore;
 

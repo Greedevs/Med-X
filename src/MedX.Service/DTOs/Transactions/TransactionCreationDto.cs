@@ -1,4 +1,4 @@
-﻿using MedX.Domain.Enitities;
+﻿using MedX.Domain.Entities;
 
 namespace MedX.Service.DTOs.Transactions;
 
