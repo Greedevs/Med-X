@@ -11,6 +11,4 @@ public class Payment : Auditable
     public long AppointmentId { get; set; }
     public Appointment Appointment { get; set; }
     public TypeOfPayment TypeOfPayment { get; set; }
-
-    public ICollection<Transaction> Transactions { get; set; }
 }
