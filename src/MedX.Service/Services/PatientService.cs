@@ -43,7 +43,6 @@ public class PatientService : IPatientService
         if(patient is not null && patient.IsDeleted==true)
             throw new NotFoundException($"This patient is not found {id}");
 
-        //patient.IsDeleted = true;
         this.repository.Delete(patient);
         await this.repository.SaveChanges();
         return true;
