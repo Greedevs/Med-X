@@ -1,6 +1,6 @@
 ﻿using MedX.Domain.Commons;
 
-namespace MedX.Domain.Enitities;
+namespace MedX.Domain.Entities;
 
 public class Transaction : Auditable
 {

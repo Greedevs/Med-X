@@ -10,5 +10,4 @@ public interface IAdminService
     Task<bool> DeleteAsync(long id);
     Task<AdminResultDto> GetAsync(long id);
     Task<IEnumerable<AdminResultDto>> GetAllAsync(PaginationParams @params, string search = null);
-    Task<IEnumerable<AdminResultDto>> SearchByQuery(string query);
 }

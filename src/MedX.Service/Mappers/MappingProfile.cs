@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MedX.Domain.Enitities;
+using MedX.Domain.Entities;
 using MedX.Domain.Entities.Administrators;
 using MedX.Service.DTOs.Administrators;
 using MedX.Service.DTOs.Appointments;

@@ -3,6 +3,7 @@ using System;
 using MedX.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MedX.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230922094401_add adminRole")]
+    partial class addadminRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,47 +25,7 @@ namespace MedX.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("MedX.Domain.Entities.Administrators.Administrator", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Phone")
-                        .HasColumnType("text");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Administrators");
-                });
-
-            modelBuilder.Entity("MedX.Domain.Entities.Appointment", b =>
+            modelBuilder.Entity("MedX.Domain.Enitities.Appointment", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -97,7 +60,7 @@ namespace MedX.Data.Migrations
                     b.ToTable("Appointments");
                 });
 
-            modelBuilder.Entity("MedX.Domain.Entities.Doctor", b =>
+            modelBuilder.Entity("MedX.Domain.Enitities.Doctor", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -142,7 +105,7 @@ namespace MedX.Data.Migrations
                     b.ToTable("Doctors");
                 });
 
-            modelBuilder.Entity("MedX.Domain.Entities.Patient", b =>
+            modelBuilder.Entity("MedX.Domain.Enitities.Patient", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -198,7 +161,7 @@ namespace MedX.Data.Migrations
                     b.ToTable("Patients");
                 });
 
-            modelBuilder.Entity("MedX.Domain.Entities.Payment", b =>
+            modelBuilder.Entity("MedX.Domain.Enitities.Payment", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -237,7 +200,7 @@ namespace MedX.Data.Migrations
                     b.ToTable("Payments");
                 });
 
-            modelBuilder.Entity("MedX.Domain.Entities.Room", b =>
+            modelBuilder.Entity("MedX.Domain.Enitities.Room", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -248,16 +211,10 @@ namespace MedX.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<bool>("IsBusy")
-                        .HasColumnType("boolean");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<int?>("Place")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("Quantity")
+                    b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
                     b.Property<int>("RoomNumber")
@@ -271,7 +228,7 @@ namespace MedX.Data.Migrations
                     b.ToTable("Rooms");
                 });
 
-            modelBuilder.Entity("MedX.Domain.Entities.Transaction", b =>
+            modelBuilder.Entity("MedX.Domain.Enitities.Transaction", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -308,7 +265,7 @@ namespace MedX.Data.Migrations
                     b.ToTable("Transactions");
                 });
 
-            modelBuilder.Entity("MedX.Domain.Entities.Treatment", b =>
+            modelBuilder.Entity("MedX.Domain.Enitities.Treatment", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -351,15 +308,55 @@ namespace MedX.Data.Migrations
                     b.ToTable("Treatments");
                 });
 
-            modelBuilder.Entity("MedX.Domain.Entities.Appointment", b =>
+            modelBuilder.Entity("MedX.Domain.Entities.Administrators.Administrator", b =>
                 {
-                    b.HasOne("MedX.Domain.Entities.Doctor", "Doctor")
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Administrators");
+                });
+
+            modelBuilder.Entity("MedX.Domain.Enitities.Appointment", b =>
+                {
+                    b.HasOne("MedX.Domain.Enitities.Doctor", "Doctor")
                         .WithMany("Appointments")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MedX.Domain.Entities.Patient", "Patient")
+                    b.HasOne("MedX.Domain.Enitities.Patient", "Patient")
                         .WithMany("Appointments")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -370,9 +367,9 @@ namespace MedX.Data.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("MedX.Domain.Entities.Doctor", b =>
+            modelBuilder.Entity("MedX.Domain.Enitities.Doctor", b =>
                 {
-                    b.HasOne("MedX.Domain.Entities.Room", "Room")
+                    b.HasOne("MedX.Domain.Enitities.Room", "Room")
                         .WithMany()
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -381,20 +378,20 @@ namespace MedX.Data.Migrations
                     b.Navigation("Room");
                 });
 
-            modelBuilder.Entity("MedX.Domain.Entities.Patient", b =>
+            modelBuilder.Entity("MedX.Domain.Enitities.Patient", b =>
                 {
-                    b.HasOne("MedX.Domain.Entities.Doctor", null)
+                    b.HasOne("MedX.Domain.Enitities.Doctor", null)
                         .WithMany("Patients")
                         .HasForeignKey("DoctorId");
 
-                    b.HasOne("MedX.Domain.Entities.Room", null)
+                    b.HasOne("MedX.Domain.Enitities.Room", null)
                         .WithMany("Patients")
                         .HasForeignKey("RoomId");
                 });
 
-            modelBuilder.Entity("MedX.Domain.Entities.Payment", b =>
+            modelBuilder.Entity("MedX.Domain.Enitities.Payment", b =>
                 {
-                    b.HasOne("MedX.Domain.Entities.Appointment", "Appointment")
+                    b.HasOne("MedX.Domain.Enitities.Appointment", "Appointment")
                         .WithMany()
                         .HasForeignKey("AppointmentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -403,21 +400,21 @@ namespace MedX.Data.Migrations
                     b.Navigation("Appointment");
                 });
 
-            modelBuilder.Entity("MedX.Domain.Entities.Transaction", b =>
+            modelBuilder.Entity("MedX.Domain.Enitities.Transaction", b =>
                 {
-                    b.HasOne("MedX.Domain.Entities.Doctor", "Doctor")
+                    b.HasOne("MedX.Domain.Enitities.Doctor", "Doctor")
                         .WithMany("Transactions")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MedX.Domain.Entities.Patient", "Patient")
+                    b.HasOne("MedX.Domain.Enitities.Patient", "Patient")
                         .WithMany("Transactions")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MedX.Domain.Entities.Payment", "Payment")
+                    b.HasOne("MedX.Domain.Enitities.Payment", "Payment")
                         .WithMany("Transactions")
                         .HasForeignKey("PaymentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -430,21 +427,21 @@ namespace MedX.Data.Migrations
                     b.Navigation("Payment");
                 });
 
-            modelBuilder.Entity("MedX.Domain.Entities.Treatment", b =>
+            modelBuilder.Entity("MedX.Domain.Enitities.Treatment", b =>
                 {
-                    b.HasOne("MedX.Domain.Entities.Doctor", "Doctor")
+                    b.HasOne("MedX.Domain.Enitities.Doctor", "Doctor")
                         .WithMany()
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MedX.Domain.Entities.Patient", "Patient")
+                    b.HasOne("MedX.Domain.Enitities.Patient", "Patient")
                         .WithMany("Treatments")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MedX.Domain.Entities.Room", "Room")
+                    b.HasOne("MedX.Domain.Enitities.Room", "Room")
                         .WithMany()
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -457,7 +454,7 @@ namespace MedX.Data.Migrations
                     b.Navigation("Room");
                 });
 
-            modelBuilder.Entity("MedX.Domain.Entities.Doctor", b =>
+            modelBuilder.Entity("MedX.Domain.Enitities.Doctor", b =>
                 {
                     b.Navigation("Appointments");
 
@@ -466,7 +463,7 @@ namespace MedX.Data.Migrations
                     b.Navigation("Transactions");
                 });
 
-            modelBuilder.Entity("MedX.Domain.Entities.Patient", b =>
+            modelBuilder.Entity("MedX.Domain.Enitities.Patient", b =>
                 {
                     b.Navigation("Appointments");
 
@@ -475,12 +472,12 @@ namespace MedX.Data.Migrations
                     b.Navigation("Treatments");
                 });
 
-            modelBuilder.Entity("MedX.Domain.Entities.Payment", b =>
+            modelBuilder.Entity("MedX.Domain.Enitities.Payment", b =>
                 {
                     b.Navigation("Transactions");
                 });
 
-            modelBuilder.Entity("MedX.Domain.Entities.Room", b =>
+            modelBuilder.Entity("MedX.Domain.Enitities.Room", b =>
                 {
                     b.Navigation("Patients");
                 });

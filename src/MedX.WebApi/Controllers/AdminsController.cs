@@ -1,27 +1,27 @@
-﻿using MedX.Domain.Configurations;
-using MedX.Service.DTOs.Patients;
+﻿using MedX.WebApi.Models;
 using MedX.Service.Interfaces;
-using MedX.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using MedX.Domain.Configurations;
+using MedX.Service.DTOs.Administrators;
 
 namespace MedX.WebApi.Controllers;
 
-public class PatientsController : BaseController
+public class AdminsController : BaseController
 {
-    private readonly IPatientService patientService;
-    public PatientsController(IPatientService patientService)
+    private readonly IAdminService adminService;
+    public AdminsController(IAdminService adminService)
     {
-        this.patientService = patientService;
+        this.adminService = adminService;
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> PostAsync(PatientCreationDto dto)
+    public async Task<IActionResult> PostAsync(AdminCreationDto dto)
     {
         return Ok(new Response
         {
             StatusCode = 200,
             Message = "OK",
-            Data = await patientService.AddAsync(dto)
+            Data = await adminService.AddAsync(dto)
         });
     }
 
@@ -32,18 +32,18 @@ public class PatientsController : BaseController
         {
             StatusCode = 200,
             Message = "OK",
-            Data = await patientService.DeleteAsync(id)
+            Data = await adminService.DeleteAsync(id)
         });
     }
 
     [HttpPut("update")]
-    public async Task<IActionResult> UpdateAsync(PatientUpdateDto dto)
+    public async Task<IActionResult> UpdateAsync(AdminUpdateDto dto)
     {
         return Ok(new Response
         {
             StatusCode = 200,
             Message = "OK",
-            Data = await patientService.UpdateAsync(dto)
+            Data = await adminService.UpdateAsync(dto)
         });
     }
 
@@ -54,7 +54,7 @@ public class PatientsController : BaseController
         {
             StatusCode = 200,
             Message = "OK",
-            Data = await patientService.GetAsync(id)
+            Data = await adminService.GetAsync(id)
         });
     }
 
@@ -65,19 +65,7 @@ public class PatientsController : BaseController
         {
             StatusCode = 200,
             Message = "OK",
-            Data = await patientService.GetAllAsync(@params, search)
+            Data = await adminService.GetAllAsync(@params, search)
         });
     }
-
-    [HttpGet("search")]
-    public async Task<IActionResult> SearchAsync(string query)
-    {
-        return Ok(new Response
-        {
-            StatusCode = 200,
-            Message = "OK",
-            Data = await patientService.SearchByQuery(query)
-        });
-    }
-
 }

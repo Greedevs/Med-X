@@ -1,27 +1,27 @@
 ﻿using MedX.Domain.Configurations;
-using MedX.Service.DTOs.Patients;
+using MedX.Service.DTOs.Treatments;
 using MedX.Service.Interfaces;
 using MedX.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MedX.WebApi.Controllers;
 
-public class PatientsController : BaseController
+public class TreatmentsController : BaseController
 {
-    private readonly IPatientService patientService;
-    public PatientsController(IPatientService patientService)
+    private readonly ITreatmentService treatmentService;
+    public TreatmentsController(ITreatmentService treatmentService)
     {
-        this.patientService = patientService;
+        this.treatmentService = treatmentService;
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> PostAsync(PatientCreationDto dto)
+    public async Task<IActionResult> PostAsync(TreatmentCreationDto dto)
     {
         return Ok(new Response
         {
             StatusCode = 200,
             Message = "OK",
-            Data = await patientService.AddAsync(dto)
+            Data = await treatmentService.AddAsync(dto)
         });
     }
 
@@ -32,52 +32,40 @@ public class PatientsController : BaseController
         {
             StatusCode = 200,
             Message = "OK",
-            Data = await patientService.DeleteAsync(id)
+            Data = await treatmentService.DeleteAsync(id)
         });
     }
 
     [HttpPut("update")]
-    public async Task<IActionResult> UpdateAsync(PatientUpdateDto dto)
+    public async Task<IActionResult> UpdateAsync(TreatmentUpdateDto dto)
     {
         return Ok(new Response
         {
             StatusCode = 200,
             Message = "OK",
-            Data = await patientService.UpdateAsync(dto)
+            Data = await treatmentService.UpdateAsync(dto)
         });
     }
 
-    [HttpGet("get/{id:long}")]
+    [HttpPut("get/{id:long}")]
     public async Task<IActionResult> GetAsync(long id)
     {
         return Ok(new Response
         {
             StatusCode = 200,
             Message = "OK",
-            Data = await patientService.GetAsync(id)
+            Data = await treatmentService.GetAsync(id)
         });
     }
 
-    [HttpGet("get-all")]
+    [HttpPut("get-all")]
     public async Task<IActionResult> GetAllAsync([FromQuery] PaginationParams @params, string search)
     {
         return Ok(new Response
         {
             StatusCode = 200,
             Message = "OK",
-            Data = await patientService.GetAllAsync(@params, search)
+            Data = await treatmentService.GetAllAsync(@params, search)
         });
     }
-
-    [HttpGet("search")]
-    public async Task<IActionResult> SearchAsync(string query)
-    {
-        return Ok(new Response
-        {
-            StatusCode = 200,
-            Message = "OK",
-            Data = await patientService.SearchByQuery(query)
-        });
-    }
-
 }

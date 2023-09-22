@@ -7,5 +7,6 @@ public class RoomResultDto
     public long Id { get; set; }
     public int RoomNumber { get; set; }
     public int Quantity { get; set; }
+    public int? Place { get; set; }
     public ICollection<PatientResultDto> Patients { get; set; }
 }

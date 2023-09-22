@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MedX.Domain.Enitities;
+using MedX.Domain.Entities;
 using MedX.Service.Interfaces;
 using MedX.Data.IRepositories;
 using MedX.Service.DTOs.Patients;

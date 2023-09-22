@@ -1,7 +1,7 @@
 ﻿using MedX.Domain.Commons;
 using MedX.Domain.Enums;
 
-namespace MedX.Domain.Enitities;
+namespace MedX.Domain.Entities;
 
 public class Patient : Auditable
 {
