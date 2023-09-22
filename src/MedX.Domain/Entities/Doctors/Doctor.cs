@@ -8,6 +8,7 @@ public class Doctor : Auditable
     public string SurName { get; set; }
     public string Professional { get; set; }
     public string Phone { get; set; }
+    public decimal Price { get; set; }
     public long RoomId { get; set; }
     public Room Room { get; set; }
 

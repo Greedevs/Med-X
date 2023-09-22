@@ -35,7 +35,6 @@ public class MappingProfile : Profile
         CreateMap<Patient, PatientUpdateDto>().ReverseMap();
         CreateMap<Patient, PatientResultDto>().ReverseMap();
         CreateMap<Patient, PatientCreationDto>().ReverseMap();
-        CreateMap<Patient, PatientForRelationDto>().ReverseMap();
         
         //Administrator
         CreateMap<Administrator, AdminUpdateDto>().ReverseMap();
