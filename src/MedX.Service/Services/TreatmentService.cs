@@ -38,7 +38,7 @@ public class TreatmentService : ITreatmentService
             ?? throw new NotFoundException($"This Doctor not found with id: {dto.DoctorId}");
 
         var existRoom = await this.roomRepository.GetAsync(r => r.Id == dto.RoomId)
-            ?? throw new NotFoundException($"This Doctor not found with id: {dto.RoomId}");
+            ?? throw new NotFoundException($"This room not found with id: {dto.RoomId}");
 
         var mappedTreatment = this.mapper.Map<Treatment>(dto);
         if (existRoom.IsBusy == false && existRoom.Place - 1 >= 0)
