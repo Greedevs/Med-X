@@ -24,14 +24,6 @@ To get started with MedX, follow these steps:
 ## Technologies Used
 MedX leverages modern technologies, including [list the technologies you've used here].
 
-## Project Team
-- **Project Manager:** [Your Name](https://github.com/muqimjon)
-- **Backend Developers:** 
-- [Backend Developer 1](https://github.com/abdurrohmanq)
-- [Backend Developer 2](https://github.com/avazbekm)
-- **Frontend Developer:** Mirzayev Muhammadyusuf]
-- Web Designer
-
 ## Contributing
 We welcome contributions to enhance MedX and make it more effective. If you'd like to contribute, please follow our [Contribution Guidelines](CONTRIBUTING.md).
 
