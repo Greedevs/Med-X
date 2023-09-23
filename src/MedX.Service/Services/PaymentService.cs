@@ -1,33 +1,81 @@
-﻿using MedX.Domain.Configurations;
+﻿using AutoMapper;
+using MedX.Data.IRepositories;
+using MedX.Domain.Configurations;
+using MedX.Domain.Entities;
+using MedX.Service.DTOs.Patients;
 using MedX.Service.DTOs.Payments;
+using MedX.Service.Exceptions;
+using MedX.Service.Extensions;
 using MedX.Service.Interfaces;
 
 namespace MedX.Service.Services;
 
-public class PaymentService : IPaymentService
+public class PaymentService : IPaymentService 
 {
-    public Task<PaymentResultDto> AddAsync(PaymentCreationDto dto)
+    private readonly IMapper mapper;
+    private readonly IRepository<Payment> repository;
+
+    public PaymentService(IMapper mapper, IRepository<Payment> repository, IRepository<Appointment> appointmentRepository)
     {
-        throw new NotImplementedException();
+        this.mapper = mapper;
+        this.repository = repository;
     }
 
-    public Task<bool> DeleteAsync(long id)
+    public async Task<PaymentResultDto> AddAsync(PaymentCreationDto dto)
     {
-        throw new NotImplementedException();
+        Payment payment = this.mapper.Map<Payment>(dto);
+        await this.repository.CreateAsync(payment);
+        await this.repository.SaveChanges();
+
+        return this.mapper.Map<PaymentResultDto>(payment);
     }
 
-    public Task<IEnumerable<PaymentResultDto>> GetAllAsync(PaginationParams @params, decimal search = 0)
+    public async Task<PaymentResultDto> UpdateAsync(PaymentUpdateDto dto)
     {
-        throw new NotImplementedException();
+        Payment payment = this.repository.GetAll().FirstOrDefault(x => x.Id.Equals(dto.Id))
+            ?? throw new NotFoundException($"This id is not found {dto.Id}");
+
+        Payment mappedPayment = this.mapper.Map(dto, payment);
+        this.repository.Update(mappedPayment);
+        await this.repository.SaveChanges();
+
+        return this.mapper.Map<PaymentResultDto>(mappedPayment);
     }
 
-    public Task<PaymentResultDto> GetAsync(long id)
+    public async Task<bool> DeleteAsync(long id)
     {
-        throw new NotImplementedException();
+        Payment payment = this.repository.GetAll().FirstOrDefault(x => x.Id.Equals(id))
+            ?? throw new NotFoundException($"This id is not found {id}");
+
+        this.repository.Delete(payment);
+        await this.repository.SaveChanges();
+        return true;
     }
 
-    public Task<PaymentResultDto> UpdateAsync(PaymentUpdateDto dto)
+    public async Task<PaymentResultDto> GetAsync(long id)
     {
-        throw new NotImplementedException();
+        Payment payment = this.repository.GetAll().FirstOrDefault(x => x.Id.Equals(id))
+            ?? throw new NotFoundException($"This id is not found {id}");
+
+        return this.mapper.Map<PaymentResultDto>(payment);
+    }
+
+    public async Task<IEnumerable<PaymentResultDto>> GetAllAsync(PaginationParams @params)
+    {
+        var payments = this.repository.GetAll()
+            .ToPaginate(@params)
+            .ToList();
+
+        return this.mapper.Map<IEnumerable<PaymentResultDto>>(payments);
+    }
+
+    public async Task<IEnumerable<PaymentResultDto>> SearchByQuery(decimal query)
+    {
+        var results = this.repository.GetAll()
+        .Where(d => d.Amount==query).ToList();
+
+        if (results.Count()>0)
+            return this.mapper.Map<IEnumerable<PaymentResultDto>>(results);
+        return null;
     }
 }
