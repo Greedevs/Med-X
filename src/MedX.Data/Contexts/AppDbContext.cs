@@ -21,14 +21,14 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Room>().HasQueryFilter(u => !u.IsDeleted);
-        modelBuilder.Entity<Doctor>().HasQueryFilter(u => !u.IsDeleted);
+        // entitilar uchun "isDeleted" holatini filter qilish
         modelBuilder.Entity<Patient>().HasQueryFilter(u => !u.IsDeleted);
-        modelBuilder.Entity<Payment>().HasQueryFilter(u => !u.IsDeleted);
-        modelBuilder.Entity<Treatment>().HasQueryFilter(u => !u.IsDeleted);
-        modelBuilder.Entity<Transaction>().HasQueryFilter(u => !u.IsDeleted);
+        modelBuilder.Entity<Doctor>().HasQueryFilter(u => !u.IsDeleted);
         modelBuilder.Entity<Appointment>().HasQueryFilter(u => !u.IsDeleted);
-        modelBuilder.Entity<Administrator>().HasQueryFilter(u => !u.IsDeleted);
+        modelBuilder.Entity<Room>().HasQueryFilter(u => !u.IsDeleted);
+        modelBuilder.Entity<Transaction>().HasQueryFilter(u => !u.IsDeleted);
+        modelBuilder.Entity<Treatment>().HasQueryFilter(u => !u.IsDeleted);
+        modelBuilder.Entity<Payment>().HasQueryFilter(u => !u.IsDeleted);
 
         base.OnModelCreating(modelBuilder);
 
@@ -54,7 +54,7 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<Transaction>()
             .HasOne(p => p.Payment)
-            .WithMany(a => a.Transactions)
+            .WithMany()
             .HasForeignKey(a => a.PaymentId);
 
         modelBuilder.Entity<Treatment>()
