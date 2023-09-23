@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using MedX.Domain.Entities;
-using MedX.Service.Interfaces;
 using MedX.Data.IRepositories;
-using MedX.Service.DTOs.Patients;
-using MedX.Domain.Configurations;
 using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
-using MedX.Service.DTOs.Doctors;
+using MedX.Service.Interfaces;
+using MedX.Domain.Configurations;
+using MedX.Service.DTOs.Patients;
 using Microsoft.EntityFrameworkCore;
 
 namespace MedX.Service.Services;
@@ -22,7 +21,7 @@ public class PatientService : IPatientService
     }
     public async Task<PatientResultDto> AddAsync(PatientCreationDto dto)
     {
-        Patient patient=this.repository.GetAll().FirstOrDefault(u=>u.Phone.Equals(dto.Phone));
+        Patient patient = this.repository.GetAll().FirstOrDefault(u => u.Phone.Equals(dto.Phone));
         if (patient is not null)
             throw new AlreadyExistException($"This patient is already exist with phone {dto.Phone}");
 
@@ -30,18 +29,18 @@ public class PatientService : IPatientService
         if (patient is not null)
             throw new AlreadyExistException($"This patient is already exist with Pinfl {dto.Pinfl}");
 
-        Patient mappedPatient =mapper.Map<Patient>(dto);
+        Patient mappedPatient = mapper.Map<Patient>(dto);
         await this.repository.CreateAsync(mappedPatient);
         await this.repository.SaveChanges();
 
-        PatientResultDto result=mapper.Map<PatientResultDto>(mappedPatient);
+        PatientResultDto result = mapper.Map<PatientResultDto>(mappedPatient);
         return result;
     }
 
     public async Task<bool> DeleteAsync(long id)
     {
         Patient patient = this.repository.GetAll().FirstOrDefault(p => p.Id.Equals(id));
-        if(patient is not null && patient.IsDeleted==true)
+        if (patient is not null && patient.IsDeleted == true)
             throw new NotFoundException($"This patient is not found {id}");
 
         this.repository.Delete(patient);
@@ -54,8 +53,8 @@ public class PatientService : IPatientService
     {
         Patient existPatient = await this.repository.GetAsync(p => p.Id == id)
             ?? throw new NotFoundException($"This patient is not found {id}");
-        
-        PatientResultDto result=this.mapper.Map<PatientResultDto>(existPatient);
+
+        PatientResultDto result = this.mapper.Map<PatientResultDto>(existPatient);
         return result;
     }
 
@@ -86,7 +85,7 @@ public class PatientService : IPatientService
 
     public async Task<IEnumerable<PatientResultDto>> GetAllAsync(PaginationParams @params, string search = null)
     {
-        var patients= await this.repository.GetAll(includes: new[] { "Treatments", "Transactions", "Appointments" })
+        var patients = await this.repository.GetAll(includes: new[] { "Treatments", "Transactions", "Appointments" })
             .ToPaginate(@params)
             .ToListAsync();
 
