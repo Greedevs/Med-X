@@ -10,5 +10,4 @@ public interface ITransactionService
     Task<bool> DeleteAsync(long id);
     Task<TransactionResultDto> GetAsync(long id);
     Task<IEnumerable<TransactionResultDto>> GetAllAsync(PaginationParams @params, string search = null);
-    Task<IEnumerable<TransactionResultDto>> SearchByQuery(string query);
 }
