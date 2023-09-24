@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using MedX.Domain.Entities;
 using MedX.Data.IRepositories;
+using MedX.Domain.Configurations;
+using MedX.Domain.Entities;
+using MedX.Service.DTOs.Patients;
 using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
 using MedX.Service.Interfaces;
-using MedX.Domain.Configurations;
-using MedX.Service.DTOs.Patients;
 using Microsoft.EntityFrameworkCore;
 
 namespace MedX.Service.Services;
@@ -21,7 +21,7 @@ public class PatientService : IPatientService
     }
     public async Task<PatientResultDto> AddAsync(PatientCreationDto dto)
     {
-        Patient patient = this.repository.GetAll().FirstOrDefault(u => u.Phone.Equals(dto.Phone));
+        Patient patient = await this.repository.GetAsync(u => u.Phone.Equals(dto.Phone));
         if (patient is not null)
             throw new AlreadyExistException($"This patient is already exist with phone {dto.Phone}");
 
@@ -39,8 +39,8 @@ public class PatientService : IPatientService
 
     public async Task<bool> DeleteAsync(long id)
     {
-        Patient patient = this.repository.GetAll().FirstOrDefault(p => p.Id.Equals(id));
-        if(patient is not null)
+        Patient patient = await this.repository.GetAsync(p => p.Id.Equals(id));
+        if (patient is not null)
             throw new NotFoundException($"This patient is not found {id}");
 
         this.repository.Delete(patient);
@@ -56,18 +56,6 @@ public class PatientService : IPatientService
 
         PatientResultDto result = this.mapper.Map<PatientResultDto>(existPatient);
         return result;
-    }
-
-    public async Task<IEnumerable<PatientResultDto>> SearchByQuery(string query)
-    {
-        var result = await this.repository.GetAll(includes: new[] { "Treatments", "Transactions", "Appointments" })
-        .Where(d => d.Pinfl.Contains(query) ||
-        d.FirstName.Contains(query) || d.LastName.Contains(query) ||
-        d.SurName.Contains(query) || d.Phone.Contains(query) || d.Address.Contains(query)).ToListAsync();
-
-        if (result is not null)
-            return this.mapper.Map<IEnumerable<PatientResultDto>>(result);
-        return null;
     }
 
     public async Task<PatientResultDto> UpdateAsync(PatientUpdateDto dto)
@@ -91,7 +79,11 @@ public class PatientService : IPatientService
 
         if (search is not null)
         {
-            patients = patients.Where(user => user.LastName.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+            patients = patients.Where(d => d.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)
+            || d.LastName.Contains(search, StringComparison.OrdinalIgnoreCase)
+            || d.SurName.Contains(search, StringComparison.OrdinalIgnoreCase)
+            || d.Phone.Contains(search, StringComparison.OrdinalIgnoreCase)
+            || d.Address.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
         }
 
         return this.mapper.Map<IEnumerable<PatientResultDto>>(patients);

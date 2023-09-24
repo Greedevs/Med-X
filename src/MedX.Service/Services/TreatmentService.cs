@@ -2,6 +2,7 @@
 using MedX.Data.IRepositories;
 using MedX.Domain.Configurations;
 using MedX.Domain.Entities;
+using MedX.Domain.Enums;
 using MedX.Service.DTOs.Treatments;
 using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
@@ -45,6 +46,16 @@ public class TreatmentService : ITreatmentService
         {
             mappedTreatment.Room = existRoom;
             existRoom.Place -= 1;
+            if (existPatient.Gender == Gender.Male)
+            {
+                existRoom.MaleCount = existRoom.MaleCount.HasValue ? existRoom.MaleCount + 1 : 1;
+                existRoom.FemaleCount = existRoom.FemaleCount.HasValue ? existRoom.FemaleCount : 0;
+            }
+            else
+            {
+                existRoom.MaleCount = existRoom.MaleCount.HasValue ? existRoom.MaleCount : 0;
+                existRoom.FemaleCount = existRoom.FemaleCount.HasValue ? existRoom.FemaleCount + 1 : 1;
+            }
         }
         else
             throw new CustomException(401, "There is no room in this room");
@@ -62,8 +73,13 @@ public class TreatmentService : ITreatmentService
 
     public async Task<bool> DeleteAsync(long id)
     {
-        var existTreatment = await this.treatmentRepository.GetAsync(r => r.Id == id)
+        var existTreatment = await this.treatmentRepository.GetAsync(r => r.Id == id, includes: new[] {"Patient", "Room"})
             ?? throw new NotFoundException($"This Treatment not found with id: {id}");
+
+        if (existTreatment.Patient.Gender == Gender.Male)
+            existTreatment.Room.MaleCount -= 1;
+        else
+            existTreatment.Room.FemaleCount -= 1;
 
         existTreatment.Room.Place += 1;
         this.roomRepository.Update(existTreatment.Room);
@@ -76,12 +92,40 @@ public class TreatmentService : ITreatmentService
     }
     public async Task<TreatmentResultDto> UpdateAsync(TreatmentUpdateDto dto)
     {
-        var existTreatment = await this.treatmentRepository.GetAsync(r => r.Id == dto.Id)
+        var existTreatment = await this.treatmentRepository.GetAsync(r => r.Id == dto.Id, includes: new[] { "Patient", "Room" })
             ?? throw new NotFoundException($"This Treatment not found with id: {dto.Id}");
 
+        var existPatient = await this.patientRepository.GetAsync(d => d.Id.Equals(dto.PatientId))
+            ?? throw new NotFoundException($"This Patient not found with id: {dto.PatientId}");
+
+        var existDoctor = await this.doctorRepository.GetAsync(r => r.Id == dto.DoctorId)
+            ?? throw new NotFoundException($"This Doctor not found with id: {dto.DoctorId}");
+
+        var existRoom = await this.roomRepository.GetAsync(r => r.Id == dto.RoomId)
+           ?? throw new NotFoundException($"This room not found with id: {dto.RoomId}");
+
+        var older = existTreatment;
         this.mapper.Map(dto, existTreatment);
+
+        if (older.Patient.Gender == Gender.Male && existTreatment.Patient.Gender == Gender.Female)
+        {
+            existRoom.MaleCount -= 1;
+            existRoom.FemaleCount += 1;
+        }
+        else if (older.Patient.Gender == Gender.Female && existTreatment.Patient.Gender == Gender.Male)
+        {
+            existRoom.MaleCount += 1;
+            existRoom.FemaleCount -= 1;
+        }
+
+        existTreatment.Room = existRoom;
+        existTreatment.Doctor = existDoctor;
+        existTreatment.Patient = existPatient;
+
+        this.roomRepository.Update(existTreatment.Room);
         this.treatmentRepository.Update(existTreatment);
         await this.treatmentRepository.SaveChanges();
+        await this.roomRepository.SaveChanges();
 
         return this.mapper.Map<TreatmentResultDto>(existTreatment);
     }

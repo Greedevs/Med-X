@@ -68,16 +68,4 @@ public class PatientsController : BaseController
             Data = await patientService.GetAllAsync(@params, search)
         });
     }
-
-    [HttpGet("search")]
-    public async Task<IActionResult> SearchAsync(string query)
-    {
-        return Ok(new Response
-        {
-            StatusCode = 200,
-            Message = "OK",
-            Data = await patientService.SearchByQuery(query)
-        });
-    }
-
 }
