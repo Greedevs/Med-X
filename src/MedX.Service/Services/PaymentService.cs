@@ -2,7 +2,6 @@
 using MedX.Data.IRepositories;
 using MedX.Domain.Configurations;
 using MedX.Domain.Entities;
-using MedX.Service.DTOs.Patients;
 using MedX.Service.DTOs.Payments;
 using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
