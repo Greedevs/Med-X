@@ -8,5 +8,7 @@ public class RoomResultDto
     public int RoomNumber { get; set; }
     public int Quantity { get; set; }
     public int? Place { get; set; }
+    public int? MaleCount { get; set; }
+    public int? FemaleCount { get; set; }
     public ICollection<PatientResultDto> Patients { get; set; }
 }

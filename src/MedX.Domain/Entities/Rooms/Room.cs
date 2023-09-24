@@ -11,5 +11,7 @@ public class Room : Auditable
     }
     public int? Place { get; set; }
     public bool IsBusy { get; set; }
+    public int? MaleCount { get; set; }
+    public int? FemaleCount { get; set; }
     public ICollection<Patient> Patients { get; set; }
 }

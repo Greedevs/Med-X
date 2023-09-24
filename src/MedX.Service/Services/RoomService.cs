@@ -67,7 +67,7 @@ public class RoomService : IRoomService
             .ToPaginate(@params)
             .ToListAsync();
 
-        if(search != null)
+        if (search != null)
         {
             allRooms = allRooms.Where(d => d.RoomNumber.Equals(search) ||
             d.Quantity.Equals(search)).ToList();
