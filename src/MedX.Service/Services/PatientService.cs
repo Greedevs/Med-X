@@ -40,7 +40,7 @@ public class PatientService : IPatientService
     public async Task<bool> DeleteAsync(long id)
     {
         Patient patient = this.repository.GetAll().FirstOrDefault(p => p.Id.Equals(id));
-        if (patient is not null && patient.IsDeleted == true)
+        if(patient is not null)
             throw new NotFoundException($"This patient is not found {id}");
 
         this.repository.Delete(patient);
@@ -95,6 +95,5 @@ public class PatientService : IPatientService
         }
 
         return this.mapper.Map<IEnumerable<PatientResultDto>>(patients);
-
     }
 }
