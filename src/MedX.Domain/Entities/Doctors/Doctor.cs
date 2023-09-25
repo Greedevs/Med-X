@@ -1,4 +1,5 @@
 ﻿using MedX.Domain.Commons;
+
 namespace MedX.Domain.Entities;
 
 public class Doctor : Auditable

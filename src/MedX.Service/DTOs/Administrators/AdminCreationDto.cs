@@ -13,6 +13,11 @@ public class AdminCreationDto
     public string Phone { get; set; }
     [EmailAddress]
     public string Email { get; set; }
-    public string Password { get; set; }
     public AdminRole Role { get; set; }
+
+    [MinLength(6), MaxLength(30), Required]
+    public string Password { get; set; }
+
+    [Compare("Password", ErrorMessage = "The passwords do not match.")]
+    public string ConfirmPassword { get; set; } = string.Empty;
 }
