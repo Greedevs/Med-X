@@ -19,6 +19,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddServices();
 
+//JWT
+builder.Services.AddJwt(builder.Configuration);
+
+
 // Logger
 var logger = new LoggerConfiguration()
                     .ReadFrom.Configuration(builder.Configuration)
