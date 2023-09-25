@@ -17,7 +17,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Add Services
 builder.Services.AddServices();
+
+// Add Authorization
+builder.Services.ConfigureSwagger();
 
 // Logger
 var logger = new LoggerConfiguration()
