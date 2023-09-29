@@ -4,7 +4,9 @@ using MedX.Data.Repositories;
 using MedX.Data.IRepositories;
 using MedX.Service.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
 namespace MedX.WebApi.Extensions;
 
@@ -23,11 +25,34 @@ public static class ServiceCollection
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
     }
+    public static void AddJwt(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddAuthentication(x =>
+        {
+            x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(o =>
+        {
+            var key = Encoding.UTF8.GetBytes(configuration["JWT:Key"]);
+            o.SaveToken = true;
+            o.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = false,
+                ValidateAudience = false,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = configuration["JWT:Issuer"],
+                ValidAudience = configuration["JWT:Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(key)
+            };
+        });
+    }
 
     public static void ConfigureSwagger(this IServiceCollection services)
     {
         services.AddSwaggerGen(setup =>
         {
+            // Include 'SecurityScheme' to use JWT Authentication
             var jwtSecurityScheme = new OpenApiSecurityScheme
             {
                 BearerFormat = "JWT",

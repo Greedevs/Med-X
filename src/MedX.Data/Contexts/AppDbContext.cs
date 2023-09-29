@@ -1,6 +1,6 @@
 ﻿using MedX.Domain.Entities;
-using MedX.Domain.Entities.Administrators;
 using Microsoft.EntityFrameworkCore;
+using MedX.Domain.Entities.Administrators;
 
 namespace MedX.Data.Contexts;
 
@@ -21,15 +21,17 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // entitilar uchun "isDeleted" holatini filter qilish
-        modelBuilder.Entity<Patient>().HasQueryFilter(u => !u.IsDeleted);
-        modelBuilder.Entity<Doctor>().HasQueryFilter(u => !u.IsDeleted);
-        modelBuilder.Entity<Appointment>().HasQueryFilter(u => !u.IsDeleted);
+        #region entitylar uchun "isDeleted" holatini filter qilish
         modelBuilder.Entity<Room>().HasQueryFilter(u => !u.IsDeleted);
-        modelBuilder.Entity<Transaction>().HasQueryFilter(u => !u.IsDeleted);
-        modelBuilder.Entity<Treatment>().HasQueryFilter(u => !u.IsDeleted);
+        modelBuilder.Entity<Doctor>().HasQueryFilter(u => !u.IsDeleted);
+        modelBuilder.Entity<Patient>().HasQueryFilter(u => !u.IsDeleted);
         modelBuilder.Entity<Payment>().HasQueryFilter(u => !u.IsDeleted);
+        modelBuilder.Entity<Treatment>().HasQueryFilter(u => !u.IsDeleted);
+        modelBuilder.Entity<Transaction>().HasQueryFilter(u => !u.IsDeleted);
+        modelBuilder.Entity<Appointment>().HasQueryFilter(u => !u.IsDeleted);
+        #endregion
 
+        #region Fluent API 
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<Appointment>()
@@ -61,5 +63,6 @@ public class AppDbContext : DbContext
             .HasOne(p => p.Patient)
             .WithMany(t => t.Treatments)
             .HasForeignKey(p => p.PatientId);
+        #endregion
     }
 }
