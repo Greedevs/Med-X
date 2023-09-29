@@ -1,21 +1,22 @@
 ﻿using MedX.Data.Contexts;
-using MedX.Data.IRepositories;
 using MedX.Domain.Commons;
-using Microsoft.EntityFrameworkCore;
+using MedX.Data.IRepositories;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace MedX.Data.Repositories;
 
 public class Repository<T> : IRepository<T> where T : Auditable
 {
-    private readonly AppDbContext appDbContext;
     private readonly DbSet<T> dbSet;
+    private readonly AppDbContext appDbContext;
 
     public Repository(AppDbContext appDbContext)
     {
-        this.appDbContext = appDbContext;
         dbSet = appDbContext.Set<T>();
+        this.appDbContext = appDbContext;
     }
+
     public async Task CreateAsync(T entity)
     {
         entity.CreatedAt = DateTime.UtcNow;
