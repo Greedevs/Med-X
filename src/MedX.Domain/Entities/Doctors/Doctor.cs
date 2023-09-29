@@ -11,5 +11,5 @@ public class Doctor : Auditable
     public string Phone { get; set; }
     public string? Email { get; set; }
     public decimal Balance { get; set; }
-    public int RoomId { get; set; }
+    public string AccountNumber { get; set; }
 }
