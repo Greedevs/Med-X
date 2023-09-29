@@ -14,4 +14,5 @@ public class Patient : Auditable
     public Gender Gender { get; set; }
     public string? Pinfl { get; set; }
     public decimal Balance { get; set; }
+    public string AccountNumber { get; set; }
 }
