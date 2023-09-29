@@ -81,7 +81,7 @@ public class PatientService : IPatientService
         {
             patients = patients.Where(d => d.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)
             || d.LastName.Contains(search, StringComparison.OrdinalIgnoreCase)
-            || d.SurName.Contains(search, StringComparison.OrdinalIgnoreCase)
+            || d.Patronymic.Contains(search, StringComparison.OrdinalIgnoreCase)
             || d.Phone.Contains(search, StringComparison.OrdinalIgnoreCase)
             || d.Address.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
         }

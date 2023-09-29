@@ -2,6 +2,6 @@
 
 public enum TypeOfPayment
 {
-    Cash = 1,
+    Cash,
     Card 
 }
