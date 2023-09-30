@@ -28,18 +28,11 @@ public class DoctorService : IDoctorService
         if (existDoctor is not null)
             throw new AlreadyExistException($"This doctor already exist with phone: {dto.Phone}");
 
-        var existRoom = await this.roomRepository.GetAsync(r => r.Id == dto.RoomId)
-            ?? throw new NotFoundException($"This room not found with id: {dto.RoomId}");
+        var existRoom = await this.roomRepository.GetAsync(r => r.Number == dto.RoomNumber)
+            ?? throw new NotFoundException($"This room not found with id: {dto.RoomNumber}");
 
 
         var mappedDoctor = this.mapper.Map<Doctor>(dto);
-        if (existRoom.IsBusy == false && existRoom.Quantity == 0)
-        {
-            existRoom.IsBusy = true;
-            mappedDoctor.Room = existRoom;
-        }
-        else
-            throw new CustomException(401, "This room is busy");
 
         await this.doctorRepository.CreateAsync(mappedDoctor);
         await this.doctorRepository.SaveChanges();
@@ -62,17 +55,10 @@ public class DoctorService : IDoctorService
         var existDoctor = await this.doctorRepository.GetAsync(r => r.Id == dto.Id)
             ?? throw new NotFoundException($"This doctor not found with id: {dto.Id}");
 
-        var existRoom = await this.roomRepository.GetAsync(r => r.Id == dto.RoomId)
-            ?? throw new NotFoundException($"This room not found with id: {dto.RoomId}");
+        var existRoom = await this.roomRepository.GetAsync(r => r.Id == dto.RoomNumber)
+            ?? throw new NotFoundException($"This room not found with id: {dto.RoomNumber}");
 
         this.mapper.Map(dto, existDoctor);
-        if (existRoom.IsBusy == false && existRoom.Quantity == 0)
-        {
-            existRoom.IsBusy = true;
-            existDoctor.Room = existRoom;
-        }
-        else
-            throw new CustomException(401, "This room is busy");
 
         this.doctorRepository.Update(existDoctor);
         await this.doctorRepository.SaveChanges();
@@ -98,7 +84,7 @@ public class DoctorService : IDoctorService
             allDoctors = allDoctors.Where(d => d.Professional.Contains(search, StringComparison.OrdinalIgnoreCase)
             || d.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)
             || d.LastName.Contains(search, StringComparison.OrdinalIgnoreCase) 
-            || d.SurName.Contains(search, StringComparison.OrdinalIgnoreCase)
+            || d.Patronymic.Contains(search, StringComparison.OrdinalIgnoreCase)
             || d.Phone.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
         }
 

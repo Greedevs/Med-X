@@ -1,38 +1,77 @@
-﻿using MedX.Domain.Configurations;
-using MedX.Service.DTOs.ServiceItems;
+﻿using AutoMapper;
+using MedX.Data.IRepositories;
+using MedX.Domain.Configurations;
+using MedX.Domain.Entities;
+using MedX.Domain.Entities.Services;
+using MedX.Service.DTOs.Services;
+using MedX.Service.Exceptions;
+using MedX.Service.Extensions;
 using MedX.Service.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace MedX.Service.Services;
 
-public class AffairService : IAffairItemService
+public class AffairService : IAffairService
 {
-    public Task<ServiceItemResultDto> AddAsync(ServiceItemCreationDto dto)
+    private readonly IRepository<Affair> affairRepository;
+    private readonly IMapper mapper;
+    public AffairService(IMapper mapper, IRepository<Affair> affairRepository)
     {
-        throw new NotImplementedException();
+        this.mapper = mapper;
+        this.affairRepository = affairRepository;
+    }
+    public async Task<AffairResultDto> AddAsync(AffairCreationDto dto)
+    {
+        var mappedAffair = this.mapper.Map<Affair>(dto);
+
+        await this.affairRepository.CreateAsync(mappedAffair);
+        await this.affairRepository.SaveChanges();
+
+        return this.mapper.Map<AffairResultDto>(mappedAffair);
     }
 
-    public Task<bool> DeleteAsync(long id)
+    public async Task<bool> DeleteAsync(long id)
     {
-        throw new NotImplementedException();
+        var existAffair = await this.affairRepository.GetAsync(r => r.Id == id)
+            ?? throw new NotFoundException($"This Affair not found with id: {id}");
+
+        this.affairRepository.Delete(existAffair);
+        await this.affairRepository.SaveChanges();
+
+        return true;
+    }
+    public async Task<AffairResultDto> UpdateAsync(AffairUpdateDto dto)
+    {
+        var existAffair = await this.affairRepository.GetAsync(r => r.Id == dto.Id)
+            ?? throw new NotFoundException($"This Affair not found with id: {dto.Id}");
+
+        this.mapper.Map(dto, existAffair);
+
+        this.affairRepository.Update(existAffair);
+        await this.affairRepository.SaveChanges();
+
+        return this.mapper.Map<AffairResultDto>(existAffair);
+    }
+    public async Task<AffairResultDto> GetAsync(long id)
+    {
+        var existAffair = await this.affairRepository.GetAsync(r => r.Id == id)
+            ?? throw new NotFoundException($"This Affair not found with id: {id}");
+
+        return this.mapper.Map<AffairResultDto>(existAffair);
     }
 
-    public Task<IEnumerable<ServiceItemResultDto>> GetAllAsync(PaginationParams @params, string search = null)
+    public async Task<IEnumerable<AffairResultDto>> GetAllAsync(PaginationParams @params, string search = null)
     {
-        throw new NotImplementedException();
-    }
+        var allAffairs = await this.affairRepository.GetAll(includes: new[] { "Room" })
+            .ToPaginate(@params)
+            .ToListAsync();
 
-    public Task<ServiceItemResultDto> GetAsync(long id)
-    {
-        throw new NotImplementedException();
-    }
+        if (search is not null)
+        {
+            allAffairs = allAffairs.Where(d => d.Name.Contains(search, StringComparison.OrdinalIgnoreCase)
+            || d.Price.ToString().Equals(search, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
 
-    public Task<ServiceItemResultDto> UpdateAsync(ServiceItemUpdateDto dto)
-    {
-        throw new NotImplementedException();
+        return this.mapper.Map<IEnumerable<AffairResultDto>>(allAffairs);
     }
 }
