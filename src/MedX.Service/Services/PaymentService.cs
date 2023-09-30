@@ -13,15 +13,19 @@ public class PaymentService : IPaymentService
 {
     private readonly IMapper mapper;
     private readonly IRepository<Payment> repository;
+    private readonly IRepository<Appointment> appointmentRepository;
 
-    public PaymentService(IMapper mapper, IRepository<Payment> repository, IRepository<Appointment> appointmentRepository)
+    public PaymentService(IMapper mapper, IRepository<Payment> repository,
+                          IRepository<Appointment> appointmentRepository)
     {
         this.mapper = mapper;
         this.repository = repository;
+        this.appointmentRepository = appointmentRepository;
     }
 
     public async Task<PaymentResultDto> AddAsync(PaymentCreationDto dto)
     {
+
         Payment payment = this.mapper.Map<Payment>(dto);
         await this.repository.CreateAsync(payment);
         await this.repository.SaveChanges();

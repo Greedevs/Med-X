@@ -5,5 +5,4 @@ public class AppointmentUpdateDto
     public long Id { get; set; }
     public long DoctorId { get; set; }
     public long PatientId { get; set; }
-    public string Disease { get; set; }
 }

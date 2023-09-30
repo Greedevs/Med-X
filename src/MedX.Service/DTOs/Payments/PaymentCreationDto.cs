@@ -4,9 +4,7 @@ namespace MedX.Service.DTOs.Payments;
 
 public class PaymentCreationDto
 {
-    public bool IsPaid { get; set; }
     public decimal Amount { get; set; }
-    public string PaymentFor { get; set; }
-    public long AppointmentId { get; set; }
-    public TypeOfPayment TypeOfPayment { get; set; }
+    public TypeOfPayment Type { get; set; }
+    public long PatientId { get; set; }
 }
