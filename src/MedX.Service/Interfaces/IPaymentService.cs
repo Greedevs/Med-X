@@ -10,6 +10,5 @@ public interface IPaymentService
     Task<PaymentResultDto> UpdateAsync(PaymentUpdateDto dto);
     Task<bool> DeleteAsync(long id);
     Task<PaymentResultDto> GetAsync(long id);
-    Task<IEnumerable<PaymentResultDto>> GetAllAsync(PaginationParams @params);
-    Task<IEnumerable<PaymentResultDto>> SearchByQuery(decimal query);
+    Task<IEnumerable<PaymentResultDto>> GetAllAsync(PaginationParams @params, string search = null);
 }

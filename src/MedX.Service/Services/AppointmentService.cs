@@ -56,9 +56,10 @@ public class AppointmentService : IAppointmentService
 
         return true;
     }
+
     public async Task<AppointmentResultDto> UpdateAsync(AppointmentUpdateDto dto)
     {
-        var existAppointment = await this.appointmentRepository.GetAsync(r => r.Id == dto.Id)
+        var existAppointment = await this.appointmentRepository.GetAsync(r => r.Id == dto.Id, includes: new[] { "Doctor", "Patient" })
             ?? throw new NotFoundException($"This Appointment not found with id: {dto.Id}");
 
         var existPatient = await this.patientRepository.GetAsync(d => d.Id.Equals(dto.PatientId))
@@ -68,14 +69,18 @@ public class AppointmentService : IAppointmentService
             ?? throw new NotFoundException($"This Doctor not found with id: {dto.DoctorId}");
 
         this.mapper.Map(dto, existAppointment);
+        existAppointment.Doctor = existDoctor;
+        existAppointment.Patient = existPatient;
+
         this.appointmentRepository.Update(existAppointment);
         await this.appointmentRepository.SaveChanges();
 
         return this.mapper.Map<AppointmentResultDto>(existAppointment);
     }
+
     public async Task<AppointmentResultDto> GetAsync(long id)
     {
-        var existAppointment = await this.appointmentRepository.GetAsync(r => r.Id == id)
+        var existAppointment = await this.appointmentRepository.GetAsync(r => r.Id == id, includes: new[] { "Doctor", "Patient" })
             ?? throw new NotFoundException($"This Appointment not found with id: {id}");
 
         return this.mapper.Map<AppointmentResultDto>(existAppointment);

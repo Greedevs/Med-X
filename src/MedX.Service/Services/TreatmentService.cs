@@ -30,6 +30,7 @@ public class TreatmentService : ITreatmentService
         this.patientRepository = patientRepository;
         this.treatmentRepository = treatmentRepository;
     }
+
     public async Task<TreatmentResultDto> AddAsync(TreatmentCreationDto dto)
     {
         var existPatient = await this.patientRepository.GetAsync(d => d.Id.Equals(dto.PatientId))
@@ -42,23 +43,21 @@ public class TreatmentService : ITreatmentService
             ?? throw new NotFoundException($"This room not found with id: {dto.RoomId}");
 
         var mappedTreatment = this.mapper.Map<Treatment>(dto);
-        if (existRoom.IsBusy == false && existRoom.Place - 1 >= 0)
+        if (existRoom.Busy + 1 <= existRoom.Quantity)
         {
+            if(existRoom.Gender != existPatient.Gender && existRoom.Busy != 0)
+            {
+                throw new CustomException(400, "The gender don't match in this room");
+            }
+            if(existRoom.Busy == 0)
+            {
+                existRoom.Gender = existPatient.Gender;
+            }
+            existRoom.Busy += 1;
             mappedTreatment.Room = existRoom;
-            existRoom.Place -= 1;
-            if (existPatient.Gender == Gender.Male)
-            {
-                existRoom.MaleCount = existRoom.MaleCount.HasValue ? existRoom.MaleCount + 1 : 1;
-                existRoom.FemaleCount = existRoom.FemaleCount.HasValue ? existRoom.FemaleCount : 0;
-            }
-            else
-            {
-                existRoom.MaleCount = existRoom.MaleCount.HasValue ? existRoom.MaleCount : 0;
-                existRoom.FemaleCount = existRoom.FemaleCount.HasValue ? existRoom.FemaleCount + 1 : 1;
-            }
         }
         else
-            throw new CustomException(401, "There is no room in this room");
+            throw new CustomException(401, "There is no available in this room");
 
         mappedTreatment.Doctor = existDoctor;
         mappedTreatment.Patient = existPatient;
@@ -76,12 +75,7 @@ public class TreatmentService : ITreatmentService
         var existTreatment = await this.treatmentRepository.GetAsync(r => r.Id == id, includes: new[] {"Patient", "Room"})
             ?? throw new NotFoundException($"This Treatment not found with id: {id}");
 
-        if (existTreatment.Patient.Gender == Gender.Male)
-            existTreatment.Room.MaleCount -= 1;
-        else
-            existTreatment.Room.FemaleCount -= 1;
-
-        existTreatment.Room.Place += 1;
+        existTreatment.Room.Busy -= 1;
         this.roomRepository.Update(existTreatment.Room);
         this.treatmentRepository.Delete(existTreatment);
 
@@ -92,7 +86,7 @@ public class TreatmentService : ITreatmentService
     }
     public async Task<TreatmentResultDto> UpdateAsync(TreatmentUpdateDto dto)
     {
-        var existTreatment = await this.treatmentRepository.GetAsync(r => r.Id == dto.Id, includes: new[] { "Patient", "Room" })
+        var existTreatment = await this.treatmentRepository.GetAsync(r => r.Id == dto.Id, includes: new[] { "Doctor", "Patient", "Room" })
             ?? throw new NotFoundException($"This Treatment not found with id: {dto.Id}");
 
         var existPatient = await this.patientRepository.GetAsync(d => d.Id.Equals(dto.PatientId))
@@ -106,17 +100,6 @@ public class TreatmentService : ITreatmentService
 
         var older = existTreatment;
         this.mapper.Map(dto, existTreatment);
-
-        if (older.Patient.Gender == Gender.Male && existTreatment.Patient.Gender == Gender.Female)
-        {
-            existRoom.MaleCount -= 1;
-            existRoom.FemaleCount += 1;
-        }
-        else if (older.Patient.Gender == Gender.Female && existTreatment.Patient.Gender == Gender.Male)
-        {
-            existRoom.MaleCount += 1;
-            existRoom.FemaleCount -= 1;
-        }
 
         existTreatment.Room = existRoom;
         existTreatment.Doctor = existDoctor;
@@ -150,7 +133,7 @@ public class TreatmentService : ITreatmentService
                 || d.Patient.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)
                 || d.Patient.LastName.Contains(search, StringComparison.OrdinalIgnoreCase)
                 || d.Doctor.LastName.Contains(search, StringComparison.OrdinalIgnoreCase)
-                || d.Room.RoomNumber.Equals(search)
+                || d.Room.Number.Equals(search)
                 || d.Room.Quantity.Equals(search)).ToList();
         }
 

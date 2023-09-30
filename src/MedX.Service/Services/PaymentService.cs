@@ -2,10 +2,12 @@
 using MedX.Data.IRepositories;
 using MedX.Domain.Configurations;
 using MedX.Domain.Entities;
+using MedX.Domain.Entities.Appointments;
 using MedX.Service.DTOs.Payments;
 using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
 using MedX.Service.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace MedX.Service.Services;
 
@@ -13,20 +15,24 @@ public class PaymentService : IPaymentService
 {
     private readonly IMapper mapper;
     private readonly IRepository<Payment> repository;
-    private readonly IRepository<Appointment> appointmentRepository;
+    private readonly IRepository<Patient> patientRepository;
 
     public PaymentService(IMapper mapper, IRepository<Payment> repository,
-                          IRepository<Appointment> appointmentRepository)
+                          IRepository<Patient> patientRepository)
     {
         this.mapper = mapper;
         this.repository = repository;
-        this.appointmentRepository = appointmentRepository;
+        this.patientRepository = patientRepository;
     }
 
     public async Task<PaymentResultDto> AddAsync(PaymentCreationDto dto)
     {
+        var existPatient = await this.patientRepository.GetAsync(d => d.Id.Equals(dto.PatientId))
+           ?? throw new NotFoundException($"This Patient not found with id: {dto.PatientId}");
 
         Payment payment = this.mapper.Map<Payment>(dto);
+        payment.Patient = existPatient;
+
         await this.repository.CreateAsync(payment);
         await this.repository.SaveChanges();
 
@@ -35,10 +41,14 @@ public class PaymentService : IPaymentService
 
     public async Task<PaymentResultDto> UpdateAsync(PaymentUpdateDto dto)
     {
-        Payment payment = this.repository.GetAll().FirstOrDefault(x => x.Id.Equals(dto.Id))
+        Payment payment = await this.repository.GetAsync(p => p.Id.Equals(dto.Id))
             ?? throw new NotFoundException($"This id is not found {dto.Id}");
 
+        var existPatient = await this.patientRepository.GetAsync(d => d.Id.Equals(dto.PatientId))
+           ?? throw new NotFoundException($"This Patient not found with id: {dto.PatientId}");
+
         Payment mappedPayment = this.mapper.Map(dto, payment);
+        payment.Patient = existPatient;
         this.repository.Update(mappedPayment);
         await this.repository.SaveChanges();
 
@@ -47,7 +57,7 @@ public class PaymentService : IPaymentService
 
     public async Task<bool> DeleteAsync(long id)
     {
-        Payment payment = this.repository.GetAll().FirstOrDefault(x => x.Id.Equals(id))
+        Payment payment = await this.repository.GetAsync(p => p.Id.Equals(id))
             ?? throw new NotFoundException($"This id is not found {id}");
 
         this.repository.Delete(payment);
@@ -57,28 +67,25 @@ public class PaymentService : IPaymentService
 
     public async Task<PaymentResultDto> GetAsync(long id)
     {
-        Payment payment = this.repository.GetAll().FirstOrDefault(x => x.Id.Equals(id))
+        Payment payment = await this.repository.GetAsync(p => p.Id.Equals(id), includes: new[] {"Patient"})
             ?? throw new NotFoundException($"This id is not found {id}");
 
         return this.mapper.Map<PaymentResultDto>(payment);
     }
 
-    public async Task<IEnumerable<PaymentResultDto>> GetAllAsync(PaginationParams @params)
+    public async Task<IEnumerable<PaymentResultDto>> GetAllAsync(PaginationParams @params, string search = null)
     {
-        var payments = this.repository.GetAll()
+        var payments = await this.repository.GetAll(includes: new[] { "Patient" })
             .ToPaginate(@params)
-            .ToList();
+            .ToListAsync();
+
+        if (search is not null)
+        {
+            payments = payments.Where(d => d.Patient.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)
+            || d.Patient.LastName.Contains(search, StringComparison.OrdinalIgnoreCase)
+            || d.Amount.ToString().Equals(search, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
 
         return this.mapper.Map<IEnumerable<PaymentResultDto>>(payments);
-    }
-
-    public async Task<IEnumerable<PaymentResultDto>> SearchByQuery(decimal query)
-    {
-        var results = this.repository.GetAll()
-        .Where(d => d.Amount==query).ToList();
-
-        if (results.Count()>0)
-            return this.mapper.Map<IEnumerable<PaymentResultDto>>(results);
-        return null;
     }
 }
