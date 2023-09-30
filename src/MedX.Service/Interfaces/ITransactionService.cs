@@ -1,4 +1,4 @@
-﻿using MedX.Domain.Configurations;
+﻿/*using MedX.Domain.Configurations;
 using MedX.Service.DTOs.Transactions;
 
 namespace MedX.Service.Interfaces;
@@ -11,3 +11,4 @@ public interface ITransactionService
     Task<TransactionResultDto> GetAsync(long id);
     Task<IEnumerable<TransactionResultDto>> GetAllAsync(PaginationParams @params, string search = null);
 }
+*/

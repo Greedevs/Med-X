@@ -1,4 +1,4 @@
-﻿    using AutoMapper;
+﻿/*    using AutoMapper;
 using MedX.Data.IRepositories;
 using MedX.Domain.Configurations;
 using MedX.Domain.Entities;
@@ -101,3 +101,4 @@ public class TransactionService : ITransactionService
         return this.mapper.Map<IEnumerable<TransactionResultDto>>(allTransactions);
     }
 }
+*/

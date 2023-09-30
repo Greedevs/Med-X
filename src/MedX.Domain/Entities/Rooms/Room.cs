@@ -9,4 +9,5 @@ public class Room : Auditable
     public int Quantity { get; set; }
     public int Available { get; set; }
     public TypeOfRoom Type { get; set; }
+    public ICollection<Patient> Patients { get; set; }
 }
