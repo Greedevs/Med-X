@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MedX.Domain.Commons;
 
-namespace MedX.Domain.Entities.Appointments
+namespace MedX.Domain.Entities.Appointments;
+
+public class Appointment : Auditable
 {
-    internal class Appointment
-    {
-    }
+    public long DoctorId { get; set; }
+    public Patient Patient { get; set; }
+    public long PatientId { get; set; }
+    public Doctor Doctor { get; set; }
 }

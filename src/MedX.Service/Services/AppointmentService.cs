@@ -2,6 +2,7 @@
 using MedX.Data.IRepositories;
 using MedX.Domain.Configurations;
 using MedX.Domain.Entities;
+using MedX.Domain.Entities.Appointments;
 using MedX.Service.DTOs.Appointments;
 using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
