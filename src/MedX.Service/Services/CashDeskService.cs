@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using MedX.Data.IRepositories;
 using MedX.Domain.Configurations;
+using MedX.Domain.Entities;
 using MedX.Domain.Entities.Services;
+using MedX.Service.DTOs.CashDesks;
 using MedX.Service.DTOs.Services;
 using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
@@ -10,67 +12,67 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MedX.Service.Services;
 
-public class CashDeskService : IAffairService
+public class CashDeskService : ICashDeskService
 {
-    private readonly IRepository<Affair> affairRepository;
+    private readonly IRepository<CashDesk> CashDeskRepository;
     private readonly IMapper mapper;
-    public AffairService(IMapper mapper, IRepository<Affair> affairRepository)
+    public CashDeskService(IMapper mapper, IRepository<CashDesk> CashDeskRepository)
     {
         this.mapper = mapper;
-        this.affairRepository = affairRepository;
+        this.CashDeskRepository = CashDeskRepository;
     }
-    public async Task<AffairResultDto> AddAsync(AffairCreationDto dto)
+    public async Task<CashDeskResultDto> AddAsync(CashDeskCreationDto dto)
     {
-        var mappedAffair = this.mapper.Map<Affair>(dto);
+        var mappedCashDesk = this.mapper.Map<CashDesk>(dto);
 
-        await this.affairRepository.CreateAsync(mappedAffair);
-        await this.affairRepository.SaveChanges();
+        await this.CashDeskRepository.CreateAsync(mappedCashDesk);
+        await this.CashDeskRepository.SaveChanges();
 
-        return this.mapper.Map<AffairResultDto>(mappedAffair);
+        return this.mapper.Map<CashDeskResultDto>(mappedCashDesk);
     }
 
     public async Task<bool> DeleteAsync(long id)
     {
-        var existAffair = await this.affairRepository.GetAsync(r => r.Id == id)
-            ?? throw new NotFoundException($"This Affair not found with id: {id}");
+        var existCashDesk = await this.CashDeskRepository.GetAsync(r => r.Id == id)
+            ?? throw new NotFoundException($"This CashDesk not found with id: {id}");
 
-        this.affairRepository.Delete(existAffair);
-        await this.affairRepository.SaveChanges();
+        this.CashDeskRepository.Delete(existCashDesk);
+        await this.CashDeskRepository.SaveChanges();
 
         return true;
     }
-    public async Task<AffairResultDto> UpdateAsync(AffairUpdateDto dto)
+    public async Task<CashDeskResultDto> UpdateAsync(CashDeskUpdateDto dto)
     {
-        var existAffair = await this.affairRepository.GetAsync(r => r.Id == dto.Id)
-            ?? throw new NotFoundException($"This Affair not found with id: {dto.Id}");
+        var existCashDesk = await this.CashDeskRepository.GetAsync(r => r.Id == dto.Id)
+            ?? throw new NotFoundException($"This CashDesk not found with id: {dto.Id}");
 
-        this.mapper.Map(dto, existAffair);
+        this.mapper.Map(dto, existCashDesk);
 
-        this.affairRepository.Update(existAffair);
-        await this.affairRepository.SaveChanges();
+        this.CashDeskRepository.Update(existCashDesk);
+        await this.CashDeskRepository.SaveChanges();
 
-        return this.mapper.Map<AffairResultDto>(existAffair);
+        return this.mapper.Map<CashDeskResultDto>(existCashDesk);
     }
-    public async Task<AffairResultDto> GetAsync(long id)
+    public async Task<CashDeskResultDto> GetAsync(long id)
     {
-        var existAffair = await this.affairRepository.GetAsync(r => r.Id == id)
-            ?? throw new NotFoundException($"This Affair not found with id: {id}");
+        var existCashDesk = await this.CashDeskRepository.GetAsync(r => r.Id == id)
+            ?? throw new NotFoundException($"This CashDesk not found with id: {id}");
 
-        return this.mapper.Map<AffairResultDto>(existAffair);
+        return this.mapper.Map<CashDeskResultDto>(existCashDesk);
     }
 
-    public async Task<IEnumerable<AffairResultDto>> GetAllAsync(PaginationParams @params, string search = null)
+    public async Task<IEnumerable<CashDeskResultDto>> GetAllAsync(PaginationParams @params, string search = null)
     {
-        var allAffairs = await this.affairRepository.GetAll(includes: new[] { "Room" })
+        var allCashDesks = await this.CashDeskRepository.GetAll()
             .ToPaginate(@params)
             .ToListAsync();
 
         if (search is not null)
         {
-            allAffairs = allAffairs.Where(d => d.Name.Contains(search, StringComparison.OrdinalIgnoreCase)
-            || d.Price.ToString().Equals(search, StringComparison.OrdinalIgnoreCase)).ToList();
+            allCashDesks = allCashDesks.Where(d => d.AccountNumber.Contains(search, StringComparison.OrdinalIgnoreCase)
+            || d.Description.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
         }
 
-        return this.mapper.Map<IEnumerable<AffairResultDto>>(allAffairs);
+        return this.mapper.Map<IEnumerable<CashDeskResultDto>>(allCashDesks);
     }
 }

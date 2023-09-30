@@ -62,7 +62,7 @@ public class AffairService : IAffairService
 
     public async Task<IEnumerable<AffairResultDto>> GetAllAsync(PaginationParams @params, string search = null)
     {
-        var allAffairs = await this.affairRepository.GetAll(includes: new[] { "Room" })
+        var allAffairs = await this.affairRepository.GetAll()
             .ToPaginate(@params)
             .ToListAsync();
 
