@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MedX.Data.IRepositories;
 using MedX.Domain.Configurations;
-using MedX.Domain.Entities;
 using MedX.Domain.Entities.Services;
 using MedX.Service.DTOs.Services;
 using MedX.Service.Exceptions;
@@ -11,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MedX.Service.Services;
 
-public class AffairService : IAffairService
+public class CashDeskService : IAffairService
 {
     private readonly IRepository<Affair> affairRepository;
     private readonly IMapper mapper;
