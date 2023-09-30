@@ -5,9 +5,9 @@ namespace MedX.Service.Interfaces;
 
 public interface IAffairItemService
 {
-    Task<ServiceItemResultDto> AddAsync(ServiceItemCreationDto dto);
-    Task<ServiceItemResultDto> UpdateAsync(ServiceItemUpdateDto dto);
+    Task<AffairItemResultDto> AddAsync(AffairItemCreationDto dto);
+    Task<AffairItemResultDto> UpdateAsync(AffairItemUpdateDto dto);
     Task<bool> DeleteAsync(long id);
-    Task<ServiceItemResultDto> GetAsync(long id);
-    Task<IEnumerable<ServiceItemResultDto>> GetAllAsync(PaginationParams @params, string search = null);
+    Task<AffairItemResultDto> GetAsync(long id);
+    Task<IEnumerable<AffairItemResultDto>> GetAllAsync(PaginationParams @params, string search = null);
 }
