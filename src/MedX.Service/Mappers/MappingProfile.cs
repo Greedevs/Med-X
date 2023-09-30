@@ -1,19 +1,20 @@
 ﻿using AutoMapper;
 using MedX.Domain.Entities;
 using MedX.Domain.Entities.Administrators;
+using MedX.Domain.Entities.Appointments;
+using MedX.Domain.Entities.MedicalRecords;
+using MedX.Domain.Entities.Services;
 using MedX.Service.DTOs.Administrators;
 using MedX.Service.DTOs.Appointments;
+using MedX.Service.DTOs.CashDesks;
 using MedX.Service.DTOs.Doctors;
+using MedX.Service.DTOs.MedicalRecords;
 using MedX.Service.DTOs.Patients;
 using MedX.Service.DTOs.Payments;
 using MedX.Service.DTOs.Rooms;
-using MedX.Service.DTOs.Transactions;
+using MedX.Service.DTOs.ServiceItems;
+using MedX.Service.DTOs.Services;
 using MedX.Service.DTOs.Treatments;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MedX.Service.Mappers;
 
@@ -25,7 +26,7 @@ public class MappingProfile : Profile
         CreateMap<Room, RoomUpdateDto>().ReverseMap();
         CreateMap<Room, RoomResultDto>().ReverseMap();
         CreateMap<Room, RoomCreationDto>().ReverseMap();
-        
+
         //Doctor
         CreateMap<Doctor, DoctorUpdateDto>().ReverseMap();
         CreateMap<Doctor, DoctorResultDto>().ReverseMap();
@@ -35,7 +36,7 @@ public class MappingProfile : Profile
         CreateMap<Patient, PatientUpdateDto>().ReverseMap();
         CreateMap<Patient, PatientResultDto>().ReverseMap();
         CreateMap<Patient, PatientCreationDto>().ReverseMap();
-        
+
         //Administrator
         CreateMap<Administrator, AdminUpdateDto>().ReverseMap();
         CreateMap<Administrator, AdminResultDto>().ReverseMap();
@@ -55,9 +56,25 @@ public class MappingProfile : Profile
         CreateMap<Appointment, AppointmentCreationDto>().ReverseMap();
         CreateMap<Appointment, AppointmentUpdateDto>().ReverseMap();
         CreateMap<Appointment, AppointmentResultDto>().ReverseMap();
-        //Transaction
-        CreateMap<Transaction, TransactionUpdateDto>().ReverseMap();
-        CreateMap<Transaction, TransactionResultDto>().ReverseMap();
-        CreateMap<Transaction, TransactionCreationDto>().ReverseMap();
+
+        //Affair
+        CreateMap<Affair, AffairCreationDto>().ReverseMap();
+        CreateMap<Affair, AffairUpdateDto>().ReverseMap();
+        CreateMap<Affair, AffairResultDto>().ReverseMap();
+
+        //AffairItem
+        CreateMap<AffairItem, AffairItemCreationDto>().ReverseMap();
+        CreateMap<AffairItem, AffairItemUpdateDto>().ReverseMap();
+        CreateMap<AffairItem, AffairItemResultDto>().ReverseMap();
+
+        //MedicalRecord
+        CreateMap<MedicalRecord, MedicalRecordCreationDto>().ReverseMap();
+        CreateMap<MedicalRecord, MedicalRecordUpdateDto>().ReverseMap();
+        CreateMap<MedicalRecord, MedicalRecordResultDto>().ReverseMap();
+
+        //CashDesk
+        CreateMap<CashDesk, CashDeskCreationDto>().ReverseMap();
+        CreateMap<CashDesk, CashDeskUpdateDto>().ReverseMap();
+        CreateMap<CashDesk, CashDeskResultDto>().ReverseMap();
     }
 }

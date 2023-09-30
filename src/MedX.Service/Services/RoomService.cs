@@ -21,9 +21,9 @@ public class RoomService : IRoomService
     }
     public async Task<RoomResultDto> AddAsync(RoomCreationDto dto)
     {
-        var existRoom = await this.repository.GetAsync(d => d.RoomNumber.Equals(dto.RoomNumber));
+        var existRoom = await this.repository.GetAsync(d => d.Number.Equals(dto.Number));
         if (existRoom is not null)
-            throw new AlreadyExistException($"This Room already exist with number: {dto.RoomNumber}");
+            throw new AlreadyExistException($"This Room already exist with number: {dto.Number}");
 
         var mappedRoom = this.mapper.Map<Room>(dto);
         await this.repository.CreateAsync(mappedRoom);
@@ -42,6 +42,7 @@ public class RoomService : IRoomService
 
         return true;
     }
+
     public async Task<RoomResultDto> UpdateAsync(RoomUpdateDto dto)
     {
         var existRoom = await this.repository.GetAsync(r => r.Id == dto.Id)
@@ -53,6 +54,7 @@ public class RoomService : IRoomService
 
         return this.mapper.Map<RoomResultDto>(existRoom);
     }
+
     public async Task<RoomResultDto> GetAsync(long id)
     {
         var existRoom = await this.repository.GetAsync(r => r.Id == id)
@@ -69,8 +71,8 @@ public class RoomService : IRoomService
 
         if (search != null)
         {
-            allRooms = allRooms.Where(d => d.RoomNumber.Equals(search) ||
-            d.Quantity.Equals(search)).ToList();
+            allRooms = allRooms.Where(d => d.Number.Equals(search) ||
+            d.Quantity.Equals(search) || d.Busy.Equals(search)).ToList();
         }
 
         return this.mapper.Map<IEnumerable<RoomResultDto>>(allRooms);

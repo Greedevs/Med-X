@@ -25,7 +25,7 @@ public class PatientService : IPatientService
         if (patient is not null)
             throw new AlreadyExistException($"This patient is already exist with phone {dto.Phone}");
 
-        patient = this.repository.GetAll().FirstOrDefault(u => u.Pinfl.Equals(dto.Pinfl));
+        patient = await this.repository.GetAsync(u => u.Pinfl.Equals(dto.Pinfl));
         if (patient is not null)
             throw new AlreadyExistException($"This patient is already exist with Pinfl {dto.Pinfl}");
 
@@ -73,7 +73,7 @@ public class PatientService : IPatientService
 
     public async Task<IEnumerable<PatientResultDto>> GetAllAsync(PaginationParams @params, string search = null)
     {
-        var patients = await this.repository.GetAll(includes: new[] { "Treatments", "Transactions", "Appointments" })
+        var patients = await this.repository.GetAll(includes: new[] { "Treatments", "Appointments" })
             .ToPaginate(@params)
             .ToListAsync();
 
