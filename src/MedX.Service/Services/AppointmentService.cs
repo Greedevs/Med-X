@@ -60,6 +60,12 @@ public class AppointmentService : IAppointmentService
         var existAppointment = await this.appointmentRepository.GetAsync(r => r.Id == dto.Id)
             ?? throw new NotFoundException($"This Appointment not found with id: {dto.Id}");
 
+        var existPatient = await this.patientRepository.GetAsync(d => d.Id.Equals(dto.PatientId))
+            ?? throw new NotFoundException($"This Patient not found with id: {dto.PatientId}");
+
+        var existDoctor = await this.doctorRepository.GetAsync(r => r.Id == dto.DoctorId)
+            ?? throw new NotFoundException($"This Doctor not found with id: {dto.DoctorId}");
+
         this.mapper.Map(dto, existAppointment);
         this.appointmentRepository.Update(existAppointment);
         await this.appointmentRepository.SaveChanges();
