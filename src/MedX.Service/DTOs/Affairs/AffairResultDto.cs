@@ -1,6 +1,6 @@
 ﻿namespace MedX.Service.DTOs.Services;
 
-public class ServiceResultDto
+public class AffairResultDto
 {
     public long Id { get; set; }
     public string Name { get; set; }

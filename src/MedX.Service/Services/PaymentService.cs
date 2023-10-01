@@ -1,17 +1,16 @@
 ﻿using AutoMapper;
 using MedX.Data.IRepositories;
-using MedX.Domain.Configurations;
 using MedX.Domain.Entities;
-using MedX.Domain.Entities.Appointments;
-using MedX.Service.DTOs.Payments;
 using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
 using MedX.Service.Interfaces;
+using MedX.Domain.Configurations;
+using MedX.Service.DTOs.Payments;
 using Microsoft.EntityFrameworkCore;
 
 namespace MedX.Service.Services;
 
-public class PaymentService : IPaymentService 
+public class PaymentService : IPaymentService
 {
     private readonly IMapper mapper;
     private readonly IRepository<Payment> repository;
@@ -67,7 +66,7 @@ public class PaymentService : IPaymentService
 
     public async Task<PaymentResultDto> GetAsync(long id)
     {
-        Payment payment = await this.repository.GetAsync(p => p.Id.Equals(id), includes: new[] {"Patient"})
+        Payment payment = await this.repository.GetAsync(p => p.Id.Equals(id), includes: new[] { "Patient" })
             ?? throw new NotFoundException($"This id is not found {id}");
 
         return this.mapper.Map<PaymentResultDto>(payment);
@@ -84,6 +83,21 @@ public class PaymentService : IPaymentService
             payments = payments.Where(d => d.Patient.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)
             || d.Patient.LastName.Contains(search, StringComparison.OrdinalIgnoreCase)
             || d.Amount.ToString().Equals(search, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+
+        return this.mapper.Map<IEnumerable<PaymentResultDto>>(payments);
+    }
+
+    public async Task<IEnumerable<PaymentResultDto>> GetAllByPatientIdAsync(long patientId, string search = null)
+    {
+        var existPatient = await this.patientRepository.GetAsync(d => d.Id.Equals(patientId))
+          ?? throw new NotFoundException($"This Patient not found with id: {patientId}");
+
+        var payments = await this.repository.GetAll(p => p.PatientId == patientId).ToListAsync();
+
+        if (search is not null)
+        {
+            payments = payments.Where(d => d.Amount.ToString().Equals(search, StringComparison.OrdinalIgnoreCase)).ToList();
         }
 
         return this.mapper.Map<IEnumerable<PaymentResultDto>>(payments);

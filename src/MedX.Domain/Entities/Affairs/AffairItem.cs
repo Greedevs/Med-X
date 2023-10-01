@@ -2,13 +2,13 @@
 
 namespace MedX.Domain.Entities.Services;
 
-public class ServiceItem : Auditable
+public class AffairItem : Auditable
 {
     public long PatientId { get; set; }
     public Patient Patient { get; set; }
 
-    public long ServiceId { get; set; }
-    public Service Service { get; set; }
+    public long AffairId { get; set; }
+    public Affair Affair { get; set; }
     
     public float Quantity { get; set; }
 }

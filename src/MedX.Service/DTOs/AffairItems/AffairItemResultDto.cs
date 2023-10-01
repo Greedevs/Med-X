@@ -2,10 +2,10 @@
 
 namespace MedX.Service.DTOs.ServiceItems;
 
-public class ServiceItemResultDto
+public class AffairItemResultDto
 {
     public long Id { get; set; }
     public PatientResultDto Patient { get; set; }
-    public ServiceItemResultDto Service { get; set; }
+    public AffairItemResultDto Affair { get; set; }
     public float Quantity { get; set; }
 }

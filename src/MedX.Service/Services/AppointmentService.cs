@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using MedX.Data.IRepositories;
-using MedX.Domain.Configurations;
 using MedX.Domain.Entities;
-using MedX.Domain.Entities.Appointments;
-using MedX.Service.DTOs.Appointments;
+using MedX.Data.IRepositories;
 using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
 using MedX.Service.Interfaces;
+using MedX.Domain.Configurations;
 using Microsoft.EntityFrameworkCore;
+using MedX.Service.DTOs.Appointments;
+using MedX.Domain.Entities.Appointments;
 
 namespace MedX.Service.Services;
 
@@ -103,5 +103,34 @@ public class AppointmentService : IAppointmentService
         }
 
         return this.mapper.Map<IEnumerable<AppointmentResultDto>>(allAppointments);
+    }
+
+    public async Task<IEnumerable<AppointmentResultDto>> GetAllByDoctorIdAsync(long doctorId, PaginationParams @params, string search = null)
+    {
+        var existDoctor = await this.doctorRepository.GetAsync(d => d.Id.Equals(doctorId))
+            ?? throw new NotFoundException($"This Patient not found with id: {doctorId}");
+
+        var appointments = await this.appointmentRepository.GetAll(a => a.DoctorId == doctorId, includes: new[] { "Doctor", "Patient" })
+            .ToPaginate(@params)
+            .ToListAsync();
+
+        if (search is not null)
+        {
+            appointments = appointments
+                .Where(d => d.Patient.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)
+                || d.Patient.LastName.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+
+        return this.mapper.Map<IEnumerable<AppointmentResultDto>>(appointments);
+    }
+
+    public async Task<IEnumerable<AppointmentResultDto>> GetAllByPatientIdAsync(long patientId)
+    {
+        var existPatient = await this.patientRepository.GetAsync(d => d.Id.Equals(patientId))
+            ?? throw new NotFoundException($"This Patient not found with id: {patientId}");
+
+        var appointments = await this.appointmentRepository.GetAll(a => a.PatientId == patientId, includes: new[] { "Doctor", "Patient" }).ToListAsync();
+
+        return this.mapper.Map<IEnumerable<AppointmentResultDto>>(appointments);
     }
 }

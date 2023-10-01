@@ -139,4 +139,43 @@ public class TreatmentService : ITreatmentService
 
         return this.mapper.Map<IEnumerable<TreatmentResultDto>>(allTreatments);
     }
+
+    public async Task<IEnumerable<TreatmentResultDto>> GetAllByPatientIdAsync(long patientId)
+    {
+        var existPatient = await this.patientRepository.GetAsync(p => p.Id == patientId)
+            ?? throw new NotFoundException($"This patient is not found with id: {patientId}");
+
+        var patients = await this.treatmentRepository.GetAll(p => p.PatientId == patientId).ToListAsync();
+
+        return this.mapper.Map<IEnumerable<TreatmentResultDto>>(patients);
+    }
+
+    public async Task<IEnumerable<TreatmentResultDto>> GetAllByDoctorIdAsync(long doctorId, PaginationParams @params, string search = null)
+    {
+        var existDoctor = await this.doctorRepository.GetAsync(p => p.Id == doctorId)
+            ?? throw new NotFoundException($"This patient is not found with id: {doctorId}");
+
+        var doctors = await this.treatmentRepository.GetAll(p => p.DoctorId == doctorId)
+            .ToPaginate(@params)
+            .ToListAsync();
+        if (search is not null)
+        {
+            doctors = doctors
+                .Where(d => d.Patient.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)
+                || d.Patient.LastName.Contains(search, StringComparison.OrdinalIgnoreCase)
+                || d.Room.Number.Equals(search)
+                || d.Room.Quantity.Equals(search)).ToList();
+        }
+        return this.mapper.Map<IEnumerable<TreatmentResultDto>>(doctors);
+    }
+
+    public async Task<IEnumerable<TreatmentResultDto>> GetAllByRoomIdAsync(long roomId)
+    {
+        var existRoom = await this.roomRepository.GetAsync(r => r.Id == roomId)
+            ?? throw new NotFoundException($"This room is not found with id = {roomId}");
+
+        var rooms = await this.treatmentRepository.GetAll(r => r.RoomId == roomId) .ToListAsync();
+
+        return this.mapper.Map<IEnumerable<TreatmentResultDto>>(rooms);
+    }
 }

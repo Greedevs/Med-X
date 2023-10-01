@@ -2,7 +2,7 @@
 
 namespace MedX.Domain.Entities.Services;
 
-public class Service : Auditable
+public class Affair : Auditable
 {
     public string Name { get; set; }
     public string Description { get; set; }
