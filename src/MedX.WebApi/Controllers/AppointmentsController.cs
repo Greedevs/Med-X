@@ -15,7 +15,7 @@ public class AppointmentsController : BaseController
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> PostAsync(AppointmentCreationDto dto)
+    public async Task<IActionResult> PostAsync([FromForm] AppointmentCreationDto dto)
     {
         return Ok(new Response
         {
@@ -37,7 +37,7 @@ public class AppointmentsController : BaseController
     }
 
     [HttpPut("update")]
-    public async Task<IActionResult> UpdateAsync(AppointmentUpdateDto dto)
+    public async Task<IActionResult> UpdateAsync([FromForm] AppointmentUpdateDto dto)
     {
         return Ok(new Response
         {
@@ -66,6 +66,28 @@ public class AppointmentsController : BaseController
             StatusCode = 200,
             Message = "OK",
             Data = await appointmentService.GetAllAsync(@params, search)
+        });
+    }
+
+    [HttpPut("get-all-by-patient/{patientId:long}")]
+    public async Task<IActionResult> GetAllByPatientIdAsync(long patientId)
+    {
+        return Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "OK",
+            Data = await appointmentService.GetAllByPatientIdAsync(patientId)
+        });
+    }
+
+    [HttpPut("get-all-by-doctor/{doctorId:long}")]
+    public async Task<IActionResult> GetAllByDoctorIdAsync(long doctorId, PaginationParams @params, string search = null)
+    {
+        return Ok(new Response
+        {
+            StatusCode = 200,
+            Message = "OK",
+            Data = await appointmentService.GetAllByDoctorIdAsync(doctorId, @params, search)
         });
     }
 }

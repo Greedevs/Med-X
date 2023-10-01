@@ -9,7 +9,7 @@ public class RoomResultDto
     public long Id { get; set; }
     public int Number { get; set; }
     public int Quantity { get; set; }
-    public int Available { get; set; }
+    public int Busy { get; set; }
     public TypeOfRoom Type { get; set; }
     public AssetResultDto Image { get; set; }
     public ICollection<PatientResultDto> Patients { get; set; }
