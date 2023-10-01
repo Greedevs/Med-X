@@ -27,22 +27,47 @@ public class AffairItemService : IAffairItemService
         this.patientRepository = patientRepository;
         this.affairItemRepository = affairItemRepository;
     }
-    public async Task<AffairItemResultDto> AddAsync(AffairItemCreationDto dto)
+
+    public async Task<IEnumerable<AffairItemResultDto>> AddAsync(AffairItemCreationDto dto)
     {
         var existPatient = await this.patientRepository.GetAsync(d => d.Id.Equals(dto.PatientId))
             ?? throw new NotFoundException($"This Patient not found with id: {dto.PatientId}");
 
-        var existAffair = await this.affairRepository.GetAsync(d => d.Id.Equals(dto.AffairId))
-            ?? throw new NotFoundException($"This Patient not found with id: {dto.AffairId}");
+        if(dto.AffairItems is null || !dto.AffairItems.Any())
+        {
+            throw new NotFoundException("No Affair items provided");
+        }
 
-        var mappedAffairItem = this.mapper.Map<AffairItem>(dto);
-        mappedAffairItem.Patient = existPatient;
-        mappedAffairItem.Affair = existAffair;
+        var totalAffairPrice = 0m;
+        var result = new List<AffairItemResultDto>();
 
-        await this.affairItemRepository.CreateAsync(mappedAffairItem);
+        foreach (var item in dto.AffairItems)
+        {
+            var existAffair = await this.affairRepository.GetAsync(d => d.Id.Equals(item.AffairId))
+                ?? throw new NotFoundException($"This Affair not found with id: {item.AffairId}");
+
+            var mappedAffairItem = new AffairItem
+            {
+                PatientId = existPatient.Id,
+                Patient = existPatient,
+                AffairId = existAffair.Id,
+                Affair = existAffair,
+                Quantity = item.Quantity
+            };
+
+            await this.affairItemRepository.CreateAsync(mappedAffairItem);
+            result.Add(this.mapper.Map<AffairItemResultDto>(mappedAffairItem));
+
+            totalAffairPrice += existAffair.Price * (int)item.Quantity;
+        }
+
+        existPatient.Balance -= totalAffairPrice;
+
+        this.patientRepository.Update(existPatient);
         await this.affairItemRepository.SaveChanges();
+        await this.patientRepository.SaveChanges();
 
-        return this.mapper.Map<AffairItemResultDto>(mappedAffairItem);
+        return result;
     }
 
     public async Task<bool> DeleteAsync(long id)

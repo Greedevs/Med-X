@@ -1,4 +1,5 @@
 using MedX.Data.Contexts;
+using MedX.Service.Helpers;
 using MedX.WebApi.Extensions;
 using MedX.WebApi.Middlewares;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,10 @@ var logger = new LoggerConfiguration()
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger);
 
+// Add JWT
+builder.Services.AddJwt(builder.Configuration);
+
+PathHelper.WebRootPath = Path.GetFullPath("wwwroot");
 
 var app = builder.Build();
 

@@ -110,7 +110,7 @@ public class AdminService : IAdminService
 
     public async Task<AdminResultDto> GetAsync(long id)
     {
-        var existAdmin = await this.repository.GetAsync(r => r.Id == id)
+        var existAdmin = await this.repository.GetAsync(r => r.Id == id, includes: new[] {"Image"})
             ?? throw new NotFoundException($"This Admin not found with id: {id}");
 
         return this.mapper.Map<AdminResultDto>(existAdmin);
@@ -118,7 +118,7 @@ public class AdminService : IAdminService
 
     public async Task<IEnumerable<AdminResultDto>> GetAllAsync(PaginationParams @params, string search = null)
     {
-        var allAdmins = await this.repository.GetAll()
+        var allAdmins = await this.repository.GetAll(includes: new[] { "Image" })
             .ToPaginate(@params)
             .ToListAsync();
 

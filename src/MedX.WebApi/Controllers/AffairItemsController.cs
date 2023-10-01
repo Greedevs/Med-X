@@ -1,16 +1,15 @@
-﻿using MedX.Domain.Configurations;
-using MedX.Service.DTOs.ServiceItems;
-using MedX.Service.DTOs.Services;
+﻿using MedX.WebApi.Models;
 using MedX.Service.Interfaces;
-using MedX.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using MedX.Domain.Configurations;
+using MedX.Service.DTOs.ServiceItems;
 
 namespace MedX.WebApi.Controllers;
 
-public class AffairItemItemsController : BaseController
+public class AffairItemController : BaseController
 {
     private readonly IAffairItemService service;
-    public AffairItemItemsController(IAffairItemService service)
+    public AffairItemController(IAffairItemService service)
     {
         this.service = service;
     }
@@ -69,7 +68,7 @@ public class AffairItemItemsController : BaseController
             Data = await service.GetAllAsync(@params, search)
         });
     }
-    
+
     [HttpPut("get-all-by-service/{serviceId:long}")]
     public async Task<IActionResult> GetAllByAffairIdAsync([FromQuery] long affairId, PaginationParams @params, [FromQuery] string search = null)
     {
@@ -77,10 +76,10 @@ public class AffairItemItemsController : BaseController
         {
             StatusCode = 200,
             Message = "OK",
-            Data = await service.GetAllByAffairIdAsync(affairId,@params, search)
+            Data = await service.GetAllByAffairIdAsync(affairId, @params, search)
         });
     }
-    
+
     [HttpPut("get-all-by-patient/{patientId:long}")]
     public async Task<IActionResult> GetAllByPatientIdAsync([FromQuery] long patientId, PaginationParams @params, [FromQuery] string search = null)
     {

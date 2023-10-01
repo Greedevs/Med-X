@@ -13,28 +13,6 @@ namespace MedX.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Administrators",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    FirstName = table.Column<string>(type: "text", nullable: true),
-                    LastName = table.Column<string>(type: "text", nullable: true),
-                    Phone = table.Column<string>(type: "text", nullable: true),
-                    Email = table.Column<string>(type: "text", nullable: true),
-                    Password = table.Column<string>(type: "text", nullable: true),
-                    Role = table.Column<int>(type: "integer", nullable: false),
-                    AccountNumber = table.Column<string>(type: "text", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Administrators", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Affairs",
                 columns: table => new
                 {
@@ -50,6 +28,23 @@ namespace MedX.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Affairs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Asset",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    FileName = table.Column<string>(type: "text", nullable: true),
+                    FilePath = table.Column<string>(type: "text", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Asset", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -72,6 +67,34 @@ namespace MedX.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Administrators",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    FirstName = table.Column<string>(type: "text", nullable: true),
+                    LastName = table.Column<string>(type: "text", nullable: true),
+                    Phone = table.Column<string>(type: "text", nullable: true),
+                    Email = table.Column<string>(type: "text", nullable: true),
+                    Password = table.Column<string>(type: "text", nullable: true),
+                    Role = table.Column<int>(type: "integer", nullable: false),
+                    AccountNumber = table.Column<string>(type: "text", nullable: true),
+                    ImageId = table.Column<long>(type: "bigint", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Administrators", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Administrators_Asset_ImageId",
+                        column: x => x.ImageId,
+                        principalTable: "Asset",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Doctors",
                 columns: table => new
                 {
@@ -86,6 +109,7 @@ namespace MedX.Data.Migrations
                     Balance = table.Column<decimal>(type: "numeric", nullable: false),
                     RoomNumber = table.Column<int>(type: "integer", nullable: false),
                     AccountNumber = table.Column<string>(type: "text", nullable: true),
+                    ImageId = table.Column<long>(type: "bigint", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
@@ -93,6 +117,11 @@ namespace MedX.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Doctors", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Doctors_Asset_ImageId",
+                        column: x => x.ImageId,
+                        principalTable: "Asset",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -106,6 +135,7 @@ namespace MedX.Data.Migrations
                     Busy = table.Column<int>(type: "integer", nullable: false),
                     Gender = table.Column<int>(type: "integer", nullable: false),
                     Type = table.Column<int>(type: "integer", nullable: false),
+                    ImageId = table.Column<long>(type: "bigint", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
@@ -113,6 +143,11 @@ namespace MedX.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Rooms", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Rooms_Asset_ImageId",
+                        column: x => x.ImageId,
+                        principalTable: "Asset",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -299,6 +334,11 @@ namespace MedX.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Administrators_ImageId",
+                table: "Administrators",
+                column: "ImageId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AffairItems_AffairId",
                 table: "AffairItems",
                 column: "AffairId");
@@ -319,6 +359,11 @@ namespace MedX.Data.Migrations
                 column: "PatientId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Doctors_ImageId",
+                table: "Doctors",
+                column: "ImageId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MedicalRecords_DoctorId",
                 table: "MedicalRecords",
                 column: "DoctorId");
@@ -337,6 +382,11 @@ namespace MedX.Data.Migrations
                 name: "IX_Payments_PatientId",
                 table: "Payments",
                 column: "PatientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rooms_ImageId",
+                table: "Rooms",
+                column: "ImageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Treatments_DoctorId",
@@ -389,6 +439,9 @@ namespace MedX.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Rooms");
+
+            migrationBuilder.DropTable(
+                name: "Asset");
         }
     }
 }
