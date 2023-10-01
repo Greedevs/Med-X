@@ -86,9 +86,48 @@ public class AffairItemService : IAffairItemService
         if (search is not null)
         {
             allAffairItems = allAffairItems.Where(d => d.Patient.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)
+            || d.Patient.LastName.Contains(search, StringComparison.OrdinalIgnoreCase)
             || d.Affair.Name.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
         }
 
         return this.mapper.Map<IEnumerable<AffairItemResultDto>>(allAffairItems);
+    }
+
+    public async Task<IEnumerable<AffairItemResultDto>> GetAllByAffairIdAsync(long affairId, PaginationParams @params, string search = null)
+    {
+        var existAffair = await this.affairRepository.GetAsync(a => a.Id == affairId)
+            ?? throw new NotFoundException($"This service is not found with id: {affairId}");
+
+        var affairs = await this.affairItemRepository.GetAll(a => a.AffairId == affairId, includes: new[] { "Patient", "Affair" })
+            .ToPaginate(@params)
+            .ToListAsync();
+
+        if (search is not null)
+        {
+            affairs = affairs.Where(d => d.Patient.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)
+            || d.Patient.LastName.Contains(search, StringComparison.OrdinalIgnoreCase)
+            || d.Affair.Name.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+
+        return this.mapper.Map<IEnumerable<AffairItemResultDto>>(affairs);
+    }
+
+    public async Task<IEnumerable<AffairItemResultDto>> GetAllByPatientIdAsync(long patientId, PaginationParams @params, string search = null)
+    {
+        var existPatient = await this.patientRepository.GetAsync(a => a.Id == patientId)
+            ?? throw new NotFoundException($"This service is not found with id: {patientId}");
+
+        var patients = await this.affairItemRepository.GetAll(a => a.PatientId == patientId, includes: new[] { "Patient", "Affair" })
+            .ToPaginate(@params)
+            .ToListAsync();
+
+        if (search is not null)
+        {
+            patients = patients.Where(d => d.Patient.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)
+            || d.Patient.LastName.Contains(search, StringComparison.OrdinalIgnoreCase)
+            || d.Affair.Name.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+
+        return this.mapper.Map<IEnumerable<AffairItemResultDto>>(patients);
     }
 }

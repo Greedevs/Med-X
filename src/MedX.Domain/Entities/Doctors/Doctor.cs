@@ -1,5 +1,6 @@
 ﻿using MedX.Domain.Commons;
 using MedX.Domain.Entities.Appointments;
+using MedX.Domain.Entities.Assets;
 using MedX.Domain.Entities.MedicalRecords;
 
 namespace MedX.Domain.Entities;
@@ -15,6 +16,8 @@ public class Doctor : Auditable
     public decimal Balance { get; set; }
     public int RoomNumber { get; set; }
     public string AccountNumber { get; set; }
+    public long? ImageId { get; set; }
+    public Asset Image { get; set; }
 
     public ICollection<Treatment> Treatments { get; set; }
     public ICollection<Appointment> Appointments { get; set; }

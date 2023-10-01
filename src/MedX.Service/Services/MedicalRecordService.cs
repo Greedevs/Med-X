@@ -8,6 +8,7 @@ using MedX.Domain.Configurations;
 using Microsoft.EntityFrameworkCore;
 using MedX.Service.DTOs.MedicalRecords;
 using MedX.Domain.Entities.MedicalRecords;
+using MedX.Service.DTOs.Appointments;
 
 namespace MedX.Service.Services;
 
@@ -79,7 +80,8 @@ public class MedicalRecordService : IMedicalRecordService
 
     public async Task<MedicalRecordResultDto> GetAsync(long id)
     {
-        var existMedicalRecord = await this.medicalRecordRepository.GetAsync(r => r.Id == id, includes: new[] { "Doctor", "Patient" })
+        var existMedicalRecord = await this.medicalRecordRepository.GetAsync(r => r.Id == id,
+            includes: new[] { "Doctor", "Patient" })
             ?? throw new NotFoundException($"This MedicalRecord not found with id: {id}");
 
         return this.mapper.Map<MedicalRecordResultDto>(existMedicalRecord);
@@ -102,5 +104,36 @@ public class MedicalRecordService : IMedicalRecordService
         }
 
         return this.mapper.Map<IEnumerable<MedicalRecordResultDto>>(allMedicalRecords);
+    }
+
+    public async Task<IEnumerable<MedicalRecordResultDto>> GetAllByPatientIdAsync(long patientId)
+    {
+        var existPatient = await this.patientRepository.GetAsync(d => d.Id.Equals(patientId))
+            ?? throw new NotFoundException($"This Patient not found with id: {patientId}");
+
+        var records = await this.medicalRecordRepository.GetAll(a => a.PatientId == patientId,
+            includes: new[] { "Doctor", "Patient" }).ToListAsync();
+
+        return this.mapper.Map<IEnumerable<MedicalRecordResultDto>>(records);
+    }
+
+    public async Task<IEnumerable<MedicalRecordResultDto>> GetAllByDoctorIdAsync(long doctorId, PaginationParams @params, string search = null)
+    {
+        var existDoctor = await this.doctorRepository.GetAsync(d => d.Id.Equals(doctorId))
+            ?? throw new NotFoundException($"This Patient not found with id: {doctorId}");
+
+        var records = await this.medicalRecordRepository.GetAll(a => a.DoctorId == doctorId,
+             includes: new[] { "Doctor", "Patient" })
+            .ToPaginate(@params)
+            .ToListAsync();
+
+        if (search is not null)
+        {
+            records = records
+                .Where(d => d.Patient.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)
+                || d.Patient.LastName.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+
+        return this.mapper.Map<IEnumerable<MedicalRecordResultDto>>(records);
     }
 }

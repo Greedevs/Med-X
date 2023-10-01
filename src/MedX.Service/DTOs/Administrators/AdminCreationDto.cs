@@ -1,4 +1,5 @@
 ﻿using MedX.Domain.Enums;
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
 namespace MedX.Service.DTOs.Administrators;
@@ -20,4 +21,5 @@ public class AdminCreationDto
 
     [Compare("Password", ErrorMessage = "The passwords do not match.")]
     public string ConfirmPassword { get; set; } = string.Empty;
+    public IFormFile Image { get; set; }
 }

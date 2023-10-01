@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace MedX.Service.DTOs.Doctors;
 
@@ -16,4 +17,5 @@ public class DoctorCreationDto
     [CheckPhone, Required, Phone]
     public string Phone { get; set; }
     public int RoomNumber { get; set; }
+    public IFormFile Image { get; set; }
 }

@@ -1,4 +1,5 @@
-﻿using MedX.Service.DTOs.Rooms;
+﻿using MedX.Service.DTOs.Assets;
+using MedX.Service.DTOs.Rooms;
 
 namespace MedX.Service.DTOs.Doctors;
 
@@ -14,4 +15,5 @@ public class DoctorResultDto
     public decimal Balance { get; set; }
     public int RoomNumber { get; set; }
     public string AccountNumber { get; set; }
+    public AssetResultDto Image { get; set; }
 }

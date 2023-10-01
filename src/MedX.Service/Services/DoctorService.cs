@@ -7,16 +7,21 @@ using MedX.Service.Interfaces;
 using MedX.Service.DTOs.Doctors;
 using MedX.Domain.Configurations;
 using Microsoft.EntityFrameworkCore;
+using MedX.Service.DTOs.Assets;
+using MedX.Domain.Entities.Assets;
+using System.Numerics;
 
 namespace MedX.Service.Services;
 
 public class DoctorService : IDoctorService
 {
     private readonly IRepository<Doctor> doctorRepository;
+    private readonly IAssetService assetService;
     private readonly IMapper mapper;
-    public DoctorService(IMapper mapper, IRepository<Doctor> doctorRepository)
+    public DoctorService(IMapper mapper, IRepository<Doctor> doctorRepository, IAssetService assetService)
     {
         this.mapper = mapper;
+        this.assetService = assetService;
         this.doctorRepository = doctorRepository;
     }
     public async Task<DoctorResultDto> AddAsync(DoctorCreationDto dto)
@@ -25,7 +30,32 @@ public class DoctorService : IDoctorService
         if (existDoctor is not null)
             throw new AlreadyExistException($"This doctor already exist with phone: {dto.Phone}");
 
-        var mappedDoctor = this.mapper.Map<Doctor>(dto);
+        string accountNumber = GenerateAccountNumber();
+        var mappedDoctor = new Doctor
+        {
+            FirstName = dto.FirstName,
+            LastName = dto.LastName,
+            Patronymic = dto.Patronymic,
+            Email = dto.Email,
+            Phone = dto.Phone,
+            Professional = dto.Professional,
+            Balance = dto.Balance,
+            RoomNumber = dto.RoomNumber,
+            AccountNumber = accountNumber,
+        };
+
+        if(dto.Image is not null )
+        {
+            var uploadedImage = await this.assetService.UploadAsync(new AssetCreationDto { FormFile = dto.Image });
+            var createdImage = new Asset
+            {
+                FileName = uploadedImage.FileName,
+                FilePath = uploadedImage.FilePath,
+            };
+
+            mappedDoctor.ImageId = uploadedImage.Id;
+            mappedDoctor.Image = createdImage;
+        }
 
         await this.doctorRepository.CreateAsync(mappedDoctor);
         await this.doctorRepository.SaveChanges();
@@ -39,6 +69,7 @@ public class DoctorService : IDoctorService
             ?? throw new NotFoundException($"This doctor not found with id: {id}");
 
         this.doctorRepository.Delete(existDoctor);
+        await this.assetService.RemoveAsync(existDoctor.Image);
         await this.doctorRepository.SaveChanges();
 
         return true;
@@ -48,7 +79,32 @@ public class DoctorService : IDoctorService
         var existDoctor = await this.doctorRepository.GetAsync(r => r.Id == dto.Id)
             ?? throw new NotFoundException($"This doctor not found with id: {dto.Id}");
 
-        this.mapper.Map(dto, existDoctor);
+        var uploadedImage = new Asset();
+        if (dto.Image is not null)
+        {
+            uploadedImage = await this.assetService.UploadAsync(new AssetCreationDto { FormFile = dto.Image });
+            await this.assetService.RemoveAsync(existDoctor.Image);
+        }
+
+        existDoctor.FirstName = dto.FirstName;
+        existDoctor.LastName = dto.LastName;
+        existDoctor.Patronymic = dto.Patronymic;
+        existDoctor.Email = dto.Email;
+        existDoctor.Phone = dto.Phone;
+        existDoctor.Professional = dto.Professional;
+        existDoctor.Balance = dto.Balance;
+        existDoctor.RoomNumber = dto.RoomNumber;
+
+        if (uploadedImage.Id > 0)
+        {
+            if (existDoctor.Image == null)
+            {
+                existDoctor.Image = new Asset();
+            }
+            existDoctor.ImageId = uploadedImage.Id;
+            existDoctor.Image.FileName = uploadedImage.FileName;
+            existDoctor.Image.FilePath = uploadedImage.FilePath;
+        }
 
         this.doctorRepository.Update(existDoctor);
         await this.doctorRepository.SaveChanges();
@@ -79,5 +135,15 @@ public class DoctorService : IDoctorService
         }
 
         return this.mapper.Map<IEnumerable<DoctorResultDto>>(allDoctors);
+    }
+
+    private string GenerateAccountNumber()
+    {
+        Random random = new Random();
+        int accountNumberLength = 9;
+        string accountNumber = random.Next((int)Math.Pow(10,
+        accountNumberLength - 1), (int)Math.Pow(10, accountNumberLength)).ToString();
+
+        return accountNumber;
     }
 }
