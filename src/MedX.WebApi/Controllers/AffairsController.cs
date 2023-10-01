@@ -1,27 +1,27 @@
-﻿using MedX.WebApi.Models;
+﻿using MedX.Domain.Configurations;
+using MedX.Service.DTOs.Services;
 using MedX.Service.Interfaces;
+using MedX.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
-using MedX.Domain.Configurations;
-using MedX.Service.DTOs.Administrators;
 
 namespace MedX.WebApi.Controllers;
 
-public class AdminsController : BaseController
+public class AffairsController : BaseController
 {
-    private readonly IAdminService adminService;
-    public AdminsController(IAdminService adminService)
+    private readonly IAffairService service;
+    public AffairsController(IAffairService service)
     {
-        this.adminService = adminService;
+        this.service = service;
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> PostAsync([FromForm] AdminCreationDto dto)
+    public async Task<IActionResult> PostAsync(AffairCreationDto dto)
     {
         return Ok(new Response
         {
             StatusCode = 200,
             Message = "OK",
-            Data = await adminService.AddAsync(dto)
+            Data = await service.AddAsync(dto)
         });
     }
 
@@ -32,40 +32,40 @@ public class AdminsController : BaseController
         {
             StatusCode = 200,
             Message = "OK",
-            Data = await adminService.DeleteAsync(id)
+            Data = await service.DeleteAsync(id)
         });
     }
 
     [HttpPut("update")]
-    public async Task<IActionResult> UpdateAsync([FromForm] AdminUpdateDto dto)
+    public async Task<IActionResult> UpdateAsync(AffairUpdateDto dto)
     {
         return Ok(new Response
         {
             StatusCode = 200,
             Message = "OK",
-            Data = await adminService.UpdateAsync(dto)
+            Data = await service.UpdateAsync(dto)
         });
     }
 
-    [HttpGet("get/{id:long}")]
+    [HttpPut("get/{id:long}")]
     public async Task<IActionResult> GetAsync(long id)
     {
         return Ok(new Response
         {
             StatusCode = 200,
             Message = "OK",
-            Data = await adminService.GetAsync(id)
+            Data = await service.GetAsync(id)
         });
     }
 
-    [HttpGet("get-all")]
-    public async Task<IActionResult> GetAllAsync([FromQuery] PaginationParams @params, string search)
+    [HttpPut("get-all")]
+    public async Task<IActionResult> GetAllAsync([FromQuery] PaginationParams @params, [FromQuery] string search = null)
     {
         return Ok(new Response
         {
             StatusCode = 200,
             Message = "OK",
-            Data = await adminService.GetAllAsync(@params, search)
+            Data = await service.GetAllAsync(@params, search)
         });
     }
 }

@@ -2,10 +2,12 @@
 using MedX.Domain.Entities;
 using MedX.Domain.Entities.Administrators;
 using MedX.Domain.Entities.Appointments;
+using MedX.Domain.Entities.Assets;
 using MedX.Domain.Entities.MedicalRecords;
 using MedX.Domain.Entities.Services;
 using MedX.Service.DTOs.Administrators;
 using MedX.Service.DTOs.Appointments;
+using MedX.Service.DTOs.Assets;
 using MedX.Service.DTOs.CashDesks;
 using MedX.Service.DTOs.Doctors;
 using MedX.Service.DTOs.MedicalRecords;
@@ -76,5 +78,8 @@ public class MappingProfile : Profile
         CreateMap<CashDesk, CashDeskCreationDto>().ReverseMap();
         CreateMap<CashDesk, CashDeskUpdateDto>().ReverseMap();
         CreateMap<CashDesk, CashDeskResultDto>().ReverseMap();
+
+        //Asset
+        CreateMap<Asset, AssetResultDto>().ReverseMap();
     }
 }

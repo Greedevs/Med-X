@@ -15,15 +15,20 @@ public static class ServiceCollection
     public static void AddServices(this IServiceCollection services)
     {
         services.AddAutoMapper(typeof(MappingProfile));
+        services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IRoomService, RoomService>();
+        services.AddScoped<IAssetService, AssetService>();
         services.AddScoped<IAdminService, AdminService>();
         services.AddScoped<IDoctorService, DoctorService>();
-        services.AddScoped<IPatientService, PatientService>();
+        services.AddScoped<IAffairService, AffairService>();
         services.AddScoped<IPaymentService, PaymentService>();
+        services.AddScoped<IPatientService, PatientService>();
+        services.AddScoped<ICashDeskService, CashDeskService>();
         services.AddScoped<ITreatmentService, TreatmentService>();
+        services.AddScoped<IAffairItemService, AffairItemService>();
         services.AddScoped<IAppointmentService, AppointmentService>();
-        services.AddScoped<IAuthService, AuthService>();
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+        services.AddScoped<IMedicalRecordService, MedicalRecordService>();
     }
     public static void AddJwt(this IServiceCollection services, IConfiguration configuration)
     {

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MedX.Domain.Entities.Assets;
+using MedX.Service.DTOs.Assets;
 
-namespace MedX.Service.Interfaces
+namespace MedX.Service.Interfaces;
+
+public interface IAssetService
 {
-    internal class IAssetService
-    {
-    }
+    Task<Asset> UploadAsync(AssetCreationDto dto);
+    Task<bool> RemoveAsync(Asset asset);
 }
