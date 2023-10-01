@@ -10,4 +10,6 @@ public interface IAffairItemService
     Task<bool> DeleteAsync(long id);
     Task<AffairItemResultDto> GetAsync(long id);
     Task<IEnumerable<AffairItemResultDto>> GetAllAsync(PaginationParams @params, string search = null);
+    Task<IEnumerable<AffairItemResultDto>> GetAllByAffairIdAsync(long affairId, PaginationParams @params, string search = null);
+    Task<IEnumerable<AffairItemResultDto>> GetAllByPatientIdAsync(long patientId, PaginationParams @params, string search = null);
 }

@@ -57,7 +57,7 @@ public class RoomService : IRoomService
 
     public async Task<RoomResultDto> GetAsync(long id)
     {
-        var existRoom = await this.repository.GetAsync(r => r.Id == id)
+        var existRoom = await this.repository.GetAsync(r => r.Id == id, includes: new[] { "Patients" })
             ?? throw new NotFoundException($"This Room not found with id: {id}");
 
         return this.mapper.Map<RoomResultDto>(existRoom);

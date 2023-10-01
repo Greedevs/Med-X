@@ -11,4 +11,5 @@ public interface IPaymentService
     Task<bool> DeleteAsync(long id);
     Task<PaymentResultDto> GetAsync(long id);
     Task<IEnumerable<PaymentResultDto>> GetAllAsync(PaginationParams @params, string search = null);
+    Task<IEnumerable<PaymentResultDto>> GetAllByPatientIdAsync(long patientId, string search = null);
 }
