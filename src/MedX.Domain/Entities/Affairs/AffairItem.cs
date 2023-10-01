@@ -9,6 +9,6 @@ public class AffairItem : Auditable
 
     public long AffairId { get; set; }
     public Affair Affair { get; set; }
-    
-    public float Quantity { get; set; }
+
+    public float Quantity { get; set; } = 1;
 }

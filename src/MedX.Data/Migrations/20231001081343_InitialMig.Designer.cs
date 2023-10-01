@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MedX.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231001052345_InitialMig")]
+    [Migration("20231001081343_InitialMig")]
     partial class InitialMig
     {
         /// <inheritdoc />
@@ -45,6 +45,9 @@ namespace MedX.Data.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
 
+                    b.Property<long?>("ImageId")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
@@ -64,6 +67,8 @@ namespace MedX.Data.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
 
                     b.ToTable("Administrators");
                 });
@@ -98,6 +103,34 @@ namespace MedX.Data.Migrations
                     b.HasIndex("PatientId");
 
                     b.ToTable("Appointments");
+                });
+
+            modelBuilder.Entity("MedX.Domain.Entities.Assets.Asset", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FilePath")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Asset");
                 });
 
             modelBuilder.Entity("MedX.Domain.Entities.CashDesk", b =>
@@ -157,6 +190,9 @@ namespace MedX.Data.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
 
+                    b.Property<long?>("ImageId")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
@@ -179,6 +215,8 @@ namespace MedX.Data.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
 
                     b.ToTable("Doctors");
                 });
@@ -328,6 +366,9 @@ namespace MedX.Data.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("integer");
 
+                    b.Property<long?>("ImageId")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
@@ -344,6 +385,8 @@ namespace MedX.Data.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
 
                     b.ToTable("Rooms");
                 });
@@ -457,6 +500,15 @@ namespace MedX.Data.Migrations
                     b.ToTable("Treatments");
                 });
 
+            modelBuilder.Entity("MedX.Domain.Entities.Administrators.Administrator", b =>
+                {
+                    b.HasOne("MedX.Domain.Entities.Assets.Asset", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
+
+                    b.Navigation("Image");
+                });
+
             modelBuilder.Entity("MedX.Domain.Entities.Appointments.Appointment", b =>
                 {
                     b.HasOne("MedX.Domain.Entities.Doctor", "Doctor")
@@ -474,6 +526,15 @@ namespace MedX.Data.Migrations
                     b.Navigation("Doctor");
 
                     b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("MedX.Domain.Entities.Doctor", b =>
+                {
+                    b.HasOne("MedX.Domain.Entities.Assets.Asset", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
+
+                    b.Navigation("Image");
                 });
 
             modelBuilder.Entity("MedX.Domain.Entities.MedicalRecords.MedicalRecord", b =>
@@ -511,6 +572,15 @@ namespace MedX.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("MedX.Domain.Entities.Room", b =>
+                {
+                    b.HasOne("MedX.Domain.Entities.Assets.Asset", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
+
+                    b.Navigation("Image");
                 });
 
             modelBuilder.Entity("MedX.Domain.Entities.Services.AffairItem", b =>

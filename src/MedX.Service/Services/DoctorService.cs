@@ -113,7 +113,7 @@ public class DoctorService : IDoctorService
     }
     public async Task<DoctorResultDto> GetAsync(long id)
     {
-        var existDoctor = await this.doctorRepository.GetAsync(r => r.Id == id)
+        var existDoctor = await this.doctorRepository.GetAsync(r => r.Id == id, includes: new[] { "Image" })
             ?? throw new NotFoundException($"This doctor not found with id: {id}");
 
         return this.mapper.Map<DoctorResultDto>(existDoctor);
@@ -121,7 +121,7 @@ public class DoctorService : IDoctorService
 
     public async Task<IEnumerable<DoctorResultDto>> GetAllAsync(PaginationParams @params, string search = null)
     {
-        var allDoctors = await this.doctorRepository.GetAll()
+        var allDoctors = await this.doctorRepository.GetAll(includes: new[] { "Image" })
             .ToPaginate(@params)
             .ToListAsync();
 
