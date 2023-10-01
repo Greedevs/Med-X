@@ -43,6 +43,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 
+app.UseAuthentication();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
