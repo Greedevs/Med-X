@@ -1,6 +1,6 @@
-﻿using MedX.Domain.Commons;
+﻿using MedX.Domain.Enums;
+using MedX.Domain.Commons;
 using MedX.Domain.Entities.Assets;
-using MedX.Domain.Enums;
 
 namespace MedX.Domain.Entities.Administrators;
 

@@ -4,12 +4,11 @@ using MedX.Data.IRepositories;
 using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
 using MedX.Service.Interfaces;
+using MedX.Service.DTOs.Assets;
 using MedX.Service.DTOs.Doctors;
 using MedX.Domain.Configurations;
-using Microsoft.EntityFrameworkCore;
-using MedX.Service.DTOs.Assets;
 using MedX.Domain.Entities.Assets;
-using System.Numerics;
+using Microsoft.EntityFrameworkCore;
 
 namespace MedX.Service.Services;
 

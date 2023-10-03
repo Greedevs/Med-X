@@ -5,11 +5,10 @@ using MedX.Service.DTOs.Rooms;
 using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
 using MedX.Service.Interfaces;
-using MedX.Domain.Configurations;
-using Microsoft.EntityFrameworkCore;
-using MedX.Domain.Entities.Assets;
 using MedX.Service.DTOs.Assets;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using MedX.Domain.Configurations;
+using MedX.Domain.Entities.Assets;
+using Microsoft.EntityFrameworkCore;
 
 namespace MedX.Service.Services;
 
@@ -103,7 +102,7 @@ public class RoomService : IRoomService
 
     public async Task<RoomResultDto> GetAsync(long id)
     {
-        var existRoom = await this.repository.GetAsync(r => r.Id == id, includes: new[] {"Image", "Patients" })
+        var existRoom = await this.repository.GetAsync(r => r.Id == id, includes: new[] { "Image", "Patients" })
             ?? throw new NotFoundException($"This Room not found with id: {id}");
 
         return this.mapper.Map<RoomResultDto>(existRoom);
@@ -111,7 +110,7 @@ public class RoomService : IRoomService
 
     public async Task<IEnumerable<RoomResultDto>> GetAllAsync(PaginationParams @params, int? search = null)
     {
-        var allRooms = await this.repository.GetAll(includes: new[] {"Image","Patients"})
+        var allRooms = await this.repository.GetAll(includes: new[] { "Image", "Patients" })
             .ToPaginate(@params)
             .ToListAsync();
 
