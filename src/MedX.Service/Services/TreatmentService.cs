@@ -112,6 +112,7 @@ public class TreatmentService : ITreatmentService
 
         return this.mapper.Map<TreatmentResultDto>(existTreatment);
     }
+
     public async Task<TreatmentResultDto> GetAsync(long id)
     {
         var existTreatment = await this.treatmentRepository.GetAsync(r => r.Id == id, includes: new[] { "Doctor", "Patient", "Room" })

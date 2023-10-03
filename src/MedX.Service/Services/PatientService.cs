@@ -28,8 +28,10 @@ public class PatientService : IPatientService
         patient = await this.repository.GetAsync(u => u.Pinfl.Equals(dto.Pinfl));
         if (patient is not null)
             throw new AlreadyExistException($"This patient is already exist with Pinfl {dto.Pinfl}");
-
+        
         Patient mappedPatient = mapper.Map<Patient>(dto);
+        mappedPatient.AccountNumber = GenerateAccountNumber();
+
         await this.repository.CreateAsync(mappedPatient);
         await this.repository.SaveChanges();
 
@@ -87,5 +89,15 @@ public class PatientService : IPatientService
         }
 
         return this.mapper.Map<IEnumerable<PatientResultDto>>(patients);
+    }
+
+    private string GenerateAccountNumber()
+    {
+        Random random = new Random();
+        int accountNumberLength = 9;
+        string accountNumber = random.Next((int)Math.Pow(10,
+        accountNumberLength - 1), (int)Math.Pow(10, accountNumberLength)).ToString();
+
+        return accountNumber;
     }
 }
