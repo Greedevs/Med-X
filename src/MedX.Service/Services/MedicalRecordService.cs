@@ -6,9 +6,9 @@ using MedX.Service.Extensions;
 using MedX.Service.Interfaces;
 using MedX.Domain.Configurations;
 using Microsoft.EntityFrameworkCore;
+using MedX.Service.DTOs.Appointments;
 using MedX.Service.DTOs.MedicalRecords;
 using MedX.Domain.Entities.MedicalRecords;
-using MedX.Service.DTOs.Appointments;
 
 namespace MedX.Service.Services;
 
