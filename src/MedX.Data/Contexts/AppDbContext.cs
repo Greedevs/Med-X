@@ -1,8 +1,8 @@
 ﻿using MedX.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-using MedX.Domain.Entities.Administrators;
-using MedX.Domain.Entities.Appointments;
 using MedX.Domain.Entities.Services;
+using Microsoft.EntityFrameworkCore;
+using MedX.Domain.Entities.Appointments;
+using MedX.Domain.Entities.Administrators;
 using MedX.Domain.Entities.MedicalRecords;
 
 namespace MedX.Data.Contexts;
