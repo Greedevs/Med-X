@@ -2,9 +2,7 @@
 using MedX.Data.IRepositories;
 using MedX.Domain.Configurations;
 using MedX.Domain.Entities;
-using MedX.Domain.Entities.Services;
 using MedX.Service.DTOs.CashDesks;
-using MedX.Service.DTOs.Services;
 using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
 using MedX.Service.Interfaces;
@@ -41,6 +39,7 @@ public class CashDeskService : ICashDeskService
 
         return true;
     }
+
     public async Task<CashDeskResultDto> UpdateAsync(CashDeskUpdateDto dto)
     {
         var existCashDesk = await this.CashDeskRepository.GetAsync(r => r.Id == dto.Id)
