@@ -3,5 +3,5 @@
 public enum TypeOfPayment
 {
     Cash,
-    Card 
+    Card
 }

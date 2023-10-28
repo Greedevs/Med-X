@@ -1,5 +1,4 @@
 ﻿using MedX.Domain.Configurations;
-using MedX.Service.DTOs.Administrators;
 using MedX.Service.DTOs.Services;
 
 namespace MedX.Service.Interfaces;

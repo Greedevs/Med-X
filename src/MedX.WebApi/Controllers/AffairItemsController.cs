@@ -1,8 +1,8 @@
-﻿using MedX.WebApi.Models;
-using MedX.Service.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using MedX.Domain.Configurations;
+﻿using MedX.Domain.Configurations;
 using MedX.Service.DTOs.ServiceItems;
+using MedX.Service.Interfaces;
+using MedX.WebApi.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MedX.WebApi.Controllers;
 
@@ -47,7 +47,7 @@ public class AffairItemController : BaseController
         });
     }
 
-    [HttpPut("get/{id:long}")]
+    [HttpGet("get/{id:long}")]
     public async Task<IActionResult> GetAsync(long id)
     {
         return Ok(new Response
@@ -58,7 +58,7 @@ public class AffairItemController : BaseController
         });
     }
 
-    [HttpPut("get-all")]
+    [HttpGet("get-all")]
     public async Task<IActionResult> GetAllAsync([FromQuery] PaginationParams @params, [FromQuery] string search = null)
     {
         return Ok(new Response
@@ -69,7 +69,7 @@ public class AffairItemController : BaseController
         });
     }
 
-    [HttpPut("get-all-by-service/{serviceId:long}")]
+    [HttpGet("get-all-by-service/{serviceId:long}")]
     public async Task<IActionResult> GetAllByAffairIdAsync([FromQuery] long affairId, PaginationParams @params, [FromQuery] string search = null)
     {
         return Ok(new Response
@@ -80,7 +80,7 @@ public class AffairItemController : BaseController
         });
     }
 
-    [HttpPut("get-all-by-patient/{patientId:long}")]
+    [HttpGet("get-all-by-patient/{patientId:long}")]
     public async Task<IActionResult> GetAllByPatientIdAsync([FromQuery] long patientId, PaginationParams @params, [FromQuery] string search = null)
     {
         return Ok(new Response

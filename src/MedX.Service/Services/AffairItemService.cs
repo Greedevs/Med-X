@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using MedX.Domain.Entities;
 using MedX.Data.IRepositories;
+using MedX.Domain.Configurations;
+using MedX.Domain.Entities;
+using MedX.Domain.Entities.Services;
+using MedX.Service.DTOs.ServiceItems;
 using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
 using MedX.Service.Interfaces;
-using MedX.Domain.Configurations;
-using MedX.Domain.Entities.Services;
 using Microsoft.EntityFrameworkCore;
-using MedX.Service.DTOs.ServiceItems;
 
 namespace MedX.Service.Services;
 
@@ -17,7 +17,7 @@ public class AffairItemService : IAffairItemService
     private readonly IRepository<Affair> affairRepository;
     private readonly IRepository<Patient> patientRepository;
     private readonly IRepository<AffairItem> affairItemRepository;
-    public AffairItemService(IMapper mapper, 
+    public AffairItemService(IMapper mapper,
         IRepository<Affair> affairRepository,
         IRepository<Patient> patientRepository,
         IRepository<AffairItem> affairItemRepository)
@@ -33,7 +33,7 @@ public class AffairItemService : IAffairItemService
         var existPatient = await this.patientRepository.GetAsync(d => d.Id.Equals(dto.PatientId))
             ?? throw new NotFoundException($"This Patient not found with id: {dto.PatientId}");
 
-        if(dto.AffairItems is null || !dto.AffairItems.Any())
+        if (dto.AffairItems is null || !dto.AffairItems.Any())
         {
             throw new NotFoundException("No Affair items provided");
         }
@@ -104,7 +104,7 @@ public class AffairItemService : IAffairItemService
 
     public async Task<IEnumerable<AffairItemResultDto>> GetAllAsync(PaginationParams @params, string search = null)
     {
-        var allAffairItems = await this.affairItemRepository.GetAll(includes: new[] {"Patient","Affair"})
+        var allAffairItems = await this.affairItemRepository.GetAll(includes: new[] { "Patient", "Affair" })
             .ToPaginate(@params)
             .ToListAsync();
 

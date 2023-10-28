@@ -1,6 +1,5 @@
 ﻿using MedX.Service.DTOs.Doctors;
 using MedX.Service.DTOs.Patients;
-using MedX.Service.DTOs.Payments;
 
 namespace MedX.Service.DTOs.Appointments;
 

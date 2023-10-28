@@ -1,5 +1,4 @@
 ﻿using MedX.Domain.Configurations;
-using MedX.Service.DTOs.Patients;
 using MedX.Service.DTOs.Payments;
 
 namespace MedX.Service.Interfaces;

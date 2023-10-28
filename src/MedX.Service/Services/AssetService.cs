@@ -1,9 +1,9 @@
-﻿using MedX.Service.Helpers;
-using MedX.Data.IRepositories;
-using MedX.Service.Extensions;
-using MedX.Service.Interfaces;
-using MedX.Service.DTOs.Assets;
+﻿using MedX.Data.IRepositories;
 using MedX.Domain.Entities.Assets;
+using MedX.Service.DTOs.Assets;
+using MedX.Service.Extensions;
+using MedX.Service.Helpers;
+using MedX.Service.Interfaces;
 
 namespace MedX.Service.Services;
 

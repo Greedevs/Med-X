@@ -1,22 +1,22 @@
 ﻿using AutoMapper;
 using MedX.Domain.Entities;
-using MedX.Service.DTOs.Rooms;
+using MedX.Domain.Entities.Administrators;
+using MedX.Domain.Entities.Appointments;
+using MedX.Domain.Entities.Assets;
+using MedX.Domain.Entities.MedicalRecords;
+using MedX.Domain.Entities.Services;
+using MedX.Service.DTOs.Administrators;
+using MedX.Service.DTOs.Appointments;
 using MedX.Service.DTOs.Assets;
+using MedX.Service.DTOs.CashDesks;
 using MedX.Service.DTOs.Doctors;
-using MedX.Service.DTOs.Services;
+using MedX.Service.DTOs.MedicalRecords;
 using MedX.Service.DTOs.Patients;
 using MedX.Service.DTOs.Payments;
-using MedX.Domain.Entities.Assets;
-using MedX.Service.DTOs.CashDesks;
-using MedX.Service.DTOs.Treatments;
-using MedX.Domain.Entities.Services;
-using MedX.Service.DTOs.Appointments;
+using MedX.Service.DTOs.Rooms;
 using MedX.Service.DTOs.ServiceItems;
-using MedX.Service.DTOs.Administrators;
-using MedX.Service.DTOs.MedicalRecords;
-using MedX.Domain.Entities.Appointments;
-using MedX.Domain.Entities.MedicalRecords;
-using MedX.Domain.Entities.Administrators;
+using MedX.Service.DTOs.Services;
+using MedX.Service.DTOs.Treatments;
 
 namespace MedX.Service.Mappers;
 

@@ -9,7 +9,8 @@ public class Room : Auditable
     private int busy;
     public int Number { get; set; }
     public int Quantity { get; set; }
-    public int Busy { 
+    public int Busy
+    {
         get => busy;
         set
         {

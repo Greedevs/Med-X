@@ -1,8 +1,8 @@
-﻿using MedX.Domain.Enums;
-using MedX.Domain.Commons;
-using MedX.Domain.Entities.Services;
+﻿using MedX.Domain.Commons;
 using MedX.Domain.Entities.Appointments;
 using MedX.Domain.Entities.MedicalRecords;
+using MedX.Domain.Entities.Services;
+using MedX.Domain.Enums;
 
 namespace MedX.Domain.Entities;
 

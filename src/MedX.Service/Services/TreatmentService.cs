@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using MedX.Domain.Entities;
 using MedX.Data.IRepositories;
+using MedX.Domain.Configurations;
+using MedX.Domain.Entities;
+using MedX.Service.DTOs.Treatments;
 using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
 using MedX.Service.Interfaces;
-using MedX.Domain.Configurations;
-using MedX.Service.DTOs.Treatments;
 using Microsoft.EntityFrameworkCore;
 
 namespace MedX.Service.Services;
@@ -44,11 +44,11 @@ public class TreatmentService : ITreatmentService
         var mappedTreatment = this.mapper.Map<Treatment>(dto);
         if (existRoom.Busy + 1 <= existRoom.Quantity)
         {
-            if(existRoom.Gender != existPatient.Gender && existRoom.Busy != 0)
+            if (existRoom.Gender != existPatient.Gender && existRoom.Busy != 0)
             {
                 throw new CustomException(400, "The gender don't match in this room");
             }
-            if(existRoom.Busy == 0)
+            if (existRoom.Busy == 0)
             {
                 existRoom.Gender = existPatient.Gender;
             }
@@ -71,7 +71,7 @@ public class TreatmentService : ITreatmentService
 
     public async Task<bool> DeleteAsync(long id)
     {
-        var existTreatment = await this.treatmentRepository.GetAsync(r => r.Id == id, includes: new[] {"Patient", "Room"})
+        var existTreatment = await this.treatmentRepository.GetAsync(r => r.Id == id, includes: new[] { "Patient", "Room" })
             ?? throw new NotFoundException($"This Treatment not found with id: {id}");
 
         existTreatment.Room.Busy -= 1;
@@ -174,7 +174,7 @@ public class TreatmentService : ITreatmentService
         var existRoom = await this.roomRepository.GetAsync(r => r.Id == roomId)
             ?? throw new NotFoundException($"This room is not found with id = {roomId}");
 
-        var rooms = await this.treatmentRepository.GetAll(r => r.RoomId == roomId) .ToListAsync();
+        var rooms = await this.treatmentRepository.GetAll(r => r.RoomId == roomId).ToListAsync();
 
         return this.mapper.Map<IEnumerable<TreatmentResultDto>>(rooms);
     }
