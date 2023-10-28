@@ -1,13 +1,13 @@
-﻿using System.Text;
-using MedX.Service.Helpers;
-using System.Security.Claims;
+﻿using MedX.Data.IRepositories;
+using MedX.Domain.Entities.Administrators;
 using MedX.Service.Exceptions;
-using MedX.Data.IRepositories;
+using MedX.Service.Helpers;
 using MedX.Service.Interfaces;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.Extensions.Configuration;
-using MedX.Domain.Entities.Administrators;
+using System.Security.Claims;
+using System.Text;
 
 namespace MedX.Service.Services;
 
@@ -23,7 +23,7 @@ public class AuthService : IAuthService
     }
     public async Task<string> GenerateTokenAsync(string phone, string password)
     {
-        Administrator administrator =await this.repository.GetAsync(a => a.Phone.Equals(phone));
+        Administrator administrator = await this.repository.GetAsync(a => a.Phone.Equals(phone));
         if (administrator is null)
             throw new NotFoundException($"This phone is not found {phone}");
 

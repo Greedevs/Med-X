@@ -1,5 +1,4 @@
 ﻿using MedX.Domain.Configurations;
-using MedX.Service.DTOs.Appointments;
 using MedX.Service.DTOs.MedicalRecords;
 using MedX.Service.Interfaces;
 using MedX.WebApi.Models;

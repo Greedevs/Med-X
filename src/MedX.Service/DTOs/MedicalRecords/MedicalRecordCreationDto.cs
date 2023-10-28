@@ -1,6 +1,4 @@
-﻿using MedX.Domain.Entities;
-
-namespace MedX.Service.DTOs.MedicalRecords;
+﻿namespace MedX.Service.DTOs.MedicalRecords;
 
 public class MedicalRecordCreationDto
 {

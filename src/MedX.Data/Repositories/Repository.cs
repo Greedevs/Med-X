@@ -1,8 +1,8 @@
 ﻿using MedX.Data.Contexts;
-using MedX.Domain.Commons;
 using MedX.Data.IRepositories;
-using System.Linq.Expressions;
+using MedX.Domain.Commons;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace MedX.Data.Repositories;
 

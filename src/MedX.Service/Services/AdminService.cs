@@ -1,16 +1,16 @@
 ﻿using AutoMapper;
-using System.Data;
-using MedX.Service.Helpers;
 using MedX.Data.IRepositories;
-using MedX.Service.Interfaces;
+using MedX.Domain.Configurations;
+using MedX.Domain.Entities.Administrators;
+using MedX.Domain.Entities.Assets;
+using MedX.Service.DTOs.Administrators;
+using MedX.Service.DTOs.Assets;
 using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
-using MedX.Service.DTOs.Assets;
-using MedX.Domain.Configurations;
-using MedX.Domain.Entities.Assets;
+using MedX.Service.Helpers;
+using MedX.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using MedX.Service.DTOs.Administrators;
-using MedX.Domain.Entities.Administrators;
+using System.Data;
 
 namespace MedX.Service.Services;
 
@@ -110,7 +110,7 @@ public class AdminService : IAdminService
 
     public async Task<AdminResultDto> GetAsync(long id)
     {
-        var existAdmin = await this.repository.GetAsync(r => r.Id == id, includes: new[] {"Image"})
+        var existAdmin = await this.repository.GetAsync(r => r.Id == id, includes: new[] { "Image" })
             ?? throw new NotFoundException($"This Admin not found with id: {id}");
 
         return this.mapper.Map<AdminResultDto>(existAdmin);

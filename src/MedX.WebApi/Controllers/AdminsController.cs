@@ -1,8 +1,8 @@
-﻿using MedX.WebApi.Models;
-using MedX.Service.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using MedX.Domain.Configurations;
+﻿using MedX.Domain.Configurations;
 using MedX.Service.DTOs.Administrators;
+using MedX.Service.Interfaces;
+using MedX.WebApi.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MedX.WebApi.Controllers;
 

@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using MedX.Domain.Entities;
 using MedX.Data.IRepositories;
+using MedX.Domain.Configurations;
+using MedX.Domain.Entities;
+using MedX.Domain.Entities.Appointments;
+using MedX.Service.DTOs.Appointments;
 using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
 using MedX.Service.Interfaces;
-using MedX.Domain.Configurations;
 using Microsoft.EntityFrameworkCore;
-using MedX.Service.DTOs.Appointments;
-using MedX.Domain.Entities.Appointments;
 
 namespace MedX.Service.Services;
 
