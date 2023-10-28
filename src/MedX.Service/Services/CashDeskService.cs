@@ -39,6 +39,7 @@ public class CashDeskService : ICashDeskService
 
         return true;
     }
+
     public async Task<CashDeskResultDto> UpdateAsync(CashDeskUpdateDto dto)
     {
         var existCashDesk = await this.CashDeskRepository.GetAsync(r => r.Id == dto.Id)
