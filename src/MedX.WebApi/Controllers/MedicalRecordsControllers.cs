@@ -47,7 +47,7 @@ public class MedicalRecordsControllers : BaseController
         });
     }
 
-    [HttpPut("get/{id:long}")]
+    [HttpGet("get/{id:long}")]
     public async Task<IActionResult> GetAsync(long id)
     {
         return Ok(new Response
@@ -58,7 +58,7 @@ public class MedicalRecordsControllers : BaseController
         });
     }
 
-    [HttpPut("get-all")]
+    [HttpGet("get-all")]
     public async Task<IActionResult> GetAllAsync([FromQuery] PaginationParams @params, string search)
     {
         return Ok(new Response
@@ -69,7 +69,7 @@ public class MedicalRecordsControllers : BaseController
         });
     }
 
-    [HttpPut("get-all-by-patient/{patientId:long}")]
+    [HttpGet("get-all-by-patient/{patientId:long}")]
     public async Task<IActionResult> GetAllByPatientIdAsync(long patientId)
     {
         return Ok(new Response
@@ -80,7 +80,7 @@ public class MedicalRecordsControllers : BaseController
         });
     }
 
-    [HttpPut("get-all-by-doctor/{doctorId:long}")]
+    [HttpGet("get-all-by-doctor/{doctorId:long}")]
     public async Task<IActionResult> GetAllByDoctorIdAsync(long doctorId, PaginationParams @params, string search = null)
     {
         return Ok(new Response
