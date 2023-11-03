@@ -62,6 +62,12 @@ public class AdminService : IAdminService
         return this.mapper.Map<AdminResultDto>(mappedAdmin);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="NotFoundException"></exception>
     public async Task<bool> DeleteAsync(long id)
     {
         var existAdmin = await this.repository.GetAsync(r => r.Id == id)
