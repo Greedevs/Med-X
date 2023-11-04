@@ -3,8 +3,6 @@ name: .NET
 on:
   push:
     branches: [ "unidevs" ]
-  pull_request:
-    branches: [ "unidevs" ]
 
 jobs:
   build:
