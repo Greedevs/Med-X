@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MedX.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231001081343_InitialMig")]
-    partial class InitialMig
+    [Migration("20231103142705_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -143,6 +143,9 @@ namespace MedX.Data.Migrations
 
                     b.Property<string>("AccountNumber")
                         .HasColumnType("text");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("numeric");
 
                     b.Property<decimal>("Balance")
                         .HasColumnType("numeric");

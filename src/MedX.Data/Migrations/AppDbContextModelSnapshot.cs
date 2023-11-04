@@ -141,6 +141,9 @@ namespace MedX.Data.Migrations
                     b.Property<string>("AccountNumber")
                         .HasColumnType("text");
 
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("numeric");
+
                     b.Property<decimal>("Balance")
                         .HasColumnType("numeric");
 
