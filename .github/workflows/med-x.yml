@@ -52,7 +52,7 @@ jobs:
       - name: Setup .NET 7
         uses: actions/setup-dotnet@v3
       - name: Build Docker image
-        run: docker build -t $USERNAME/med-x -f MedX.WebApi/Deckerfile .
+        run: docker build -t $USERNAME/med-x -f src/MedX.WebApi/Deckerfile .
       - name: Login to Docker account
         run: docker login -u $USERNAME -p $PASSWORD #--password-stdin
       - name: Push Docker image
