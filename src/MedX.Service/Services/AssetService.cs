@@ -4,15 +4,18 @@ using MedX.Service.Extensions;
 using MedX.Service.Interfaces;
 using MedX.Service.DTOs.Assets;
 using MedX.Domain.Entities.Assets;
+using Microsoft.AspNetCore.Http;
 
 namespace MedX.Service.Services;
 
 public class AssetService : IAssetService
 {
     private readonly IRepository<Asset> repository;
-    public AssetService(IRepository<Asset> repository)
+    private readonly IHttpContextAccessor httpContextAccessor;
+    public AssetService(IRepository<Asset> repository, IHttpContextAccessor httpContextAccessor)
     {
         this.repository = repository;
+        this.httpContextAccessor = httpContextAccessor;
     }
 
     public async Task<Asset> UploadAsync(AssetCreationDto dto)
@@ -22,18 +25,23 @@ public class AssetService : IAssetService
         if (!Directory.Exists(webRootPath))
             Directory.CreateDirectory(webRootPath);
 
-        var fileExtention = Path.GetExtension(dto.FormFile.FileName);
-        var fileName = $"{Guid.NewGuid().ToString("N")}{fileExtention}";
+        var fileExtension = Path.GetExtension(dto.FormFile.FileName);
+        var fileName = $"{Guid.NewGuid().ToString("N")}{fileExtension}";
         var filePath = Path.Combine(webRootPath, fileName);
 
-        var fileStream = new FileStream(filePath, FileMode.OpenOrCreate);
-        await fileStream.WriteAsync(dto.FormFile.ToByte());
+        using (var fileStream = new FileStream(filePath, FileMode.Create))
+        {
+            await dto.FormFile.CopyToAsync(fileStream);
+        }
+
+        var imageUrl = $"{httpContextAccessor.HttpContext.Request.Scheme}://{httpContextAccessor.HttpContext.Request.Host}/Images/{fileName}";
 
         var asset = new Asset()
         {
             FileName = fileName,
-            FilePath = filePath,
+            FilePath = imageUrl,
         };
+
         await this.repository.CreateAsync(asset);
         await this.repository.SaveChanges();
         return asset;

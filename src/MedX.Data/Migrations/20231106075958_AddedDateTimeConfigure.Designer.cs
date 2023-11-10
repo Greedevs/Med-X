@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MedX.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231001081343_InitialMig")]
-    partial class InitialMig
+    [Migration("20231106075958_AddedDateTimeConfigure")]
+    partial class AddedDateTimeConfigure
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -144,6 +144,9 @@ namespace MedX.Data.Migrations
                     b.Property<string>("AccountNumber")
                         .HasColumnType("text");
 
+                    b.Property<decimal?>("Amount")
+                        .HasColumnType("numeric");
+
                     b.Property<decimal>("Balance")
                         .HasColumnType("numeric");
 
@@ -159,10 +162,15 @@ namespace MedX.Data.Migrations
                     b.Property<bool>("IsIncome")
                         .HasColumnType("boolean");
 
+                    b.Property<long>("PaymentId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PaymentId");
 
                     b.ToTable("CashDesks");
                 });
@@ -280,7 +288,7 @@ namespace MedX.Data.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
@@ -526,6 +534,17 @@ namespace MedX.Data.Migrations
                     b.Navigation("Doctor");
 
                     b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("MedX.Domain.Entities.CashDesk", b =>
+                {
+                    b.HasOne("MedX.Domain.Entities.Payment", "Payment")
+                        .WithMany()
+                        .HasForeignKey("PaymentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Payment");
                 });
 
             modelBuilder.Entity("MedX.Domain.Entities.Doctor", b =>

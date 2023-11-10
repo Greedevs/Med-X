@@ -9,6 +9,7 @@ using MedX.Service.DTOs.Assets;
 using MedX.Domain.Configurations;
 using MedX.Domain.Entities.Assets;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace MedX.Service.Services;
 

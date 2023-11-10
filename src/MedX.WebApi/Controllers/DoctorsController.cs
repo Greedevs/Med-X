@@ -26,11 +26,11 @@ public class DoctorsController : BaseController
     public async Task<IActionResult> UpdateAsync([FromForm] DoctorUpdateDto dto)
         => Ok(new Response { Data = await doctorService.UpdateAsync(dto) });
 
-    [HttpPut("get/{id:long}")]
+    [HttpGet("get/{id:long}")]
     public async Task<IActionResult> GetAsync(long id)
         => Ok(new Response { Data = await doctorService.GetAsync(id) });
 
-    [HttpPut("get-all")]
+    [HttpGet("get-all")]
     public async Task<IActionResult> GetAllAsync([FromQuery] PaginationParams @params, string search)
     => Ok(new Response { Data = await doctorService.GetAllAsync(@params, search) });
 }

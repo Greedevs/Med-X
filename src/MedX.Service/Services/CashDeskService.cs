@@ -2,9 +2,7 @@
 using MedX.Data.IRepositories;
 using MedX.Domain.Configurations;
 using MedX.Domain.Entities;
-using MedX.Domain.Entities.Services;
 using MedX.Service.DTOs.CashDesks;
-using MedX.Service.DTOs.Services;
 using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
 using MedX.Service.Interfaces;
@@ -14,48 +12,58 @@ namespace MedX.Service.Services;
 
 public class CashDeskService : ICashDeskService
 {
-    private readonly IRepository<CashDesk> CashDeskRepository;
+    private readonly IRepository<CashDesk> cashDeskRepository;
+    private readonly IRepository<Payment> paymentRepository;
     private readonly IMapper mapper;
-    public CashDeskService(IMapper mapper, IRepository<CashDesk> CashDeskRepository)
+    public CashDeskService(IMapper mapper,
+        IRepository<CashDesk> cashDeskRepository,
+        IRepository<Payment> paymentRepository)
     {
         this.mapper = mapper;
-        this.CashDeskRepository = CashDeskRepository;
+        this.paymentRepository = paymentRepository;
+        this.cashDeskRepository = cashDeskRepository;
     }
     public async Task<CashDeskResultDto> AddAsync(CashDeskCreationDto dto)
     {
-        var mappedCashDesk = this.mapper.Map<CashDesk>(dto);
+        var payment = await paymentRepository.GetAsync(p => p.Id.Equals(dto.PaymentId))
+            ?? throw new NotFoundException("This payment is not found!");
 
-        await this.CashDeskRepository.CreateAsync(mappedCashDesk);
-        await this.CashDeskRepository.SaveChanges();
+        var cashDesk = this.mapper.Map<CashDesk>(dto);
+        cashDesk.Payment = payment;
 
-        return this.mapper.Map<CashDeskResultDto>(mappedCashDesk);
+        await this.cashDeskRepository.CreateAsync(cashDesk);
+        await this.cashDeskRepository.SaveChanges();
+
+        return this.mapper.Map<CashDeskResultDto>(cashDesk);
     }
 
     public async Task<bool> DeleteAsync(long id)
     {
-        var existCashDesk = await this.CashDeskRepository.GetAsync(r => r.Id == id)
+        var existCashDesk = await this.cashDeskRepository.GetAsync(r => r.Id == id)
             ?? throw new NotFoundException($"This CashDesk not found with id: {id}");
 
-        this.CashDeskRepository.Delete(existCashDesk);
-        await this.CashDeskRepository.SaveChanges();
+        this.cashDeskRepository.Delete(existCashDesk);
+        await this.cashDeskRepository.SaveChanges();
 
         return true;
     }
+
     public async Task<CashDeskResultDto> UpdateAsync(CashDeskUpdateDto dto)
     {
-        var existCashDesk = await this.CashDeskRepository.GetAsync(r => r.Id == dto.Id)
+        var existCashDesk = await this.cashDeskRepository.GetAsync(r => r.Id == dto.Id)
             ?? throw new NotFoundException($"This CashDesk not found with id: {dto.Id}");
 
         this.mapper.Map(dto, existCashDesk);
 
-        this.CashDeskRepository.Update(existCashDesk);
-        await this.CashDeskRepository.SaveChanges();
+        this.cashDeskRepository.Update(existCashDesk);
+        await this.cashDeskRepository.SaveChanges();
 
         return this.mapper.Map<CashDeskResultDto>(existCashDesk);
     }
+
     public async Task<CashDeskResultDto> GetAsync(long id)
     {
-        var existCashDesk = await this.CashDeskRepository.GetAsync(r => r.Id == id)
+        var existCashDesk = await this.cashDeskRepository.GetAsync(r => r.Id == id)
             ?? throw new NotFoundException($"This CashDesk not found with id: {id}");
 
         return this.mapper.Map<CashDeskResultDto>(existCashDesk);
@@ -63,7 +71,7 @@ public class CashDeskService : ICashDeskService
 
     public async Task<IEnumerable<CashDeskResultDto>> GetAllAsync(PaginationParams @params, string search = null)
     {
-        var allCashDesks = await this.CashDeskRepository.GetAll()
+        var allCashDesks = await this.cashDeskRepository.GetAll()
             .ToPaginate(@params)
             .ToListAsync();
 
@@ -74,5 +82,25 @@ public class CashDeskService : ICashDeskService
         }
 
         return this.mapper.Map<IEnumerable<CashDeskResultDto>>(allCashDesks);
+    }
+
+    public async Task<CashDesk> GetLastCashDeskAsync()
+    {
+        var result = await cashDeskRepository.GetAll()
+            .OrderByDescending(c => c.Id)
+            .FirstOrDefaultAsync();
+
+        return result;
+    }
+
+    public async Task<bool> DeleteByPaymentIdAsync(long paymentId)
+    {
+        var cashDesk = await cashDeskRepository.GetAsync(p => p.PaymentId.Equals(paymentId))
+            ?? throw new NotFoundException("This payment is not found!");
+
+        this.cashDeskRepository.Delete(cashDesk);
+        await this.cashDeskRepository.SaveChanges();
+
+        return true;
     }
 }

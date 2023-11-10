@@ -47,7 +47,7 @@ public class AffairsController : BaseController
         });
     }
 
-    [HttpPut("get/{id:long}")]
+    [HttpGet("get/{id:long}")]
     public async Task<IActionResult> GetAsync(long id)
     {
         return Ok(new Response
@@ -58,7 +58,7 @@ public class AffairsController : BaseController
         });
     }
 
-    [HttpPut("get-all")]
+    [HttpGet("get-all")]
     public async Task<IActionResult> GetAllAsync([FromQuery] PaginationParams @params, [FromQuery] string search = null)
     {
         return Ok(new Response

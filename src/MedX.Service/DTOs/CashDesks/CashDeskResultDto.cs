@@ -1,4 +1,6 @@
-﻿namespace MedX.Service.DTOs.CashDesks;
+﻿using MedX.Domain.Entities;
+
+namespace MedX.Service.DTOs.CashDesks;
 
 public class CashDeskResultDto
 {
@@ -6,5 +8,6 @@ public class CashDeskResultDto
     public string Description { get; set; }
     public decimal Balance { get; set; }
     public string AccountNumber { get; set; }
+    public Payment Payment { get; set; }
     public bool IsIncome { get; set; }
 }

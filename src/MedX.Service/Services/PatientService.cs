@@ -7,6 +7,7 @@ using MedX.Service.Interfaces;
 using MedX.Domain.Configurations;
 using MedX.Service.DTOs.Patients;
 using Microsoft.EntityFrameworkCore;
+using MedX.Domain.Entities.Services;
 
 namespace MedX.Service.Services;
 
@@ -50,16 +51,6 @@ public class PatientService : IPatientService
         return true;
     }
 
-
-    public async Task<PatientResultDto> GetAsync(long id)
-    {
-        Patient existPatient = await this.repository.GetAsync(p => p.Id == id)
-            ?? throw new NotFoundException($"This patient is not found {id}");
-
-        PatientResultDto result = this.mapper.Map<PatientResultDto>(existPatient);
-        return result;
-    }
-
     public async Task<PatientResultDto> UpdateAsync(PatientUpdateDto dto)
     {
         Patient existPatient = await this.repository.GetAsync(p => p.Id == dto.Id)
@@ -72,6 +63,16 @@ public class PatientService : IPatientService
         PatientResultDto result = this.mapper.Map<PatientResultDto>(existPatient);
         return result;
     }
+
+    public async Task<PatientResultDto> GetAsync(long id)
+    {
+        Patient existPatient = await this.repository.GetAsync(p => p.Id == id)
+            ?? throw new NotFoundException($"This patient is not found {id}");
+
+        PatientResultDto result = this.mapper.Map<PatientResultDto>(existPatient);
+        return result;
+    }
+
 
     public async Task<IEnumerable<PatientResultDto>> GetAllAsync(PaginationParams @params, string search = null)
     {

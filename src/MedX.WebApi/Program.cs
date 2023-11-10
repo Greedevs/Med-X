@@ -3,7 +3,6 @@ using MedX.Service.Helpers;
 using MedX.WebApi.Extensions;
 using MedX.WebApi.Middlewares;
 using Microsoft.EntityFrameworkCore;
-using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,12 +24,12 @@ builder.Services.AddServices();
 builder.Services.ConfigureSwagger();
 
 // Logger
-var logger = new LoggerConfiguration()
+/*var logger = new LoggerConfiguration()
                     .ReadFrom.Configuration(builder.Configuration)
                     .Enrich.FromLogContext()
                     .CreateLogger();
 builder.Logging.ClearProviders();
-builder.Logging.AddSerilog(logger);
+builder.Logging.AddSerilog(logger);*/
 
 // Add JWT
 builder.Services.AddJwt(builder.Configuration);
@@ -40,13 +39,15 @@ PathHelper.WebRootPath = Path.GetFullPath("wwwroot");
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
 app.UseMiddleware<ExceptionHandlerMiddleware>();
+
+app.UseStaticFiles();
 
 app.UseAuthentication();
 

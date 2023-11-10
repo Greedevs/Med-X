@@ -5,13 +5,13 @@ VisualStudioVersion = 17.7.34003.232
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{681E78B2-785A-4771-B7B9-9BC2D72A8856}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedX.WebApi", "src\MedX.WebApi\MedX.WebApi.csproj", "{2D234F20-3EA8-4541-8772-BE8B66D1D648}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedX.WebApi", "src\MedX.WebApi\MedX.WebApi.csproj", "{2D234F20-3EA8-4541-8772-BE8B66D1D648}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedX.Data", "src\MedX.Data\MedX.Data.csproj", "{2A5CFE2B-E743-4F9C-8BFF-416391A2F023}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedX.Data", "src\MedX.Data\MedX.Data.csproj", "{2A5CFE2B-E743-4F9C-8BFF-416391A2F023}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedX.Service", "src\MedX.Service\MedX.Service.csproj", "{FF5939B4-5925-40E4-8FB1-C40A6967FB9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedX.Service", "src\MedX.Service\MedX.Service.csproj", "{FF5939B4-5925-40E4-8FB1-C40A6967FB9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedX.Domain", "src\MedX.Domain\MedX.Domain.csproj", "{00ED443E-1ACF-4F62-A9AB-D976AE39327C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MedX.Domain", "src\MedX.Domain\MedX.Domain.csproj", "{00ED443E-1ACF-4F62-A9AB-D976AE39327C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

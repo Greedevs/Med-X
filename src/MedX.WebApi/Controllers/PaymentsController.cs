@@ -1,4 +1,5 @@
 ﻿using MedX.Domain.Configurations;
+using MedX.Service.DTOs.CashDesks;
 using MedX.Service.DTOs.Payments;
 using MedX.Service.Interfaces;
 using MedX.WebApi.Models;
@@ -24,6 +25,7 @@ public class PaymentsController : BaseController
             Data = await paymentService.AddAsync(dto)
         });
     }
+    
 
     [HttpDelete("delete/{id:long}")]
     public async Task<IActionResult> DeleteAsync(long id)
@@ -47,7 +49,7 @@ public class PaymentsController : BaseController
         });
     }
 
-    [HttpPut("get/{id:long}")]
+    [HttpGet("get/{id:long}")]
     public async Task<IActionResult> GetAsync(long id)
     {
         return Ok(new Response
@@ -58,7 +60,7 @@ public class PaymentsController : BaseController
         });
     }
 
-    [HttpPut("get-all")]
+    [HttpGet("get-all")]
     public async Task<IActionResult> GetAllAsync([FromQuery] PaginationParams @params, string search)
     {
         return Ok(new Response
@@ -69,7 +71,7 @@ public class PaymentsController : BaseController
         });
     }
 
-    [HttpPut("get-all-by-patient/{patientId:long}")]
+    [HttpGet("get-all-by-patient/{patientId:long}")]
     public async Task<IActionResult> GetAllByPatientIdAsync(long patientId)
     {
         return Ok(new Response

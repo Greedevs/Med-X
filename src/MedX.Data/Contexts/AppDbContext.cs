@@ -44,6 +44,10 @@ public class AppDbContext : DbContext
         #region Fluent API 
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Entity<Patient>()
+            .Property(u => u.DateOfBirth)
+            .HasColumnType("timestamp");
+
         modelBuilder.Entity<Appointment>()
             .HasOne(d => d.Doctor)
             .WithMany(a => a.Appointments)
