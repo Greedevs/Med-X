@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using MedX.Domain.Entities;
 using MedX.Data.IRepositories;
+using MedX.Domain.Configurations;
+using MedX.Domain.Entities;
+using MedX.Domain.Entities.Assets;
+using MedX.Service.DTOs.Assets;
 using MedX.Service.DTOs.Rooms;
 using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
 using MedX.Service.Interfaces;
-using MedX.Service.DTOs.Assets;
-using MedX.Domain.Configurations;
-using MedX.Domain.Entities.Assets;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 

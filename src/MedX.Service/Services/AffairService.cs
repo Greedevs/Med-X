@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using MedX.Data.IRepositories;
+using MedX.Domain.Configurations;
+using MedX.Domain.Entities.Services;
+using MedX.Service.DTOs.Services;
 using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
 using MedX.Service.Interfaces;
-using MedX.Service.DTOs.Services;
-using MedX.Domain.Configurations;
-using MedX.Domain.Entities.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace MedX.Service.Services;

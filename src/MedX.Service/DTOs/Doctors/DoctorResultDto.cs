@@ -1,5 +1,4 @@
 ﻿using MedX.Service.DTOs.Assets;
-using MedX.Service.DTOs.Rooms;
 
 namespace MedX.Service.DTOs.Doctors;
 

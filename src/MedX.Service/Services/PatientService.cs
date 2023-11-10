@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using MedX.Domain.Entities;
 using MedX.Data.IRepositories;
+using MedX.Domain.Configurations;
+using MedX.Domain.Entities;
+using MedX.Service.DTOs.Patients;
 using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
 using MedX.Service.Interfaces;
-using MedX.Domain.Configurations;
-using MedX.Service.DTOs.Patients;
 using Microsoft.EntityFrameworkCore;
 using MedX.Domain.Entities.Services;
 
@@ -29,7 +29,7 @@ public class PatientService : IPatientService
         patient = await this.repository.GetAsync(u => u.Pinfl.Equals(dto.Pinfl));
         if (patient is not null)
             throw new AlreadyExistException($"This patient is already exist with Pinfl {dto.Pinfl}");
-        
+
         Patient mappedPatient = mapper.Map<Patient>(dto);
         mappedPatient.AccountNumber = GenerateAccountNumber();
 

@@ -1,8 +1,8 @@
-﻿using MedX.Service.Mappers;
-using MedX.Service.Services;
+﻿using MedX.Data.IRepositories;
 using MedX.Data.Repositories;
-using MedX.Data.IRepositories;
 using MedX.Service.Interfaces;
+using MedX.Service.Mappers;
+using MedX.Service.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;

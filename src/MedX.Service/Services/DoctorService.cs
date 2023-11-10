@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using MedX.Domain.Entities;
 using MedX.Data.IRepositories;
+using MedX.Domain.Configurations;
+using MedX.Domain.Entities;
+using MedX.Domain.Entities.Assets;
+using MedX.Service.DTOs.Assets;
+using MedX.Service.DTOs.Doctors;
 using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
 using MedX.Service.Interfaces;
-using MedX.Service.DTOs.Assets;
-using MedX.Service.DTOs.Doctors;
-using MedX.Domain.Configurations;
-using MedX.Domain.Entities.Assets;
 using Microsoft.EntityFrameworkCore;
 
 namespace MedX.Service.Services;
@@ -43,7 +43,7 @@ public class DoctorService : IDoctorService
             AccountNumber = accountNumber,
         };
 
-        if(dto.Image is not null )
+        if (dto.Image is not null)
         {
             var uploadedImage = await this.assetService.UploadAsync(new AssetCreationDto { FormFile = dto.Image });
             var createdImage = new Asset

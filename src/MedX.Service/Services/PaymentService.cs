@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using MedX.Domain.Entities;
 using MedX.Data.IRepositories;
+using MedX.Domain.Configurations;
+using MedX.Domain.Entities;
+using MedX.Service.DTOs.Payments;
 using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
 using MedX.Service.Interfaces;
-using MedX.Domain.Configurations;
-using MedX.Service.DTOs.Payments;
 using Microsoft.EntityFrameworkCore;
 using MedX.Service.DTOs.CashDesks;
 
