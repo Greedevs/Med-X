@@ -48,6 +48,8 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 
+app.UseStaticFiles();
+
 app.UseAuthentication();
 
 app.UseHttpsRedirection();

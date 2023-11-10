@@ -9,6 +9,7 @@ using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
 using MedX.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace MedX.Service.Services;
 

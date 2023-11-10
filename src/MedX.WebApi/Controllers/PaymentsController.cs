@@ -1,4 +1,5 @@
 ﻿using MedX.Domain.Configurations;
+using MedX.Service.DTOs.CashDesks;
 using MedX.Service.DTOs.Payments;
 using MedX.Service.Interfaces;
 using MedX.WebApi.Models;
@@ -24,6 +25,7 @@ public class PaymentsController : BaseController
             Data = await paymentService.AddAsync(dto)
         });
     }
+    
 
     [HttpDelete("delete/{id:long}")]
     public async Task<IActionResult> DeleteAsync(long id)

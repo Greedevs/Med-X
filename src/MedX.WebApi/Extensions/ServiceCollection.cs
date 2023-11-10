@@ -29,6 +29,7 @@ public static class ServiceCollection
         services.AddScoped<IAppointmentService, AppointmentService>();
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IMedicalRecordService, MedicalRecordService>();
+        services.AddHttpContextAccessor();
     }
     public static void AddJwt(this IServiceCollection services, IConfiguration configuration)
     {

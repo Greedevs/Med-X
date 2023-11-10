@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MedX.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMig : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -44,25 +44,6 @@ namespace MedX.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Asset", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CashDesks",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Description = table.Column<string>(type: "text", nullable: true),
-                    Balance = table.Column<decimal>(type: "numeric", nullable: false),
-                    AccountNumber = table.Column<string>(type: "text", nullable: true),
-                    IsIncome = table.Column<bool>(type: "boolean", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CashDesks", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -332,6 +313,33 @@ namespace MedX.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "CashDesks",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Amount = table.Column<decimal>(type: "numeric", nullable: true),
+                    AccountNumber = table.Column<string>(type: "text", nullable: true),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    Balance = table.Column<decimal>(type: "numeric", nullable: false),
+                    IsIncome = table.Column<bool>(type: "boolean", nullable: false),
+                    PaymentId = table.Column<long>(type: "bigint", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CashDesks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CashDesks_Payments_PaymentId",
+                        column: x => x.PaymentId,
+                        principalTable: "Payments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Administrators_ImageId",
                 table: "Administrators",
@@ -356,6 +364,11 @@ namespace MedX.Data.Migrations
                 name: "IX_Appointments_PatientId",
                 table: "Appointments",
                 column: "PatientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CashDesks_PaymentId",
+                table: "CashDesks",
+                column: "PaymentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Doctors_ImageId",
@@ -422,13 +435,13 @@ namespace MedX.Data.Migrations
                 name: "MedicalRecords");
 
             migrationBuilder.DropTable(
-                name: "Payments");
-
-            migrationBuilder.DropTable(
                 name: "Treatments");
 
             migrationBuilder.DropTable(
                 name: "Affairs");
+
+            migrationBuilder.DropTable(
+                name: "Payments");
 
             migrationBuilder.DropTable(
                 name: "Doctors");
