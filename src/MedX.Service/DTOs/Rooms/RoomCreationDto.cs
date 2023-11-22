@@ -7,7 +7,7 @@ public class RoomCreationDto
 {
     public int Number { get; set; }
     public int Quantity { get; set; }
-    public int Busy { get; set; }
+    public int Busy { get; set; } = 0;
     public TypeOfRoom Type { get; set; }
     public IFormFile Image { get; set; }
 }

@@ -56,6 +56,7 @@ public class MedicalRecordService : IMedicalRecordService
 
         return true;
     }
+
     public async Task<MedicalRecordResultDto> UpdateAsync(MedicalRecordUpdateDto dto)
     {
         var existMedicalRecord = await this.medicalRecordRepository.GetAsync(r => r.Id == dto.Id, includes: new[] { "Doctor", "Patient" })

@@ -7,6 +7,7 @@ using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
 using MedX.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using MedX.Service.DTOs.CashDesks;
 
 namespace MedX.Service.Services;
 
@@ -15,12 +16,15 @@ public class PaymentService : IPaymentService
     private readonly IMapper mapper;
     private readonly IRepository<Payment> repository;
     private readonly IRepository<Patient> patientRepository;
+    private readonly ICashDeskService cashDeskService;
 
     public PaymentService(IMapper mapper, IRepository<Payment> repository,
-                          IRepository<Patient> patientRepository)
+                          IRepository<Patient> patientRepository, 
+                          ICashDeskService cashDeskService)
     {
         this.mapper = mapper;
         this.repository = repository;
+        this.cashDeskService = cashDeskService;
         this.patientRepository = patientRepository;
     }
 
@@ -35,6 +39,21 @@ public class PaymentService : IPaymentService
         await this.repository.CreateAsync(payment);
         await this.repository.SaveChanges();
 
+        var cashDesk = await cashDeskService.GetLastCashDeskAsync();
+        if (cashDesk == null)
+            cashDesk = new CashDesk();
+        
+        cashDesk.Balance += dto.Amount;
+        cashDesk.PaymentId = payment.Id;
+        cashDesk.Description = dto.Description;
+        var createCash = mapper.Map<CashDeskCreationDto>(cashDesk);
+
+        await cashDeskService.AddAsync(createCash);
+
+        existPatient.Balance += dto.Amount;
+        this.patientRepository.Update(existPatient);
+        await this.patientRepository.SaveChanges();
+
         return this.mapper.Map<PaymentResultDto>(payment);
     }
 
@@ -46,10 +65,28 @@ public class PaymentService : IPaymentService
         var existPatient = await this.patientRepository.GetAsync(d => d.Id.Equals(dto.PatientId))
            ?? throw new NotFoundException($"This Patient not found with id: {dto.PatientId}");
 
+        decimal oldAmount = payment.Amount;
         Payment mappedPayment = this.mapper.Map(dto, payment);
         payment.Patient = existPatient;
         this.repository.Update(mappedPayment);
         await this.repository.SaveChanges();
+
+        if (oldAmount != dto.Amount)
+        {
+            var cashDesk = await cashDeskService.GetLastCashDeskAsync();
+            if (cashDesk == null)
+                cashDesk = new CashDesk();
+
+            decimal amountDifference = dto.Amount - oldAmount;
+            cashDesk.Balance += amountDifference;
+            var cashDeskDto = new CashDeskCreationDto
+            {
+                Amount = amountDifference,
+                Description = dto.Description,
+                IsIncome = amountDifference > 0
+            };
+            await cashDeskService.AddAsync(cashDeskDto);
+        }
 
         return this.mapper.Map<PaymentResultDto>(mappedPayment);
     }
@@ -61,6 +98,8 @@ public class PaymentService : IPaymentService
 
         this.repository.Delete(payment);
         await this.repository.SaveChanges();
+        await this.cashDeskService.DeleteByPaymentIdAsync(id);
+
         return true;
     }
 
