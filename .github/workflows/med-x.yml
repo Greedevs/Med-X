@@ -1,59 +1,59 @@
-name: .NET
+# name: .NET
 
-on:
-  push:
-    branches: [ "unidevs" ]
+# on:
+#   push:
+#     branches: [ "unidevs" ]
 
-jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
+# jobs:
+#   build:
+#     name: Build
+#     runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
-    - name: Setup .NET 7
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 7.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
+#     steps:
+#     - name: Checkout Code
+#       uses: actions/checkout@v3
+#     - name: Setup .NET 7
+#       uses: actions/setup-dotnet@v3
+#       with:
+#         dotnet-version: 7.0.x
+#     - name: Restore dependencies
+#       run: dotnet restore
+#     - name: Build
+#       run: dotnet build --no-restore
 
-  test:
-    name: Test
-    needs: build
-    runs-on: ubuntu-latest
+#   test:
+#     name: Test
+#     needs: build
+#     runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
-    - name: Setup .NET 7
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 7.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Testing
-      run: dotnet test --no-restore
+#     steps:
+#     - name: Checkout Code
+#       uses: actions/checkout@v3
+#     - name: Setup .NET 7
+#       uses: actions/setup-dotnet@v3
+#       with:
+#         dotnet-version: 7.0.x
+#     - name: Restore dependencies
+#       run: dotnet restore
+#     - name: Testing
+#       run: dotnet test --no-restore
 
-  dockerize:
-    name: Dockerize
-    needs: test
-    runs-on: ubuntu-latest
-    env:
-      USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+#   dockerize:
+#     name: Dockerize
+#     needs: test
+#     runs-on: ubuntu-latest
+#     env:
+#       USERNAME: ${{ secrets.DOCKER_USERNAME }}
+#       PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Setup .NET 7
-        uses: actions/setup-dotnet@v3
-      - name: Build Docker image
-        run: docker build -t $USERNAME/med-x -f src/MedX.WebApi/Deckerfile .
-      - name: Login to Docker account
-        run: docker login -u $USERNAME -p $PASSWORD #--password-stdin
-      - name: Push Docker image
-        run: docker push $USERNAME/med-x
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v3
+#       - name: Setup .NET 7
+#         uses: actions/setup-dotnet@v3
+#       - name: Build Docker image
+#         run: docker build -t $USERNAME/med-x -f src/MedX.WebApi/Deckerfile .
+#       - name: Login to Docker account
+#         run: docker login -u $USERNAME -p $PASSWORD #--password-stdin
+#       - name: Push Docker image
+#         run: docker push $USERNAME/med-x
