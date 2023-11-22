@@ -1,0 +1,130 @@
+﻿<Window x:Class="MedX.Desktop.Windows.RegisterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MedX.Desktop.Windows"
+        mc:Ignorable="d"
+        Title="RegisterWindow" Height="630" Width="500">
+
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    </Window.Resources>
+    
+    <Window.Background>
+        <ImageBrush ImageSource="/Assets/Images/register-background-image.png"/>
+    </Window.Background>
+
+    <Border Background="Black"
+            Margin="40"
+            Opacity="0.6"
+            CornerRadius="10">
+        <StackPanel Margin="20">
+            <Label Content="First name"
+                   FontFamily="Jetbrains Mono Font"
+                   Foreground="White"
+                   FontSize="16"
+                   FontWeight="SemiBold"
+                   Margin="0 10 0 5"/>
+            <Border BorderThickness="1"
+                    BorderBrush="White"
+                    Height="35"
+                    CornerRadius="5">
+                <TextBox x:Name="tbFirstName"
+                         VerticalAlignment="Center"
+                         Margin="5 0"
+                         BorderThickness="0"
+                         FontSize="16"
+                         Foreground="White"
+                         Background="Transparent"/>
+            </Border>
+            <Label Content="Last name"
+                   FontFamily="Jetbrains Mono Font"
+                   Foreground="White"
+                   FontSize="16"
+                   FontWeight="SemiBold"
+                   Margin="0 10 0 5"/>
+            <Border BorderThickness="1"
+                    BorderBrush="White"
+                    Height="35"
+                    CornerRadius="5">
+                <TextBox x:Name="tbLastName"
+                         VerticalAlignment="Center"
+                         Margin="5 0"
+                         BorderThickness="0"
+                         FontSize="16"
+                         Foreground="White"
+                         Background="Transparent"/>
+            </Border>
+
+
+            <Label Content="Email"
+                   FontFamily="Jetbrains Mono Font"
+                   Foreground="White"
+                   FontSize="16"
+                   FontWeight="SemiBold"
+                   Margin="0 10 0 5"/>
+            <Border BorderThickness="1"
+                    BorderBrush="White"
+                    Height="35"
+                    CornerRadius="5">
+                <TextBox x:Name="tbEmail"
+                         VerticalAlignment="Center"
+                         Margin="5 0"
+                         BorderThickness="0"
+                         FontSize="16"
+                         Foreground="White"
+                         Background="Transparent"/>
+            </Border>
+
+
+            <Label Content="Password"
+                   FontFamily="Jetbrains Mono Font"
+                   Foreground="White"
+                   FontSize="16"
+                   FontWeight="SemiBold"
+                   Margin="0 10 0 5"/>
+            <Border BorderThickness="1"
+                    BorderBrush="White"
+                    Height="35"
+                    CornerRadius="5">
+                <PasswordBox x:Name="tbPassword"
+                         VerticalAlignment="Center"
+                         Margin="5 0"
+                         BorderThickness="0"
+                         FontSize="16"
+                         Foreground="White"
+                         Background="Transparent"/>
+            </Border>
+
+            <Border Height="40"
+                    Margin="0 25 0 0"
+                    Background="Blue"
+                    CornerRadius="5">
+                <Label Content="Register"
+                       FontFamily="Jetbrains Mono Font"
+                       Foreground="White"
+                       FontSize="16"
+                       FontWeight="SemiBold"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+            </Border>
+
+            <Border Height="40"
+                    Margin="0 25 0 0"
+                    Background="Green"
+                    CornerRadius="5">
+                <Label Content="Login"
+                       FontFamily="Jetbrains Mono Font"
+                       Foreground="White"
+                       FontSize="16"
+                       FontWeight="SemiBold"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+            </Border>
+        </StackPanel>
+    </Border>
+</Window>

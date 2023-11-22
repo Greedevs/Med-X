@@ -1,9 +1,9 @@
+using Serilog;
 using MedX.Data.Contexts;
 using MedX.Service.Helpers;
 using MedX.WebApi.Extensions;
 using MedX.WebApi.Middlewares;
 using Microsoft.EntityFrameworkCore;
-using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
