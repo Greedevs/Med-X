@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MedX.Desktop"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1000"
+        Title="MainWindow" Height="450" Width="800"
         WindowStyle="None"
         ResizeMode="NoResize"
         Background="Transparent">
-    <Grid Background="Transparent">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
             <RowDefinition/>
@@ -17,6 +17,7 @@
 
         <Border Background="#E8E8E8"
                 CornerRadius="10 10 0 0"
+                MouseLeftButtonDown="Border_MouseLeftButtonDown"
                 BorderThickness="0">
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
@@ -30,12 +31,11 @@
                        FontWeight="SemiBold"
                        FontSize="15"
                        VerticalAlignment="Center"
-                       MouseLeftButtonDown="Border_MouseLeftButtonDown"
                        HorizontalAlignment="Right"
                        Margin="0 0 10 0"
-                       Width="Auto"/>   
+                       Width="Auto"/>
 
-                    <StackPanel Orientation="Horizontal"
+                <StackPanel Orientation="Horizontal"
                                 Grid.Column="0">
                     <StackPanel.Resources>
                         <Style TargetType="Button">
@@ -51,9 +51,9 @@
                             </Setter>
                         </Style>
                     </StackPanel.Resources>
-                    <Button  Background="#FC5C58"/>
-                    <Button Background="#FDBE46"/>
-                    <Button Background="#39C94E"/>
+                    <Button  Background="#FC5C58" Click="CloseButton_Click"/>
+                    <Button Background="#FDBE46" Click="MinimizeButton_Click"/>
+                    <Button Background="#39C94E" Click="MaximazeButton_Click"/>
                 </StackPanel>
             </Grid>
         </Border>
@@ -66,6 +66,6 @@
                 </Grid.ColumnDefinitions>
             </Grid>
         </Border>
-        
+
     </Grid>
 </Window>
