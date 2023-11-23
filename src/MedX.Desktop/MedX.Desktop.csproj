@@ -16,4 +16,17 @@
     <Resource Include="Assets\Images\register-background-image.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Assets\Icons\" />
+    <Folder Include="Assets\Logos\" />
+    <Folder Include="Assets\Sounds\" />
+    <Folder Include="Components\" />
+    <Folder Include="Constants\" />
+    <Folder Include="Entities\" />
+    <Folder Include="Enums\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Styles\" />
+    <Folder Include="Pages\" />
+  </ItemGroup>
+
 </Project>
