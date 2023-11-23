@@ -35,7 +35,7 @@ namespace MedX.Desktop
 
         private void MaximazeButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowStyle = WindowStyle.SingleBorderWindow;
+            WindowStyle = WindowStyle.ThreeDBorderWindow;
             if (this.WindowState == WindowState.Maximized)
                 this.WindowState = WindowState.Normal;
             else this.WindowState = WindowState.Maximized;
