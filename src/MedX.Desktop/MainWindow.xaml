@@ -5,19 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MedX.Desktop"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="MainWindow" Height="650" Width="1000"
         WindowStyle="None"
         ResizeMode="NoResize"
         Background="Transparent"
-        Opacity="1">
+        Opacity="1"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Border Background="#E8E8E8"
-                CornerRadius="10 10 0 0"
+        <Border Background="{DynamicResource SecondaryBackground}"
+                CornerRadius="4 4 0 0"
                 MouseLeftButtonDown="Border_MouseLeftButtonDown"
                 BorderThickness="0">
             <Grid Grid.Row="0">
@@ -33,28 +35,13 @@
                        FontSize="15"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Right"
-                       Margin="0 0 10 0"
+                       Margin="0 0 5 0"
                        Width="Auto"/>
 
-                <StackPanel Orientation="Horizontal"
-                                Grid.Column="0">
-                    <StackPanel.Resources>
-                        <Style TargetType="Button">
-                            <Setter Property="Width" Value="15"/>
-                            <Setter Property="Margin" Value="5"/>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="Button">
-                                        <Border Background="{TemplateBinding Background}"
-                                                CornerRadius="100"/>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </StackPanel.Resources>
-                    <Button  Background="#FC5C58" Click="CloseButton_Click"/>
-                    <Button Background="#FDBE46" Click="MinimizeButton_Click"/>
-                    <Button Background="#39C94E" Click="MaximazeButton_Click"/>
+                <StackPanel Orientation="Horizontal" Grid.Column="0">
+                    <Button Click="CloseButton_Click" Style="{DynamicResource CloseButton}"/>
+                    <Button Click="MinimizeButton_Click" Style="{DynamicResource MinimizeButton}"/>
+                    <Button Click="MaximazeButton_Click" Style="{DynamicResource MaximizeButton}"/>
                 </StackPanel>
             </Grid>
         </Border>
@@ -63,7 +50,7 @@
                 <ColumnDefinition Width="250"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Border  Grid.Column="0" Background="AntiqueWhite" CornerRadius="0 0 0 10" Padding="10">
+            <Border  Grid.Column="0" Background="AntiqueWhite" CornerRadius="0 0 0 4" Padding="10">
                 <StackPanel>
                     <StackPanel.Resources>
                         <Style TargetType="Button">
@@ -79,7 +66,7 @@
                 </StackPanel>
                 
             </Border>
-            <Border Grid.Column="1" Background="Aqua" CornerRadius="0 0 10 0"/>
+            <Border Grid.Column="1" Background="Aqua" CornerRadius="0 0 4 0"/>
         </Grid>
 
     </Grid>

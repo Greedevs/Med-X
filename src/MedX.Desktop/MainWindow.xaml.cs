@@ -29,13 +29,11 @@ namespace MedX.Desktop
 
         private void MinimizeButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowStyle = WindowStyle.SingleBorderWindow;
             WindowState = WindowState.Minimized;
         }
 
         private void MaximazeButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowStyle = WindowStyle.ThreeDBorderWindow;
             if (this.WindowState == WindowState.Maximized)
                 this.WindowState = WindowState.Normal;
             else this.WindowState = WindowState.Maximized;
