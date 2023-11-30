@@ -18,8 +18,8 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Border Background="{DynamicResource SecondaryBackground}"
-                CornerRadius="4 4 0 0"
+        <Border Background="{DynamicResource PrimaryBackground}"
+                CornerRadius="5 5 0 0"
                 MouseLeftButtonDown="Border_MouseLeftButtonDown"
                 BorderThickness="0">
             <Grid Grid.Row="0">
@@ -50,7 +50,7 @@
                 <ColumnDefinition Width="250"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Border  Grid.Column="0" Background="AntiqueWhite" CornerRadius="0 0 0 4" Padding="10">
+            <Border  Grid.Column="0" Background="{DynamicResource PrimaryBackground}" CornerRadius="0 0 0 5" Padding="10">
                 <StackPanel>
                     <StackPanel.Resources>
                         <Style TargetType="Button">
@@ -59,14 +59,17 @@
                             <Setter Property="Background" Value="Azure"/>
                         </Style>
                     </StackPanel.Resources>
-                    <Button Content="Dashboard" Foreground="Black"/>
-                    <Button Content="My Info"/>
-                    <Button Content="Nimadir"/>
-                    <Label Content="Button" />
+
+                    <RadioButton Style="{DynamicResource MenuButton}" Content="Patient" />
+                    <RadioButton Style="{DynamicResource MenuButton}" Content="Docktor" />
+                    <RadioButton Style="{DynamicResource MenuButton}" Content="Home" />
+
                 </StackPanel>
                 
             </Border>
-            <Border Grid.Column="1" Background="Aqua" CornerRadius="0 0 4 0"/>
+            <Border Grid.Column="1" Background="{DynamicResource SecondaryBackground}" CornerRadius="0 0 5 0">
+                
+            </Border>
         </Grid>
 
     </Grid>

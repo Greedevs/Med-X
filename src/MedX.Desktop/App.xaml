@@ -10,7 +10,6 @@
                 
                 <!--begin::Themes-->
                 <ResourceDictionary Source="/Themes/LightTheme.xaml"/>
-                <ResourceDictionary Source="/Themes/DarkTheme.xaml"/>
                 <!--end::Themes-->
                 
                 <!--begin::Icons-->
