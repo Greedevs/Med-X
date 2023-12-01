@@ -19,7 +19,7 @@ namespace MedX.Desktop
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if(this.WindowState == WindowState.Maximized)
+            if (this.WindowState == WindowState.Maximized)
                 this.WindowState = WindowState.Normal;
             this.DragMove();
         }
@@ -68,20 +68,8 @@ namespace MedX.Desktop
 
         private void rbAffairs_Click(object sender, RoutedEventArgs e)
         {
-            AffairsPage politicsPage = new();
-            PageNavigator.Content = politicsPage;
-        }
-
-        private void rbAdministrators_Click(object sender, RoutedEventArgs e)
-        {
-            AdministratorsPage administratorsPage = new();
-            PageNavigator.Content = administratorsPage;
-        }
-
-        private void rbAppointments_Click(object sender, RoutedEventArgs e)
-        {
-            AppointmentsPage appointmentsPage = new();
-            PageNavigator.Content = appointmentsPage;
+            ReportsPage reportsPage = new();
+            PageNavigator.Content = reportsPage;
         }
 
         private void rbCashDesk_Click(object sender, RoutedEventArgs e)
@@ -90,16 +78,22 @@ namespace MedX.Desktop
             PageNavigator.Content = cashPage;
         }
 
-        private void rbMedicalRecords_Click(object sender, RoutedEventArgs e)
-        {
-            MedicalRecordsPage medicalRecordsPage = new();
-            PageNavigator.Content = medicalRecordsPage;
-        }
-
         private void rbRooms_Click(object sender, RoutedEventArgs e)
         {
             RoomsPage roomsPage = new();
             PageNavigator.Content = roomsPage;
+        }
+
+        private void rbReports_Click(object sender, RoutedEventArgs e)
+        {
+            ReportsPage reportsPage = new();
+            PageNavigator.Content = reportsPage;
+        }
+
+        private void rbAbout_Click(object sender, RoutedEventArgs e)
+        {
+            AboutPage aboutPage = new();
+            PageNavigator.Content = aboutPage;
         }
     }
 }

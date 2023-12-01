@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace MedX.Desktop.Pages
 {
     /// <summary>
-    /// Interaction logic for AffairsPage.xaml
+    /// Interaction logic for AboutPage.xaml
     /// </summary>
-    public partial class AffairsPage : Page
+    public partial class AboutPage : Page
     {
-        public AffairsPage()
+        public AboutPage()
         {
             InitializeComponent();
         }

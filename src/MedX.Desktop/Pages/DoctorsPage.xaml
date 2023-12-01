@@ -9,8 +9,8 @@
       Title="DoctorsPage">
 
     <Grid>
-        <TextBlock
+        <TextBlock Text="Doctors Page"
                    FontSize="35"
-                   Foreground="{DynamicResource PrimaryForeground}"> DoctorsPage</TextBlock>
+                   Foreground="{DynamicResource PrimaryForeground}"/>
     </Grid>
 </Page>

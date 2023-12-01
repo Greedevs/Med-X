@@ -78,41 +78,29 @@
                                  Content="Patients"
                                  Click="rbPatients_Click"/>
 
-                    <RadioButton x:Name="rbAffairs" 
-                                 Tag="{DynamicResource dashboard}" 
-                                 Style="{DynamicResource MenuButton}" 
-                                 Content="Affairs"
-                                 Click="rbAffairs_Click"/>
-
-                    <RadioButton x:Name="rbAdministrators" 
-                                 Tag="{DynamicResource dashboard}" 
-                                 Style="{DynamicResource MenuButton}" 
-                                 Content="Administrators"
-                                 Click="rbAdministrators_Click"/>
-
-                    <RadioButton x:Name="rbAppointments" 
-                                 Tag="{DynamicResource dashboard}" 
-                                 Style="{DynamicResource MenuButton}" 
-                                 Content="Appointments"
-                                 Click="rbAppointments_Click"/>
-
-                    <RadioButton x:Name="rbCashDesk" 
-                                 Tag="{DynamicResource dashboard}" 
-                                 Style="{DynamicResource MenuButton}" 
-                                 Content="Cash Desk"
-                                 Click="rbCashDesk_Click"/>
-
-                    <RadioButton x:Name="rbMedicalRecords" 
-                                 Tag="{DynamicResource dashboard}" 
-                                 Style="{DynamicResource MenuButton}" 
-                                 Content="Medical records"
-                                 Click="rbMedicalRecords_Click"/>
-
                     <RadioButton x:Name="rbRooms" 
                                  Tag="{DynamicResource dashboard}" 
                                  Style="{DynamicResource MenuButton}" 
                                  Content="Rooms"
                                  Click="rbRooms_Click"/>
+
+                    <RadioButton x:Name="rbReports" 
+                                 Tag="{DynamicResource dashboard}" 
+                                 Style="{DynamicResource MenuButton}" 
+                                 Content="Reports"
+                                 Click="rbReports_Click"/>
+
+                    <RadioButton x:Name="rbCashDesk" 
+                                 Tag="{DynamicResource dashboard}" 
+                                 Style="{DynamicResource MenuButton}" 
+                                 Content="Cash desk"
+                                 Click="rbCashDesk_Click"/>
+
+                    <RadioButton x:Name="rbAbout" 
+                                 Tag="{DynamicResource dashboard}" 
+                                 Style="{DynamicResource MenuButton}" 
+                                 Content="About"
+                                 Click="rbAbout_Click"/>
 
                 </StackPanel>
                 
@@ -120,7 +108,8 @@
             <Border Grid.Column="1"  
                     CornerRadius="0 0 5 0"
                     Background="{DynamicResource SecondaryBackground}">
-                <Frame x:Name="PageNavigator"/>
+                <Frame x:Name="PageNavigator"
+                       Visibility="Hidden"/>
 
             </Border>
         </Grid>
