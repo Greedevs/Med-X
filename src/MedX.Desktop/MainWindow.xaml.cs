@@ -1,6 +1,8 @@
-﻿using System.Windows;
+﻿using MedX.Desktop.Pages;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using System.Xml.XPath;
 
 namespace MedX.Desktop
 {
@@ -44,6 +46,60 @@ namespace MedX.Desktop
         {
             base.OnActivated(e);
             Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() => WindowStyle = WindowStyle.None));
+        }
+
+        private void rbDashboard_Click(object sender, RoutedEventArgs e)
+        {
+            DashboardPage dashboardPage = new();
+            PageNavigator.Content = dashboardPage;
+        }
+
+        private void rbDocktors_Click(object sender, RoutedEventArgs e)
+        {
+            DoctorsPage doctorsPage = new();
+            PageNavigator.Content = doctorsPage;
+        }
+
+        private void rbPatients_Click(object sender, RoutedEventArgs e)
+        {
+            PatientsPage patientsPage = new(); // TODO: implement
+            PageNavigator.Content = patientsPage;
+        }
+
+        private void rbAffairs_Click(object sender, RoutedEventArgs e)
+        {
+            AffairsPage politicsPage = new();
+            PageNavigator.Content = politicsPage;
+        }
+
+        private void rbAdministrators_Click(object sender, RoutedEventArgs e)
+        {
+            AdministratorsPage administratorsPage = new();
+            PageNavigator.Content = administratorsPage;
+        }
+
+        private void rbAppointments_Click(object sender, RoutedEventArgs e)
+        {
+            AppointmentsPage appointmentsPage = new();
+            PageNavigator.Content = appointmentsPage;
+        }
+
+        private void rbCashDesk_Click(object sender, RoutedEventArgs e)
+        {
+            CashDesksPage cashPage = new();
+            PageNavigator.Content = cashPage;
+        }
+
+        private void rbMedicalRecords_Click(object sender, RoutedEventArgs e)
+        {
+            MedicalRecordsPage medicalRecordsPage = new();
+            PageNavigator.Content = medicalRecordsPage;
+        }
+
+        private void rbRooms_Click(object sender, RoutedEventArgs e)
+        {
+            RoomsPage roomsPage = new();
+            PageNavigator.Content = roomsPage;
         }
     }
 }
