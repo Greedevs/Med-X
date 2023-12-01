@@ -107,15 +107,16 @@
                     <Border x:Name="B" CornerRadius="5">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="5"/>
+                                <ColumnDefinition Width="10"/>
                                 <ColumnDefinition Width="60"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <!--<Border x:Name="Indicator" Grid.Column="0"
+                            <Border x:Name="Indicator" Grid.Column="0"
                                     Visibility="Collapsed"
                                     Background="{DynamicResource SelectedBorderColor}"
-                                    Height="24"
-                                    CornerRadius="2"/>-->
+                                    Height="5"
+                                    Width="10"
+                                    CornerRadius="1"/>
                             <Path x:Name="icon"
                                   Grid.Column="1"
                                   Data="{Binding Tag, RelativeSource={RelativeSource AncestorType={x:Type RadioButton}}}"
@@ -142,6 +143,7 @@
                             <Setter TargetName="B" Property="Cursor" Value="Hand"/>
                             <Setter TargetName="B" Property="Background" Value="{DynamicResource Selectedbackground}"/>
                             <Setter TargetName="icon" Property="Fill" Value="{DynamicResource SelectedBorderColor}"/>
+                            <Setter TargetName="Indicator" Property="Visibility" Value="Visible"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
