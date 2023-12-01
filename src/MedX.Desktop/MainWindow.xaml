@@ -60,15 +60,57 @@
                         </Style>
                     </StackPanel.Resources>
 
-                    <RadioButton Style="{DynamicResource MenuButton}" Content="Patient" />
-                    <RadioButton Style="{DynamicResource MenuButton}" Content="Docktor" />
-                    <RadioButton Style="{DynamicResource MenuButton}" Content="Home" />
+                    <RadioButton x:Name="rbDashboard" 
+                                 Tag="{DynamicResource dashboard}" 
+                                 Style="{DynamicResource MenuButton}" 
+                                 Content="Dashboard"
+                                 Click="rbDashboard_Click"/>
+
+                    <RadioButton x:Name="rbDocktors" 
+                                 Tag="{DynamicResource dashboard}" 
+                                 Style="{DynamicResource MenuButton}" 
+                                 Content="Docktors"
+                                 Click="rbDocktors_Click"/>
+
+                    <RadioButton x:Name="rbPatients" 
+                                 Tag="{DynamicResource dashboard}" 
+                                 Style="{DynamicResource MenuButton}" 
+                                 Content="Patients"
+                                 Click="rbPatients_Click"/>
+
+                    <RadioButton x:Name="rbRooms" 
+                                 Tag="{DynamicResource dashboard}" 
+                                 Style="{DynamicResource MenuButton}" 
+                                 Content="Rooms"
+                                 Click="rbRooms_Click"/>
+
+                    <RadioButton x:Name="rbReports" 
+                                 Tag="{DynamicResource dashboard}" 
+                                 Style="{DynamicResource MenuButton}" 
+                                 Content="Reports"
+                                 Click="rbReports_Click"/>
+
+                    <RadioButton x:Name="rbCashDesk" 
+                                 Tag="{DynamicResource dashboard}" 
+                                 Style="{DynamicResource MenuButton}" 
+                                 Content="Cash desk"
+                                 Click="rbCashDesk_Click"/>
+
+                    <RadioButton x:Name="rbAbout" 
+                                 Tag="{DynamicResource dashboard}" 
+                                 Style="{DynamicResource MenuButton}" 
+                                 Content="About"
+                                 Click="rbAbout_Click"/>
 
                 </StackPanel>
                 
             </Border>
-            <Border Grid.Column="1" Background="{DynamicResource SecondaryBackground}" CornerRadius="0 0 5 0">
-                
+            <Border Grid.Column="1"  
+                    CornerRadius="0 0 5 0"
+                    Background="{DynamicResource SecondaryBackground}">
+                <Frame x:Name="PageNavigator"
+                       Visibility="Hidden"/>
+
             </Border>
         </Grid>
 

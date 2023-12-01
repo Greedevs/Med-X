@@ -1,6 +1,8 @@
-﻿using System.Windows;
+﻿using MedX.Desktop.Pages;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
+using System.Xml.XPath;
 
 namespace MedX.Desktop
 {
@@ -17,7 +19,7 @@ namespace MedX.Desktop
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if(this.WindowState == WindowState.Maximized)
+            if (this.WindowState == WindowState.Maximized)
                 this.WindowState = WindowState.Normal;
             this.DragMove();
         }
@@ -44,6 +46,54 @@ namespace MedX.Desktop
         {
             base.OnActivated(e);
             Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() => WindowStyle = WindowStyle.None));
+        }
+
+        private void rbDashboard_Click(object sender, RoutedEventArgs e)
+        {
+            DashboardPage dashboardPage = new();
+            PageNavigator.Content = dashboardPage;
+        }
+
+        private void rbDocktors_Click(object sender, RoutedEventArgs e)
+        {
+            DoctorsPage doctorsPage = new();
+            PageNavigator.Content = doctorsPage;
+        }
+
+        private void rbPatients_Click(object sender, RoutedEventArgs e)
+        {
+            PatientsPage patientsPage = new(); // TODO: implement
+            PageNavigator.Content = patientsPage;
+        }
+
+        private void rbAffairs_Click(object sender, RoutedEventArgs e)
+        {
+            ReportsPage reportsPage = new();
+            PageNavigator.Content = reportsPage;
+        }
+
+        private void rbCashDesk_Click(object sender, RoutedEventArgs e)
+        {
+            CashDesksPage cashPage = new();
+            PageNavigator.Content = cashPage;
+        }
+
+        private void rbRooms_Click(object sender, RoutedEventArgs e)
+        {
+            RoomsPage roomsPage = new();
+            PageNavigator.Content = roomsPage;
+        }
+
+        private void rbReports_Click(object sender, RoutedEventArgs e)
+        {
+            ReportsPage reportsPage = new();
+            PageNavigator.Content = reportsPage;
+        }
+
+        private void rbAbout_Click(object sender, RoutedEventArgs e)
+        {
+            AboutPage aboutPage = new();
+            PageNavigator.Content = aboutPage;
         }
     }
 }
