@@ -10,7 +10,6 @@
 
     <Grid>
         <TextBlock Text="Reports Page"
-                   FontSize="35"
-                   Foreground="{DynamicResource PrimaryForeground}"/>
+                   FontSize="35"/>
     </Grid>
 </Page>

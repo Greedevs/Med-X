@@ -67,37 +67,37 @@
                                  Click="rbDashboard_Click"/>
 
                     <RadioButton x:Name="rbDocktors" 
-                                 Tag="{DynamicResource dashboard}" 
+                                 Tag="{DynamicResource doctors}" 
                                  Style="{DynamicResource MenuButton}" 
                                  Content="Docktors"
                                  Click="rbDocktors_Click"/>
 
                     <RadioButton x:Name="rbPatients" 
-                                 Tag="{DynamicResource dashboard}" 
+                                 Tag="{DynamicResource patients}" 
                                  Style="{DynamicResource MenuButton}" 
                                  Content="Patients"
                                  Click="rbPatients_Click"/>
 
                     <RadioButton x:Name="rbRooms" 
-                                 Tag="{DynamicResource dashboard}" 
+                                 Tag="{DynamicResource rooms}" 
                                  Style="{DynamicResource MenuButton}" 
                                  Content="Rooms"
                                  Click="rbRooms_Click"/>
 
                     <RadioButton x:Name="rbReports" 
-                                 Tag="{DynamicResource dashboard}" 
+                                 Tag="{DynamicResource report}" 
                                  Style="{DynamicResource MenuButton}" 
                                  Content="Reports"
                                  Click="rbReports_Click"/>
 
                     <RadioButton x:Name="rbCashDesk" 
-                                 Tag="{DynamicResource dashboard}" 
+                                 Tag="{DynamicResource cashDesk}" 
                                  Style="{DynamicResource MenuButton}" 
                                  Content="Cash desk"
                                  Click="rbCashDesk_Click"/>
 
                     <RadioButton x:Name="rbAbout" 
-                                 Tag="{DynamicResource dashboard}" 
+                                 Tag="{DynamicResource about}" 
                                  Style="{DynamicResource MenuButton}" 
                                  Content="About"
                                  Click="rbAbout_Click"/>
@@ -109,7 +109,7 @@
                     CornerRadius="0 0 5 0"
                     Background="{DynamicResource SecondaryBackground}">
                 <Frame x:Name="PageNavigator"
-                       Visibility="Hidden"/>
+                       NavigationUIVisibility="Hidden"/>
 
             </Border>
         </Grid>

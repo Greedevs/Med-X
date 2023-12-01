@@ -13,5 +13,4 @@
     <SolidColorBrush x:Key="PrimaryBorder" Color="#D3D3D3"/>
     <SolidColorBrush x:Key="SecondaryBorder" Color="#00AADA"/>
     
-    
 </ResourceDictionary>
