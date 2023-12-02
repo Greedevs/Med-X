@@ -13,12 +13,12 @@ namespace MedX.Service.Services;
 
 public class MedicalRecordService : IMedicalRecordService
 {
-    private readonly IRepository<Doctor> doctorRepository;
+    private readonly IRepository<Employee> doctorRepository;
     private readonly IRepository<Patient> patientRepository;
     private readonly IRepository<MedicalRecord> medicalRecordRepository;
     private readonly IMapper mapper;
     public MedicalRecordService(IMapper mapper,
-        IRepository<Doctor> doctorRepository,
+        IRepository<Employee> doctorRepository,
         IRepository<Patient> patientRepository,
         IRepository<MedicalRecord> medicalRecordRepository)
     {
@@ -33,7 +33,7 @@ public class MedicalRecordService : IMedicalRecordService
             ?? throw new NotFoundException($"This Patient not found with id: {dto.PatientId}");
 
         var existDoctor = await this.doctorRepository.GetAsync(r => r.Id == dto.DoctorId)
-            ?? throw new NotFoundException($"This Doctor not found with id: {dto.DoctorId}");
+            ?? throw new NotFoundException($"This Employee not found with id: {dto.DoctorId}");
 
 
         var mappedMedicalRecord = this.mapper.Map<MedicalRecord>(dto);
@@ -59,14 +59,14 @@ public class MedicalRecordService : IMedicalRecordService
 
     public async Task<MedicalRecordResultDto> UpdateAsync(MedicalRecordUpdateDto dto)
     {
-        var existMedicalRecord = await this.medicalRecordRepository.GetAsync(r => r.Id == dto.Id, includes: new[] { "Doctor", "Patient" })
+        var existMedicalRecord = await this.medicalRecordRepository.GetAsync(r => r.Id == dto.Id, includes: new[] { "Employee", "Patient" })
             ?? throw new NotFoundException($"This MedicalRecord not found with id: {dto.Id}");
 
         var existPatient = await this.patientRepository.GetAsync(d => d.Id.Equals(dto.PatientId))
             ?? throw new NotFoundException($"This Patient not found with id: {dto.PatientId}");
 
         var existDoctor = await this.doctorRepository.GetAsync(r => r.Id == dto.DoctorId)
-            ?? throw new NotFoundException($"This Doctor not found with id: {dto.DoctorId}");
+            ?? throw new NotFoundException($"This Employee not found with id: {dto.DoctorId}");
 
         this.mapper.Map(dto, existMedicalRecord);
         existMedicalRecord.Doctor = existDoctor;
@@ -81,7 +81,7 @@ public class MedicalRecordService : IMedicalRecordService
     public async Task<MedicalRecordResultDto> GetAsync(long id)
     {
         var existMedicalRecord = await this.medicalRecordRepository.GetAsync(r => r.Id == id,
-            includes: new[] { "Doctor", "Patient" })
+            includes: new[] { "Employee", "Patient" })
             ?? throw new NotFoundException($"This MedicalRecord not found with id: {id}");
 
         return this.mapper.Map<MedicalRecordResultDto>(existMedicalRecord);
@@ -89,7 +89,7 @@ public class MedicalRecordService : IMedicalRecordService
 
     public async Task<IEnumerable<MedicalRecordResultDto>> GetAllAsync(PaginationParams @params, string search = null)
     {
-        var allMedicalRecords = await this.medicalRecordRepository.GetAll(includes: new[] { "Doctor", "Patient" })
+        var allMedicalRecords = await this.medicalRecordRepository.GetAll(includes: new[] { "Employee", "Patient" })
             .ToPaginate(@params)
             .ToListAsync();
 
@@ -112,7 +112,7 @@ public class MedicalRecordService : IMedicalRecordService
             ?? throw new NotFoundException($"This Patient not found with id: {patientId}");
 
         var records = await this.medicalRecordRepository.GetAll(a => a.PatientId == patientId,
-            includes: new[] { "Doctor", "Patient" }).ToListAsync();
+            includes: new[] { "Employee", "Patient" }).ToListAsync();
 
         return this.mapper.Map<IEnumerable<MedicalRecordResultDto>>(records);
     }
@@ -123,7 +123,7 @@ public class MedicalRecordService : IMedicalRecordService
             ?? throw new NotFoundException($"This Patient not found with id: {doctorId}");
 
         var records = await this.medicalRecordRepository.GetAll(a => a.DoctorId == doctorId,
-             includes: new[] { "Doctor", "Patient" })
+             includes: new[] { "Employee", "Patient" })
             .ToPaginate(@params)
             .ToListAsync();
 

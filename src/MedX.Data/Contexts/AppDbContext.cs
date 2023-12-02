@@ -14,7 +14,7 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<Room> Rooms { get; set; }
-    public DbSet<Doctor> Doctors { get; set; }
+    public DbSet<Employee> Doctors { get; set; }
     public DbSet<Affair> Affairs { get; set; }
     public DbSet<Patient> Patients { get; set; }
     public DbSet<Payment> Payments { get; set; }
@@ -30,7 +30,7 @@ public class AppDbContext : DbContext
         #region entitylar uchun "isDeleted" holatini filter qilish
         modelBuilder.Entity<Room>().HasQueryFilter(u => !u.IsDeleted);
         modelBuilder.Entity<Affair>().HasQueryFilter(u => !u.IsDeleted);
-        modelBuilder.Entity<Doctor>().HasQueryFilter(u => !u.IsDeleted);
+        modelBuilder.Entity<Employee>().HasQueryFilter(u => !u.IsDeleted);
         modelBuilder.Entity<Patient>().HasQueryFilter(u => !u.IsDeleted);
         modelBuilder.Entity<Payment>().HasQueryFilter(u => !u.IsDeleted);
         modelBuilder.Entity<CashDesk>().HasQueryFilter(u => !u.IsDeleted);

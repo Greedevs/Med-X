@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MedX.Desktop.Windows.Employees;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,13 +17,19 @@ using System.Windows.Shapes;
 namespace MedX.Desktop.Pages
 {
     /// <summary>
-    /// Interaction logic for DoctorsPage.xaml
+    /// Interaction logic for EmployeesPage.xaml
     /// </summary>
-    public partial class DoctorsPage : Page
+    public partial class EmployeesPage : Page
     {
-        public DoctorsPage()
+        public EmployeesPage()
         {
             InitializeComponent();
+        }
+
+        private void btnCreate_Click(object sender, RoutedEventArgs e)
+        {
+            EmployeeCreateWindow employeeCreateWindow = new();
+            employeeCreateWindow.ShowDialog();
         }
     }
 }

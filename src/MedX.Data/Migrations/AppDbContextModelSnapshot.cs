@@ -172,7 +172,7 @@ namespace MedX.Data.Migrations
                     b.ToTable("CashDesks");
                 });
 
-            modelBuilder.Entity("MedX.Domain.Entities.Doctor", b =>
+            modelBuilder.Entity("MedX.Domain.Entities.Employee", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -516,7 +516,7 @@ namespace MedX.Data.Migrations
 
             modelBuilder.Entity("MedX.Domain.Entities.Appointments.Appointment", b =>
                 {
-                    b.HasOne("MedX.Domain.Entities.Doctor", "Doctor")
+                    b.HasOne("MedX.Domain.Entities.Employee", "Employee")
                         .WithMany("Appointments")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -528,7 +528,7 @@ namespace MedX.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Doctor");
+                    b.Navigation("Employee");
 
                     b.Navigation("Patient");
                 });
@@ -544,7 +544,7 @@ namespace MedX.Data.Migrations
                     b.Navigation("Payment");
                 });
 
-            modelBuilder.Entity("MedX.Domain.Entities.Doctor", b =>
+            modelBuilder.Entity("MedX.Domain.Entities.Employee", b =>
                 {
                     b.HasOne("MedX.Domain.Entities.Assets.Asset", "Image")
                         .WithMany()
@@ -555,7 +555,7 @@ namespace MedX.Data.Migrations
 
             modelBuilder.Entity("MedX.Domain.Entities.MedicalRecords.MedicalRecord", b =>
                 {
-                    b.HasOne("MedX.Domain.Entities.Doctor", "Doctor")
+                    b.HasOne("MedX.Domain.Entities.Employee", "Employee")
                         .WithMany("MedicalRecords")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -567,7 +567,7 @@ namespace MedX.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Doctor");
+                    b.Navigation("Employee");
 
                     b.Navigation("Patient");
                 });
@@ -620,7 +620,7 @@ namespace MedX.Data.Migrations
 
             modelBuilder.Entity("MedX.Domain.Entities.Treatment", b =>
                 {
-                    b.HasOne("MedX.Domain.Entities.Doctor", "Doctor")
+                    b.HasOne("MedX.Domain.Entities.Employee", "Employee")
                         .WithMany("Treatments")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -638,14 +638,14 @@ namespace MedX.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Doctor");
+                    b.Navigation("Employee");
 
                     b.Navigation("Patient");
 
                     b.Navigation("Room");
                 });
 
-            modelBuilder.Entity("MedX.Domain.Entities.Doctor", b =>
+            modelBuilder.Entity("MedX.Domain.Entities.Employee", b =>
                 {
                     b.Navigation("Appointments");
 

@@ -13,12 +13,12 @@ namespace MedX.Service.Services;
 
 public class AppointmentService : IAppointmentService
 {
-    private readonly IRepository<Doctor> doctorRepository;
+    private readonly IRepository<Employee> doctorRepository;
     private readonly IRepository<Patient> patientRepository;
     private readonly IRepository<Appointment> appointmentRepository;
     private readonly IMapper mapper;
     public AppointmentService(IMapper mapper,
-        IRepository<Doctor> doctorRepository,
+        IRepository<Employee> doctorRepository,
         IRepository<Patient> patientRepository,
         IRepository<Appointment> appointmentRepository)
     {
@@ -33,7 +33,7 @@ public class AppointmentService : IAppointmentService
             ?? throw new NotFoundException($"This Patient not found with id: {dto.PatientId}");
 
         var existDoctor = await this.doctorRepository.GetAsync(r => r.Id == dto.DoctorId)
-            ?? throw new NotFoundException($"This Doctor not found with id: {dto.DoctorId}");
+            ?? throw new NotFoundException($"This Employee not found with id: {dto.DoctorId}");
 
 
         var mappedAppointment = this.mapper.Map<Appointment>(dto);
@@ -59,14 +59,14 @@ public class AppointmentService : IAppointmentService
 
     public async Task<AppointmentResultDto> UpdateAsync(AppointmentUpdateDto dto)
     {
-        var existAppointment = await this.appointmentRepository.GetAsync(r => r.Id == dto.Id, includes: new[] { "Doctor", "Patient" })
+        var existAppointment = await this.appointmentRepository.GetAsync(r => r.Id == dto.Id, includes: new[] { "Employee", "Patient" })
             ?? throw new NotFoundException($"This Appointment not found with id: {dto.Id}");
 
         var existPatient = await this.patientRepository.GetAsync(d => d.Id.Equals(dto.PatientId))
             ?? throw new NotFoundException($"This Patient not found with id: {dto.PatientId}");
 
         var existDoctor = await this.doctorRepository.GetAsync(r => r.Id == dto.DoctorId)
-            ?? throw new NotFoundException($"This Doctor not found with id: {dto.DoctorId}");
+            ?? throw new NotFoundException($"This Employee not found with id: {dto.DoctorId}");
 
         this.mapper.Map(dto, existAppointment);
         existAppointment.Doctor = existDoctor;
@@ -80,7 +80,7 @@ public class AppointmentService : IAppointmentService
 
     public async Task<AppointmentResultDto> GetAsync(long id)
     {
-        var existAppointment = await this.appointmentRepository.GetAsync(r => r.Id == id, includes: new[] { "Doctor", "Patient" })
+        var existAppointment = await this.appointmentRepository.GetAsync(r => r.Id == id, includes: new[] { "Employee", "Patient" })
             ?? throw new NotFoundException($"This Appointment not found with id: {id}");
 
         return this.mapper.Map<AppointmentResultDto>(existAppointment);
@@ -88,7 +88,7 @@ public class AppointmentService : IAppointmentService
 
     public async Task<IEnumerable<AppointmentResultDto>> GetAllAsync(PaginationParams @params, string search = null)
     {
-        var allAppointments = await this.appointmentRepository.GetAll(includes: new[] { "Doctor", "Patient" })
+        var allAppointments = await this.appointmentRepository.GetAll(includes: new[] { "Employee", "Patient" })
             .ToPaginate(@params)
             .ToListAsync();
 
@@ -110,7 +110,7 @@ public class AppointmentService : IAppointmentService
         var existDoctor = await this.doctorRepository.GetAsync(d => d.Id.Equals(doctorId))
             ?? throw new NotFoundException($"This Patient not found with id: {doctorId}");
 
-        var appointments = await this.appointmentRepository.GetAll(a => a.DoctorId == doctorId, includes: new[] { "Doctor", "Patient" })
+        var appointments = await this.appointmentRepository.GetAll(a => a.DoctorId == doctorId, includes: new[] { "Employee", "Patient" })
             .ToPaginate(@params)
             .ToListAsync();
 
@@ -129,7 +129,7 @@ public class AppointmentService : IAppointmentService
         var existPatient = await this.patientRepository.GetAsync(d => d.Id.Equals(patientId))
             ?? throw new NotFoundException($"This Patient not found with id: {patientId}");
 
-        var appointments = await this.appointmentRepository.GetAll(a => a.PatientId == patientId, includes: new[] { "Doctor", "Patient" }).ToListAsync();
+        var appointments = await this.appointmentRepository.GetAll(a => a.PatientId == patientId, includes: new[] { "Employee", "Patient" }).ToListAsync();
 
         return this.mapper.Map<IEnumerable<AppointmentResultDto>>(appointments);
     }

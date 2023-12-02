@@ -29,10 +29,10 @@ public class MappingProfile : Profile
         CreateMap<Room, RoomResultDto>().ReverseMap();
         CreateMap<Room, RoomCreationDto>().ReverseMap();
 
-        //Doctor
-        CreateMap<Doctor, DoctorUpdateDto>().ReverseMap();
-        CreateMap<Doctor, DoctorResultDto>().ReverseMap();
-        CreateMap<Doctor, DoctorCreationDto>().ReverseMap();
+        //Employee
+        CreateMap<Employee, EmployeeUpdateDto>().ReverseMap();
+        CreateMap<Employee, EmployeeResultDto>().ReverseMap();
+        CreateMap<Employee, EmployeeCreationDto>().ReverseMap();
 
         //Patient
         CreateMap<Patient, PatientUpdateDto>().ReverseMap();
