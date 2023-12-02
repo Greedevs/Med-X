@@ -18,6 +18,8 @@
                 
                 <!--begin::Styles-->
                 <ResourceDictionary Source="/Styles/ButtonStyles.xaml"/>
+                <ResourceDictionary Source="/Styles/BorderStyles.xaml"/>
+                <ResourceDictionary Source="/Styles/LabelStyles.xaml"/>
                 <!--end::Styles-->
 
             </ResourceDictionary.MergedDictionaries>

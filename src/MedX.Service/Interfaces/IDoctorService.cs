@@ -5,9 +5,9 @@ namespace MedX.Service.Interfaces;
 
 public interface IDoctorService
 {
-    Task<DoctorResultDto> AddAsync(DoctorCreationDto dto);
-    Task<DoctorResultDto> UpdateAsync(DoctorUpdateDto dto);
+    Task<EmployeeResultDto> AddAsync(EmployeeCreationDto dto);
+    Task<EmployeeResultDto> UpdateAsync(EmployeeUpdateDto dto);
     Task<bool> DeleteAsync(long id);
-    Task<DoctorResultDto> GetAsync(long id);
-    Task<IEnumerable<DoctorResultDto>> GetAllAsync(PaginationParams @params, string search = null);
+    Task<EmployeeResultDto> GetAsync(long id);
+    Task<IEnumerable<EmployeeResultDto>> GetAllAsync(PaginationParams @params, string search = null);
 }

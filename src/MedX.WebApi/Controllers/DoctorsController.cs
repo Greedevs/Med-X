@@ -15,7 +15,7 @@ public class DoctorsController : BaseController
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> PostAsync([FromForm] DoctorCreationDto dto)
+    public async Task<IActionResult> PostAsync([FromForm] EmployeeCreationDto dto)
         => Ok(new Response { Data = await doctorService.AddAsync(dto) });
 
     [HttpDelete("delete/{id:long}")]
@@ -23,7 +23,7 @@ public class DoctorsController : BaseController
         => Ok(new Response { Data = await doctorService.DeleteAsync(id) });
 
     [HttpPut("update")]
-    public async Task<IActionResult> UpdateAsync([FromForm] DoctorUpdateDto dto)
+    public async Task<IActionResult> UpdateAsync([FromForm] EmployeeUpdateDto dto)
         => Ok(new Response { Data = await doctorService.UpdateAsync(dto) });
 
     [HttpGet("get/{id:long}")]

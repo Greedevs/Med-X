@@ -13,13 +13,13 @@ namespace MedX.Service.Services;
 public class TreatmentService : ITreatmentService
 {
     private readonly IRepository<Room> roomRepository;
-    private readonly IRepository<Doctor> doctorRepository;
+    private readonly IRepository<Employee> doctorRepository;
     private readonly IRepository<Patient> patientRepository;
     private readonly IRepository<Treatment> treatmentRepository;
     private readonly IMapper mapper;
     public TreatmentService(IMapper mapper,
         IRepository<Room> roomRepository,
-        IRepository<Doctor> doctorRepository,
+        IRepository<Employee> doctorRepository,
         IRepository<Patient> patientRepository,
         IRepository<Treatment> treatmentRepository)
     {
@@ -36,7 +36,7 @@ public class TreatmentService : ITreatmentService
             ?? throw new NotFoundException($"This Patient not found with id: {dto.PatientId}");
 
         var existDoctor = await this.doctorRepository.GetAsync(r => r.Id == dto.DoctorId)
-            ?? throw new NotFoundException($"This Doctor not found with id: {dto.DoctorId}");
+            ?? throw new NotFoundException($"This Employee not found with id: {dto.DoctorId}");
 
         var existRoom = await this.roomRepository.GetAsync(r => r.Id == dto.RoomId)
             ?? throw new NotFoundException($"This room not found with id: {dto.RoomId}");
@@ -85,14 +85,14 @@ public class TreatmentService : ITreatmentService
     }
     public async Task<TreatmentResultDto> UpdateAsync(TreatmentUpdateDto dto)
     {
-        var existTreatment = await this.treatmentRepository.GetAsync(r => r.Id == dto.Id, includes: new[] { "Doctor", "Patient", "Room" })
+        var existTreatment = await this.treatmentRepository.GetAsync(r => r.Id == dto.Id, includes: new[] { "Employee", "Patient", "Room" })
             ?? throw new NotFoundException($"This Treatment not found with id: {dto.Id}");
 
         var existPatient = await this.patientRepository.GetAsync(d => d.Id.Equals(dto.PatientId))
             ?? throw new NotFoundException($"This Patient not found with id: {dto.PatientId}");
 
         var existDoctor = await this.doctorRepository.GetAsync(r => r.Id == dto.DoctorId)
-            ?? throw new NotFoundException($"This Doctor not found with id: {dto.DoctorId}");
+            ?? throw new NotFoundException($"This Employee not found with id: {dto.DoctorId}");
 
         var existRoom = await this.roomRepository.GetAsync(r => r.Id == dto.RoomId)
            ?? throw new NotFoundException($"This room not found with id: {dto.RoomId}");
@@ -114,7 +114,7 @@ public class TreatmentService : ITreatmentService
 
     public async Task<TreatmentResultDto> GetAsync(long id)
     {
-        var existTreatment = await this.treatmentRepository.GetAsync(r => r.Id == id, includes: new[] { "Doctor", "Patient", "Room" })
+        var existTreatment = await this.treatmentRepository.GetAsync(r => r.Id == id, includes: new[] { "Employee", "Patient", "Room" })
             ?? throw new NotFoundException($"This Treatment not found with id: {id}");
 
         return this.mapper.Map<TreatmentResultDto>(existTreatment);
@@ -122,7 +122,7 @@ public class TreatmentService : ITreatmentService
 
     public async Task<IEnumerable<TreatmentResultDto>> GetAllAsync(PaginationParams @params, string search = null)
     {
-        var allTreatments = await this.treatmentRepository.GetAll(includes: new[] { "Doctor", "Patient", "Room" })
+        var allTreatments = await this.treatmentRepository.GetAll(includes: new[] { "Employee", "Patient", "Room" })
             .ToPaginate(@params)
             .ToListAsync();
 

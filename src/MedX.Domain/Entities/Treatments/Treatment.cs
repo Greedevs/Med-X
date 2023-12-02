@@ -5,7 +5,7 @@ namespace MedX.Domain.Entities;
 public class Treatment : Auditable
 {
     public long DoctorId { get; set; }
-    public Doctor Doctor { get; set; }
+    public Employee Doctor { get; set; }
 
     public long PatientId { get; set; }
     public Patient Patient { get; set; }

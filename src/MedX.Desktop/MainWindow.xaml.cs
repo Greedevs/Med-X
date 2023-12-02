@@ -54,10 +54,10 @@ namespace MedX.Desktop
             PageNavigator.Content = dashboardPage;
         }
 
-        private void rbDocktors_Click(object sender, RoutedEventArgs e)
+        private void rbDoctors_Click(object sender, RoutedEventArgs e)
         {
-            DoctorsPage doctorsPage = new();
-            PageNavigator.Content = doctorsPage;
+            EmployeesPage employeesPage = new();
+            PageNavigator.Content = employeesPage;
         }
 
         private void rbPatients_Click(object sender, RoutedEventArgs e)
@@ -94,6 +94,12 @@ namespace MedX.Desktop
         {
             AboutPage aboutPage = new();
             PageNavigator.Content = aboutPage;
+        }
+
+        private void rbEmployees_Click(object sender, RoutedEventArgs e)
+        {
+            EmployeesPage employeesPage = new();
+            PageNavigator.Content = employeesPage;
         }
     }
 }

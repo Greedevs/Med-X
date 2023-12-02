@@ -14,23 +14,23 @@ namespace MedX.Service.Services;
 
 public class DoctorService : IDoctorService
 {
-    private readonly IRepository<Doctor> doctorRepository;
+    private readonly IRepository<Employee> doctorRepository;
     private readonly IAssetService assetService;
     private readonly IMapper mapper;
-    public DoctorService(IMapper mapper, IRepository<Doctor> doctorRepository, IAssetService assetService)
+    public DoctorService(IMapper mapper, IRepository<Employee> doctorRepository, IAssetService assetService)
     {
         this.mapper = mapper;
         this.assetService = assetService;
         this.doctorRepository = doctorRepository;
     }
-    public async Task<DoctorResultDto> AddAsync(DoctorCreationDto dto)
+    public async Task<EmployeeResultDto> AddAsync(EmployeeCreationDto dto)
     {
         var existDoctor = await this.doctorRepository.GetAsync(d => d.Phone.Equals(dto.Phone));
         if (existDoctor is not null)
             throw new AlreadyExistException($"This doctor already exist with phone: {dto.Phone}");
 
         string accountNumber = GenerateAccountNumber();
-        var mappedDoctor = new Doctor
+        var mappedDoctor = new Employee
         {
             FirstName = dto.FirstName,
             LastName = dto.LastName,
@@ -38,7 +38,6 @@ public class DoctorService : IDoctorService
             Email = dto.Email,
             Phone = dto.Phone,
             Professional = dto.Professional,
-            Balance = dto.Balance,
             AccountNumber = accountNumber,
         };
 
@@ -58,7 +57,7 @@ public class DoctorService : IDoctorService
         await this.doctorRepository.CreateAsync(mappedDoctor);
         await this.doctorRepository.SaveChanges();
 
-        return this.mapper.Map<DoctorResultDto>(mappedDoctor);
+        return this.mapper.Map<EmployeeResultDto>(mappedDoctor);
     }
 
     public async Task<bool> DeleteAsync(long id)
@@ -72,7 +71,7 @@ public class DoctorService : IDoctorService
 
         return true;
     }
-    public async Task<DoctorResultDto> UpdateAsync(DoctorUpdateDto dto)
+    public async Task<EmployeeResultDto> UpdateAsync(EmployeeUpdateDto dto)
     {
         var existDoctor = await this.doctorRepository.GetAsync(r => r.Id == dto.Id)
             ?? throw new NotFoundException($"This doctor not found with id: {dto.Id}");
@@ -90,7 +89,6 @@ public class DoctorService : IDoctorService
         existDoctor.Email = dto.Email;
         existDoctor.Phone = dto.Phone;
         existDoctor.Professional = dto.Professional;
-        existDoctor.Balance = dto.Balance;
 
         if (uploadedImage.Id > 0)
         {
@@ -106,17 +104,17 @@ public class DoctorService : IDoctorService
         this.doctorRepository.Update(existDoctor);
         await this.doctorRepository.SaveChanges();
 
-        return this.mapper.Map<DoctorResultDto>(existDoctor);
+        return this.mapper.Map<EmployeeResultDto>(existDoctor);
     }
-    public async Task<DoctorResultDto> GetAsync(long id)
+    public async Task<EmployeeResultDto> GetAsync(long id)
     {
         var existDoctor = await this.doctorRepository.GetAsync(r => r.Id == id, includes: new[] { "Image" })
             ?? throw new NotFoundException($"This doctor not found with id: {id}");
 
-        return this.mapper.Map<DoctorResultDto>(existDoctor);
+        return this.mapper.Map<EmployeeResultDto>(existDoctor);
     }
 
-    public async Task<IEnumerable<DoctorResultDto>> GetAllAsync(PaginationParams @params, string search = null)
+    public async Task<IEnumerable<EmployeeResultDto>> GetAllAsync(PaginationParams @params, string search = null)
     {
         var allDoctors = await this.doctorRepository.GetAll(includes: new[] { "Image" })
             .ToPaginate(@params)
@@ -131,7 +129,7 @@ public class DoctorService : IDoctorService
             || d.Phone.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
         }
 
-        return this.mapper.Map<IEnumerable<DoctorResultDto>>(allDoctors);
+        return this.mapper.Map<IEnumerable<EmployeeResultDto>>(allDoctors);
     }
 
     private string GenerateAccountNumber()
