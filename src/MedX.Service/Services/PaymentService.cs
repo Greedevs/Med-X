@@ -44,7 +44,6 @@ public class PaymentService : IPaymentService
             cashDesk = new CashDesk();
         
         cashDesk.Balance += dto.Amount;
-        cashDesk.PaymentId = payment.Id;
         cashDesk.Description = dto.Description;
         var createCash = mapper.Map<CashDeskCreationDto>(cashDesk);
 
@@ -98,7 +97,6 @@ public class PaymentService : IPaymentService
 
         this.repository.Delete(payment);
         await this.repository.SaveChanges();
-        await this.cashDeskService.DeleteByPaymentIdAsync(id);
 
         return true;
     }
