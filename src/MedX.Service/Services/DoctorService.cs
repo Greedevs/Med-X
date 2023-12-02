@@ -39,7 +39,6 @@ public class DoctorService : IDoctorService
             Phone = dto.Phone,
             Professional = dto.Professional,
             Balance = dto.Balance,
-            RoomNumber = dto.RoomNumber,
             AccountNumber = accountNumber,
         };
 
@@ -92,7 +91,6 @@ public class DoctorService : IDoctorService
         existDoctor.Phone = dto.Phone;
         existDoctor.Professional = dto.Professional;
         existDoctor.Balance = dto.Balance;
-        existDoctor.RoomNumber = dto.RoomNumber;
 
         if (uploadedImage.Id > 0)
         {

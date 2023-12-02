@@ -29,7 +29,6 @@ public class CashDeskService : ICashDeskService
             ?? throw new NotFoundException("This payment is not found!");
 
         var cashDesk = this.mapper.Map<CashDesk>(dto);
-        cashDesk.Payment = payment;
 
         await this.cashDeskRepository.CreateAsync(cashDesk);
         await this.cashDeskRepository.SaveChanges();
@@ -91,16 +90,5 @@ public class CashDeskService : ICashDeskService
             .FirstOrDefaultAsync();
 
         return result;
-    }
-
-    public async Task<bool> DeleteByPaymentIdAsync(long paymentId)
-    {
-        var cashDesk = await cashDeskRepository.GetAsync(p => p.PaymentId.Equals(paymentId))
-            ?? throw new NotFoundException("This payment is not found!");
-
-        this.cashDeskRepository.Delete(cashDesk);
-        await this.cashDeskRepository.SaveChanges();
-
-        return true;
     }
 }
