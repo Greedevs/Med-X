@@ -14,7 +14,6 @@ public class Doctor : Auditable
     public string Phone { get; set; }
     public string Email { get; set; }
     public decimal Balance { get; set; }
-    public int RoomNumber { get; set; }
     public string AccountNumber { get; set; }
     public long? ImageId { get; set; }
     public Asset Image { get; set; }

@@ -34,3 +34,6 @@ If you have any questions, suggestions, or encounter issues related to this proj
 Check out our [Roadmap](ROADMAP.md) to see our plans and upcoming features.
 
 Thank you for choosing MedX to streamline and digitize your healthcare administration processes!
+
+![image](https://github.com/muqimjon/Med-X/assets/58146206/d92a09ab-32a3-477a-94b4-dca8d7600c00)
+
