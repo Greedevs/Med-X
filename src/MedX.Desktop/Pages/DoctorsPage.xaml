@@ -8,9 +8,38 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DoctorsPage">
 
-    <Grid>
-        <TextBlock Text="Doctors Page"
-                   FontSize="35"
-                   Foreground="{DynamicResource PrimaryForeground}"/>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal">
+            <Border CornerRadius="10" 
+                    Width="400"
+                    Background="{DynamicResource PrimaryBackground}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Path Grid.Column="0" 
+                          Data="{DynamicResource search}"
+                          Fill="{DynamicResource PrimaryForeground}"
+                          Width="20"
+                          Height="20"
+                          Stretch="Uniform"/>
+                    <TextBox x:Name="tbSearch"
+                             Grid.Column="1"
+                             VerticalAlignment="Center"
+                             FontFamily="jetbrains mono"
+                             FontSize="16"
+                             BorderThickness="0"
+                             Margin="5 0 5 0"
+                             Foreground="{DynamicResource PrimaryForeground}"
+                             Background="{DynamicResource PrimaryBackground}"/>
+                </Grid>
+            </Border>
+        </StackPanel>
     </Grid>
 </Page>

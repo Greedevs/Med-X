@@ -9,7 +9,4 @@ public class CashDesk : Auditable
     public string Description { get; set; }
     public decimal Balance { get; set; }
     public bool IsIncome { get; set; }
-
-    public long PaymentId { get; set; }
-    public Payment Payment { get; set; }
 }
