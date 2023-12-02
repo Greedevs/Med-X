@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style TargetType="TextBox" x:Key="AddItemTextBox">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontFamily" Value="jetbrains mono"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0 0 0 1"/>
+        <Setter Property="Margin" Value="10 0 10 7"/>
+    </Style>
+
+</ResourceDictionary>

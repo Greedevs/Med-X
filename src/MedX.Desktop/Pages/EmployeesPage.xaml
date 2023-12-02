@@ -17,6 +17,7 @@
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
             <Border Style="{DynamicResource BorderShadow}"
+                    Background="{DynamicResource PrimaryBackground}"
                     Width="400">
                 <Grid>
                     <Grid.ColumnDefinitions>
