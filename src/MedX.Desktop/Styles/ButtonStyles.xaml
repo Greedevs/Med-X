@@ -184,4 +184,118 @@
         </Setter>
     </Style>
 
+    <!--<Style x:Key="AddItemSelectImageButton" TargetType="Button">
+        <Setter Property="Height" Value="140"/>
+        <Setter Property="Width" Value="140"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+
+                <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="B"
+                         CornerRadius="5">
+                        <Border.Resources>
+                            <Style TargetType="Border">
+                            <Setter Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect  Color="Black" BlurRadius="30" Opacity="0.2"/>
+                                </Setter.Value>
+                                </Setter>
+                                <Setter Property="Background">
+                                    <Setter.Value>
+                                        <ImageBrush x:Name="ImbBImage" ImageSource="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Border.Resources>
+                        <Grid x:Name="TargetText"
+                              Visibility="Collapsed">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="1"
+                                    Background="Black"
+                                    CornerRadius="5"
+                                    Opacity="0.5">
+                            <TextBlock x:Name="tb"
+                                       Grid.Column="2"
+                                       Text="{TemplateBinding Content}"
+                                       FontFamily="Segoi UI"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       Opacity="1"
+                                       Foreground="{DynamicResource SecondaryForeground}"/>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="B" Property="Cursor" Value="Hand"/>
+                            <Setter TargetName="TargetText" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>-->
+    <Style x:Key="AddItemSelectImageButton" TargetType="Button">
+        <Setter Property="Height" Value="140"/>
+        <Setter Property="Width" Value="140"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="B" CornerRadius="5">
+                        <Border.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect Color="Black" BlurRadius="30" Opacity="0.2"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Background">
+                                    <Setter.Value>
+                                        <!-- ImageBrush uchun "Tag" xususiyatini ishlatish -->
+                                        <ImageBrush x:Name="ImbBImage" 
+                                                    ImageSource="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"
+                                                    Stretch="UniformToFill"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Border.Resources>
+                        <Grid x:Name="TargetText" Visibility="Collapsed">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="2*"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Border Grid.Row="1" 
+                                    Background="Black" 
+                                    CornerRadius="5" 
+                                    Opacity="0.5">
+                                <TextBlock x:Name="tb" 
+                                           Grid.Column="2" 
+                                           Text="{TemplateBinding Content}" 
+                                           FontFamily="Segoi UI" 
+                                           VerticalAlignment="Center" 
+                                           HorizontalAlignment="Center" 
+                                           Opacity="1" Foreground="{DynamicResource SecondaryForeground}"/>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="B" Property="Cursor" Value="Hand"/>
+                            <Setter TargetName="TargetText" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
 </ResourceDictionary>

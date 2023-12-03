@@ -9,7 +9,7 @@
             <ResourceDictionary.MergedDictionaries>
                 
                 <!--begin::Themes-->
-                <ResourceDictionary Source="/Themes/DarkTheme.xaml"/>
+                <ResourceDictionary Source="/Themes/LightTheme.xaml"/>
                 <!--end::Themes-->
                 
                 <!--begin::Icons-->
