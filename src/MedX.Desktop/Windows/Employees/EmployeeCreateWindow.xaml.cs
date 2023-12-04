@@ -35,4 +35,16 @@ public partial class EmployeeCreateWindow : Window
             btnSelectImage.Tag = path;
         }
     }
+
+    private void rbDegree1_Checked(object sender, RoutedEventArgs e)
+    {
+        lSalary.Content = "Persentage";
+        tbSalary.IsReadOnly = false;
+    }
+
+    private void rbDegree2_Checked(object sender, RoutedEventArgs e)
+    {
+        lSalary.Content = "Salary";
+        tbSalary.IsReadOnly = false;
+    }
 }

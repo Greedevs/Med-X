@@ -13,6 +13,7 @@
 
     <Style x:Key="AddItemBorder" TargetType="{x:Type Border}">
         <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="Height" Value="60"/>
         <Setter Property="Margin" Value="20 20 10 0"/>
         <Setter Property="Background" Value="{DynamicResource PrimaryBackground}"/>
         <Setter Property="Effect">

@@ -9,7 +9,7 @@
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         AllowsTransparency="True"
-        Height="700" Width="600"
+        Height="680" Width="550"
         Background="Transparent">
     <Border CornerRadius="5"
             Background="{DynamicResource SecondaryBackground}">
@@ -53,9 +53,9 @@
                 
                 <Grid Background="Transparent">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="3*"/>
-                        <RowDefinition Height="9*"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="160"/>
+                        <RowDefinition Height="400"/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <Button x:Name="btnSelectImage" Style="{DynamicResource AddItemSelectImageButton}"
@@ -76,7 +76,7 @@
                                     <TextBox x:Name="tbFirstName"
                                              Grid.Column="1"
                                              Style="{DynamicResource AddItemTextBox}"
-                                             Foreground="{DynamicResource SecondaryForeground}"/>
+                                             Foreground="{DynamicResource PrimaryForeground}"/>
                                 </StackPanel>
                             </Border>
 
@@ -86,7 +86,7 @@
                                     <TextBox x:Name="tbLastName"
                                              Grid.Column="1"
                                              Style="{DynamicResource AddItemTextBox}"
-                                             Foreground="{DynamicResource SecondaryForeground}"/>
+                                             Foreground="{DynamicResource PrimaryForeground}"/>
                                 </StackPanel>
                             </Border>
 
@@ -96,32 +96,9 @@
                                     <TextBox x:Name="tbPatronymic"
                                              Grid.Column="1"
                                              Style="{DynamicResource AddItemTextBox}"
-                                             Foreground="{DynamicResource SecondaryForeground}"/>
+                                             Foreground="{DynamicResource PrimaryForeground}"/>
                                 </StackPanel>
                             </Border>
-
-                            <Border Style="{DynamicResource AddItemBorder}">
-                                <StackPanel>
-                                    <Label Content="Professional" Style="{DynamicResource TitleLable}"/>
-                                    <TextBox x:Name="tbProfessional"
-                                             Grid.Column="1"
-                                             Style="{DynamicResource AddItemTextBox}"
-                                             Foreground="{DynamicResource SecondaryForeground}"/>
-                                </StackPanel>
-                            </Border>
-
-                            <Border Style="{DynamicResource AddItemBorder}">
-                                <StackPanel>
-                                    <Label Content="Image" Style="{DynamicResource TitleLable}"/>
-                                    <TextBox x:Name="tbImage"
-                                             Grid.Column="1"
-                                             Style="{DynamicResource AddItemTextBox}"
-                                             Foreground="{DynamicResource SecondaryForeground}"/>
-                                </StackPanel>
-                            </Border>
-
-                        </StackPanel>
-                        <StackPanel Grid.Column="1" Grid.Row="1">
 
                             <Border Style="{DynamicResource AddItemBorder}">
                                 <StackPanel>
@@ -129,7 +106,7 @@
                                     <TextBox x:Name="tbEmail"
                                              Grid.Column="1"
                                              Style="{DynamicResource AddItemTextBox}"
-                                             Foreground="{DynamicResource SecondaryForeground}"/>
+                                             Foreground="{DynamicResource PrimaryForeground}"/>
                                 </StackPanel>
                             </Border>
 
@@ -139,17 +116,51 @@
                                     <TextBox x:Name="tbPhone"
                                              Grid.Column="1"
                                              Style="{DynamicResource AddItemTextBox}"
-                                             Foreground="{DynamicResource SecondaryForeground}"/>
+                                             Foreground="{DynamicResource PrimaryForeground}"/>
+                                </StackPanel>
+                            </Border>
+
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Grid.Row="1">
+
+                            <Border Style="{DynamicResource AddItemBorder}">
+                                <StackPanel>
+                                    <Label Content="Professional" Style="{DynamicResource TitleLable}"/>
+                                    <TextBox x:Name="tbProfessional"
+                                             Grid.Column="1"
+                                             Style="{DynamicResource AddItemTextBox}"
+                                             Foreground="{DynamicResource PrimaryForeground}"/>
                                 </StackPanel>
                             </Border>
 
                             <Border Style="{DynamicResource AddItemBorder}">
                                 <StackPanel>
-                                    <Label Content="Persentage" Style="{DynamicResource TitleLable}"/>
-                                    <TextBox x:Name="tbPersentage"
+                                    <Label Content="Degree" Style="{DynamicResource TitleLable}"/>
+                                    <StackPanel Orientation="Horizontal" Background="Transparent">
+                                        <RadioButton x:Name="rbDegree1"
+                                                     Checked="rbDegree1_Checked"
+                                                     Content="1st"
+                                                     Margin="25 7" 
+                                                     Foreground="{DynamicResource PrimaryForeground}"/>
+                                        <RadioButton Checked="rbDegree2_Checked"
+                                                     x:Name="rbDegree2" 
+                                                     Content="2st"
+                                                     Margin="25 7" 
+                                                     Foreground="{DynamicResource PrimaryForeground}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Style="{DynamicResource AddItemBorder}">
+                                <StackPanel>
+                                    <Label x:Name="lSalary"
+                                           Content="Required degree for this"
+                                           Style="{DynamicResource TitleLable}"/>
+                                    <TextBox x:Name="tbSalary"
                                              Grid.Column="1"
                                              Style="{DynamicResource AddItemTextBox}"
-                                             Foreground="{DynamicResource SecondaryForeground}"/>
+                                             Foreground="{DynamicResource PrimaryForeground}"
+                                             IsReadOnly="True"/>
                                 </StackPanel>
                             </Border>
 
@@ -159,7 +170,7 @@
                                     <TextBox x:Name="tbPassword"
                                              Grid.Column="1"
                                              Style="{DynamicResource AddItemTextBox}"
-                                             Foreground="{DynamicResource SecondaryForeground}"/>
+                                             Foreground="{DynamicResource PrimaryForeground}"/>
                                 </StackPanel>
                             </Border>
 
@@ -169,13 +180,18 @@
                                     <TextBox x:Name="tbConfirmPassword"
                                              Grid.Column="1"
                                              Style="{DynamicResource AddItemTextBox}"
-                                             Foreground="{DynamicResource SecondaryForeground}"/>
+                                             Foreground="{DynamicResource PrimaryForeground}"/>
                                 </StackPanel>
                             </Border>
 
                         </StackPanel>
                     </Grid>
-                    
+                    <Button Grid.Row="2" 
+                            Height="45"
+                            Content="Add"
+                            Width="200"
+                            Margin="0 0 0 10"
+                            Style="{DynamicResource SuccesssButton}"/>
                 </Grid>
             </Border>
         </Grid>
