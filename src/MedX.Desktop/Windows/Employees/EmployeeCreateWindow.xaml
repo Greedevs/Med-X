@@ -186,8 +186,10 @@
 
                         </StackPanel>
                     </Grid>
-                    <Button Grid.Row="2" 
+                    <Button x:Name="CreateEmployee" 
+                            Grid.Row="2" 
                             Height="45"
+                            Click="CreateEmployee_Click"
                             Content="Add"
                             Width="200"
                             Margin="0 0 0 10"

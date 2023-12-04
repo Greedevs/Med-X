@@ -8,8 +8,8 @@ namespace MedX.WebApi.Controllers;
 
 public class DoctorsController : BaseController
 {
-    private readonly IDoctorService doctorService;
-    public DoctorsController(IDoctorService doctorService)
+    private readonly IEmployeeService doctorService;
+    public DoctorsController(IEmployeeService doctorService)
     {
         this.doctorService = doctorService;
     }

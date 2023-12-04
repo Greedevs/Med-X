@@ -25,4 +25,8 @@
     <Folder Include="ViewModels\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MedX.Service\MedX.Service.csproj" />
+  </ItemGroup>
+
 </Project>

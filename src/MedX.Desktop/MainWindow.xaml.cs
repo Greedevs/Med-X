@@ -101,5 +101,11 @@ namespace MedX.Desktop
             EmployeesPage employeesPage = new();
             PageNavigator.Content = employeesPage;
         }
+
+        private void rbInformation_Click(object sender, RoutedEventArgs e)
+        {
+            InformationPage informationPage = new();
+            PageNavigator.Content = informationPage;
+        }
     }
 }

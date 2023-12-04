@@ -1,4 +1,8 @@
-﻿using Microsoft.Win32;
+﻿using MedX.Domain.Enums;
+using MedX.Service.DTOs.Doctors;
+using MedX.Service.Interfaces;
+using MedX.Service.Services;
+using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Input;
 
@@ -46,5 +50,40 @@ public partial class EmployeeCreateWindow : Window
     {
         lSalary.Content = "Salary";
         tbSalary.IsReadOnly = false;
+    }
+
+    /*    private async void btnCreateEmployee(object sender, RoutedEventArgs e)
+        {
+            EmployeeCreationDto employeeCreationDto = new()
+            {
+                FirstName = tbFirstName.Text,
+                LastName = tbLastName.Text,
+                Patronymic = tbPatronymic.Text,
+                Email = tbEmail.Text,
+                Phone = tbPhone.Text,
+                Professional = tbProfessional.Text,
+                Password = tbPassword.Text,
+            };
+
+            if(rbDegree1.IsChecked == true)
+            {
+                employeeCreationDto.Degree = Degree.Primary;
+                employeeCreationDto.Percentage = Convert.ToInt32(tbSalary.Text);
+            }
+            else if(rbDegree2.IsChecked == true)
+            {
+                employeeCreationDto.Degree = Degree.Secondary;
+                employeeCreationDto.Salary = Convert.ToDecimal(tbSalary.Text);
+            }
+
+    *//*        var resultDto = await employeeService.AddAsync(employeeCreationDto);
+            if (resultDto is not null)
+                MessageBox.Show($"{resultDto.FirstName} {resultDto.LastName} employee created");
+            else MessageBox.Show("Something goes wrong");*//*
+        }*/
+
+    private void CreateEmployee_Click(object sender, RoutedEventArgs e)
+    {
+
     }
 }

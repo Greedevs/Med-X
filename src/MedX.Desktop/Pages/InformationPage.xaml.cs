@@ -16,18 +16,13 @@ using System.Windows.Shapes;
 namespace MedX.Desktop.Pages
 {
     /// <summary>
-    /// Interaction logic for CashDesksPage.xaml
+    /// Interaction logic for InformationPage.xaml
     /// </summary>
-    public partial class CashDesksPage : Page
+    public partial class InformationPage : Page
     {
-        public CashDesksPage()
+        public InformationPage()
         {
             InitializeComponent();
-        }
-
-        private void btnCreate_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

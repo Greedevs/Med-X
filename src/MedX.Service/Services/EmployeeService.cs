@@ -12,12 +12,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MedX.Service.Services;
 
-public class DoctorService : IDoctorService
+public class EmployeeService : IEmployeeService
 {
     private readonly IRepository<Employee> doctorRepository;
     private readonly IAssetService assetService;
     private readonly IMapper mapper;
-    public DoctorService(IMapper mapper, IRepository<Employee> doctorRepository, IAssetService assetService)
+    public EmployeeService(IMapper mapper, IRepository<Employee> doctorRepository, IAssetService assetService)
     {
         this.mapper = mapper;
         this.assetService = assetService;
