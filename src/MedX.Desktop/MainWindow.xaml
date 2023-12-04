@@ -98,7 +98,7 @@
                                      Click="rbEmployees_Click"/>
 
                         <RadioButton x:Name="rbReports" 
-                                     Tag="{DynamicResource report}" 
+                                     Tag="{DynamicResource reports}" 
                                      Style="{DynamicResource MenuButton}" 
                                      Content="Reports"
                                      Click="rbReports_Click"/>
@@ -108,6 +108,12 @@
                                      Style="{DynamicResource MenuButton}" 
                                      Content="Cash desk"
                                      Click="rbCashDesk_Click"/>
+
+                        <RadioButton x:Name="rbInformation" 
+                                     Tag="{DynamicResource information}" 
+                                     Style="{DynamicResource MenuButton}" 
+                                     Content="Information"
+                                     Click="rbInformation_Click"/>
 
                         <RadioButton x:Name="rbAbout" 
                                      Tag="{DynamicResource about}" 

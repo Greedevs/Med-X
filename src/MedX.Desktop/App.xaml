@@ -9,7 +9,7 @@
             <ResourceDictionary.MergedDictionaries>
                 
                 <!--begin::Themes-->
-                <ResourceDictionary Source="/Themes/DarkTheme.xaml"/>
+                <ResourceDictionary Source="/Themes/LightTheme.xaml"/>
                 <!--end::Themes-->
                 
                 <!--begin::Icons-->
@@ -21,6 +21,7 @@
                 <ResourceDictionary Source="/Styles/BorderStyles.xaml"/>
                 <ResourceDictionary Source="/Styles/LabelStyles.xaml"/>
                 <ResourceDictionary Source="/Styles/TextBoxStyles.xaml"/>
+                <ResourceDictionary Source="/Styles/ComboBoxStyles.xaml"/>
                 <!--end::Styles-->
 
             </ResourceDictionary.MergedDictionaries>

@@ -28,7 +28,7 @@ namespace MedX.Desktop.Pages
 
         private void btnCreate_Click(object sender, RoutedEventArgs e)
         {
-            EmployeeCreateWindow employeeCreateWindow = new();
+            EmployeeCreateWindow employeeCreateWindow = new EmployeeCreateWindow();
             employeeCreateWindow.ShowDialog();
         }
     }

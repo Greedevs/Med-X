@@ -3,7 +3,7 @@ using MedX.Service.DTOs.Doctors;
 
 namespace MedX.Service.Interfaces;
 
-public interface IDoctorService
+public interface IEmployeeService
 {
     Task<EmployeeResultDto> AddAsync(EmployeeCreationDto dto);
     Task<EmployeeResultDto> UpdateAsync(EmployeeUpdateDto dto);

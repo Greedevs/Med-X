@@ -4,13 +4,48 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:MedX.Desktop.Pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="RoomsPage">
+      mc:Ignorable="d"
+      d:DesignHeight="450" d:DesignWidth="800">
 
-    <Grid>
-        <TextBlock Text="Rooms Page"
-                   FontSize="35"
-                   Foreground="{DynamicResource PrimaryForeground}"/>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+            <Border Style="{DynamicResource BorderShadow}"
+                    Background="{DynamicResource PrimaryBackground}"
+                    Width="400">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Path Grid.Column="0" 
+                          Data="{DynamicResource search}"
+                          Fill="{DynamicResource PrimaryForeground}"
+                          Width="20"
+                          Height="20"
+                          Stretch="Uniform"/>
+                    <TextBox x:Name="tbSearch"
+                             Grid.Column="1"
+                             VerticalAlignment="Center"
+                             FontFamily="jetbrains mono"
+                             FontSize="16"
+                             BorderThickness="0"
+                             Margin="5 0 5 0"
+                             Foreground="{DynamicResource PrimaryForeground}"
+                             Background="{DynamicResource PrimaryBackground}"/>
+                </Grid>
+            </Border>
+            <Button x:Name="btnCreate"
+                        Style="{DynamicResource SuccesssButton}"
+                        Content="Add"/>
+        </StackPanel>
+        <WrapPanel Grid.Row="1">
+
+        </WrapPanel>
     </Grid>
 </Page>

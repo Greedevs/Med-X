@@ -19,7 +19,7 @@ public static class ServiceCollection
         services.AddScoped<IRoomService, RoomService>();
         services.AddScoped<IAssetService, AssetService>();
         services.AddScoped<IAdminService, AdminService>();
-        services.AddScoped<IDoctorService, DoctorService>();
+        services.AddScoped<IEmployeeService, EmployeeService>();
         services.AddScoped<IAffairService, AffairService>();
         services.AddScoped<IPaymentService, PaymentService>();
         services.AddScoped<IPatientService, PatientService>();
