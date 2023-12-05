@@ -1,7 +1,6 @@
 ﻿using MedX.Domain.Enums;
 using MedX.Service.DTOs.Doctors;
 using MedX.Service.Interfaces;
-using MedX.Service.Services;
 using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Input;
@@ -13,9 +12,12 @@ namespace MedX.Desktop.Windows.Employees;
 /// </summary>
 public partial class EmployeeCreateWindow : Window
 {
-    public EmployeeCreateWindow()
+    private readonly IEmployeeService employeeService;
+
+    public EmployeeCreateWindow(IEmployeeService employeeService)
     {
         InitializeComponent();
+        this.employeeService = employeeService ?? throw new ArgumentNullException(nameof(employeeService));
     }
 
     private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -52,38 +54,33 @@ public partial class EmployeeCreateWindow : Window
         tbSalary.IsReadOnly = false;
     }
 
-    /*    private async void btnCreateEmployee(object sender, RoutedEventArgs e)
-        {
-            EmployeeCreationDto employeeCreationDto = new()
-            {
-                FirstName = tbFirstName.Text,
-                LastName = tbLastName.Text,
-                Patronymic = tbPatronymic.Text,
-                Email = tbEmail.Text,
-                Phone = tbPhone.Text,
-                Professional = tbProfessional.Text,
-                Password = tbPassword.Text,
-            };
-
-            if(rbDegree1.IsChecked == true)
-            {
-                employeeCreationDto.Degree = Degree.Primary;
-                employeeCreationDto.Percentage = Convert.ToInt32(tbSalary.Text);
-            }
-            else if(rbDegree2.IsChecked == true)
-            {
-                employeeCreationDto.Degree = Degree.Secondary;
-                employeeCreationDto.Salary = Convert.ToDecimal(tbSalary.Text);
-            }
-
-    *//*        var resultDto = await employeeService.AddAsync(employeeCreationDto);
-            if (resultDto is not null)
-                MessageBox.Show($"{resultDto.FirstName} {resultDto.LastName} employee created");
-            else MessageBox.Show("Something goes wrong");*//*
-        }*/
-
-    private void CreateEmployee_Click(object sender, RoutedEventArgs e)
+    private async void btnCreateEmployee_Click(object sender, RoutedEventArgs e)
     {
+        EmployeeCreationDto employeeCreationDto = new()
+        {
+            FirstName = tbFirstName.Text,
+            LastName = tbLastName.Text,
+            Patronymic = tbPatronymic.Text,
+            Email = tbEmail.Text,
+            Phone = tbPhone.Text,
+            Professional = tbProfessional.Text,
+            Password = tbPassword.Text,
+        };
 
+        if (rbDegree1.IsChecked == true)
+        {
+            employeeCreationDto.Degree = Degree.Primary;
+            employeeCreationDto.Percentage = Convert.ToInt32(tbSalary.Text);
+        }
+        else if (rbDegree2.IsChecked == true)
+        {
+            employeeCreationDto.Degree = Degree.Secondary;
+            employeeCreationDto.Salary = Convert.ToDecimal(tbSalary.Text);
+        }
+
+        var resultDto = await employeeService.AddAsync(employeeCreationDto);
+        if (resultDto is not null)
+            MessageBox.Show($"{resultDto.FirstName} {resultDto.LastName} employee created");
+        else MessageBox.Show("Something goes wrong");
     }
 }

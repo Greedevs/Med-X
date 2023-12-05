@@ -19,16 +19,16 @@ public static class ServiceCollection
         services.AddScoped<IRoomService, RoomService>();
         services.AddScoped<IAssetService, AssetService>();
         services.AddScoped<IAdminService, AdminService>();
-        services.AddScoped<IEmployeeService, EmployeeService>();
         services.AddScoped<IAffairService, AffairService>();
         services.AddScoped<IPaymentService, PaymentService>();
         services.AddScoped<IPatientService, PatientService>();
         services.AddScoped<ICashDeskService, CashDeskService>();
+        services.AddScoped<IEmployeeService, EmployeeService>();
         services.AddScoped<ITreatmentService, TreatmentService>();
         services.AddScoped<IAffairItemService, AffairItemService>();
         services.AddScoped<IAppointmentService, AppointmentService>();
-        services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IMedicalRecordService, MedicalRecordService>();
+        services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddHttpContextAccessor();
     }
     public static void AddJwt(this IServiceCollection services, IConfiguration configuration)

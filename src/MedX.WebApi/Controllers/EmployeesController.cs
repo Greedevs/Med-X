@@ -6,31 +6,31 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MedX.WebApi.Controllers;
 
-public class DoctorsController : BaseController
+public class EmployeesController : BaseController
 {
-    private readonly IEmployeeService doctorService;
-    public DoctorsController(IEmployeeService doctorService)
+    private readonly IEmployeeService employeeService;
+    public EmployeesController(IEmployeeService employeeService)
     {
-        this.doctorService = doctorService;
+        this.employeeService = employeeService;
     }
 
     [HttpPost("create")]
     public async Task<IActionResult> PostAsync([FromForm] EmployeeCreationDto dto)
-        => Ok(new Response { Data = await doctorService.AddAsync(dto) });
+        => Ok(new Response { Data = await employeeService.AddAsync(dto) });
 
     [HttpDelete("delete/{id:long}")]
     public async Task<IActionResult> DeleteAsync(long id)
-        => Ok(new Response { Data = await doctorService.DeleteAsync(id) });
+        => Ok(new Response { Data = await employeeService.DeleteAsync(id) });
 
     [HttpPut("update")]
     public async Task<IActionResult> UpdateAsync([FromForm] EmployeeUpdateDto dto)
-        => Ok(new Response { Data = await doctorService.UpdateAsync(dto) });
+        => Ok(new Response { Data = await employeeService.UpdateAsync(dto) });
 
     [HttpGet("get/{id:long}")]
     public async Task<IActionResult> GetAsync(long id)
-        => Ok(new Response { Data = await doctorService.GetAsync(id) });
+        => Ok(new Response { Data = await employeeService.GetAsync(id) });
 
     [HttpGet("get-all")]
     public async Task<IActionResult> GetAllAsync([FromQuery] PaginationParams @params, string search)
-    => Ok(new Response { Data = await doctorService.GetAllAsync(@params, search) });
+    => Ok(new Response { Data = await employeeService.GetAllAsync(@params, search) });
 }

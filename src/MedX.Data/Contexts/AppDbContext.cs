@@ -14,11 +14,11 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<Room> Rooms { get; set; }
-    public DbSet<Employee> Doctors { get; set; }
     public DbSet<Affair> Affairs { get; set; }
     public DbSet<Patient> Patients { get; set; }
     public DbSet<Payment> Payments { get; set; }
     public DbSet<CashDesk> CashDesks { get; set; }
+    public DbSet<Employee> Employees { get; set; }
     public DbSet<Treatment> Treatments { get; set; }
     public DbSet<AffairItem> AffairItems { get; set; }
     public DbSet<Appointment> Appointments { get; set; }

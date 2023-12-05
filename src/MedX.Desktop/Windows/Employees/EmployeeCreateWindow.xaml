@@ -9,10 +9,12 @@
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         AllowsTransparency="True"
-        Height="680" Width="550"
+        Height="750" Width="550"
         Background="Transparent">
     <Border CornerRadius="5"
-            Background="{DynamicResource SecondaryBackground}">
+            Background="{DynamicResource SecondaryBackground}"
+            Margin="20"
+            Style="{DynamicResource BorderShadow}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="27"/>
@@ -189,7 +191,7 @@
                     <Button x:Name="CreateEmployee" 
                             Grid.Row="2" 
                             Height="45"
-                            Click="CreateEmployee_Click"
+                            Click="btnCreateEmployee_Click"
                             Content="Add"
                             Width="200"
                             Margin="0 0 0 10"

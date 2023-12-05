@@ -12,15 +12,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MedX.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231106075958_AddedDateTimeConfigure")]
-    partial class AddedDateTimeConfigure
+    [Migration("20231205133700_InitialMigrate")]
+    partial class InitialMigrate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.11")
+                .HasAnnotation("ProductVersion", "7.0.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -162,15 +162,10 @@ namespace MedX.Data.Migrations
                     b.Property<bool>("IsIncome")
                         .HasColumnType("boolean");
 
-                    b.Property<long>("PaymentId")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PaymentId");
 
                     b.ToTable("CashDesks");
                 });
@@ -192,6 +187,9 @@ namespace MedX.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int>("Degree")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
@@ -207,8 +205,14 @@ namespace MedX.Data.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("text");
 
+                    b.Property<string>("Password")
+                        .HasColumnType("text");
+
                     b.Property<string>("Patronymic")
                         .HasColumnType("text");
+
+                    b.Property<int?>("Percentage")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Phone")
                         .HasColumnType("text");
@@ -216,8 +220,8 @@ namespace MedX.Data.Migrations
                     b.Property<string>("Professional")
                         .HasColumnType("text");
 
-                    b.Property<int>("RoomNumber")
-                        .HasColumnType("integer");
+                    b.Property<decimal?>("Salary")
+                        .HasColumnType("numeric");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -226,7 +230,7 @@ namespace MedX.Data.Migrations
 
                     b.HasIndex("ImageId");
 
-                    b.ToTable("Doctors");
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("MedX.Domain.Entities.MedicalRecords.MedicalRecord", b =>
@@ -296,6 +300,9 @@ namespace MedX.Data.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("integer");
 
+                    b.Property<long?>("ImageId")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
@@ -318,6 +325,8 @@ namespace MedX.Data.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
 
                     b.HasIndex("RoomId");
 
@@ -519,7 +528,7 @@ namespace MedX.Data.Migrations
 
             modelBuilder.Entity("MedX.Domain.Entities.Appointments.Appointment", b =>
                 {
-                    b.HasOne("MedX.Domain.Entities.Employee", "Employee")
+                    b.HasOne("MedX.Domain.Entities.Employee", "Doctor")
                         .WithMany("Appointments")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -531,20 +540,9 @@ namespace MedX.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Employee");
+                    b.Navigation("Doctor");
 
                     b.Navigation("Patient");
-                });
-
-            modelBuilder.Entity("MedX.Domain.Entities.CashDesk", b =>
-                {
-                    b.HasOne("MedX.Domain.Entities.Payment", "Payment")
-                        .WithMany()
-                        .HasForeignKey("PaymentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Payment");
                 });
 
             modelBuilder.Entity("MedX.Domain.Entities.Employee", b =>
@@ -558,7 +556,7 @@ namespace MedX.Data.Migrations
 
             modelBuilder.Entity("MedX.Domain.Entities.MedicalRecords.MedicalRecord", b =>
                 {
-                    b.HasOne("MedX.Domain.Entities.Employee", "Employee")
+                    b.HasOne("MedX.Domain.Entities.Employee", "Doctor")
                         .WithMany("MedicalRecords")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -570,16 +568,22 @@ namespace MedX.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Employee");
+                    b.Navigation("Doctor");
 
                     b.Navigation("Patient");
                 });
 
             modelBuilder.Entity("MedX.Domain.Entities.Patient", b =>
                 {
+                    b.HasOne("MedX.Domain.Entities.Assets.Asset", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
+
                     b.HasOne("MedX.Domain.Entities.Room", null)
                         .WithMany("Patients")
                         .HasForeignKey("RoomId");
+
+                    b.Navigation("Image");
                 });
 
             modelBuilder.Entity("MedX.Domain.Entities.Payment", b =>
@@ -623,7 +627,7 @@ namespace MedX.Data.Migrations
 
             modelBuilder.Entity("MedX.Domain.Entities.Treatment", b =>
                 {
-                    b.HasOne("MedX.Domain.Entities.Employee", "Employee")
+                    b.HasOne("MedX.Domain.Entities.Employee", "Doctor")
                         .WithMany("Treatments")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -641,7 +645,7 @@ namespace MedX.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Employee");
+                    b.Navigation("Doctor");
 
                     b.Navigation("Patient");
 

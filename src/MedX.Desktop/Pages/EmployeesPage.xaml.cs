@@ -1,4 +1,5 @@
 ﻿using MedX.Desktop.Windows.Employees;
+using MedX.Service.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,30 +7,32 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace MedX.Desktop.Pages
+namespace MedX.Desktop.Pages;
+
+/// <summary>
+/// Interaction logic for EmployeesPage.xaml
+/// </summary>
+// EmployeesPage.xaml.cs
+public partial class EmployeesPage : Page
 {
-    /// <summary>
-    /// Interaction logic for EmployeesPage.xaml
-    /// </summary>
-    public partial class EmployeesPage : Page
-    {
-        public EmployeesPage()
-        {
-            InitializeComponent();
-        }
+    private readonly IEmployeeService employeeService;
 
-        private void btnCreate_Click(object sender, RoutedEventArgs e)
+    public EmployeesPage()
+    {
+        InitializeComponent();
+        // EmployeeService obyekti yaratilganda shu yerda o'rnating
+        this.employeeService = (IEmployeeService)App.ServiceProvider.GetService(typeof(IEmployeeService));
+        if (employeeService == null)
         {
-            EmployeeCreateWindow employeeCreateWindow = new EmployeeCreateWindow();
-            employeeCreateWindow.ShowDialog();
+            throw new InvalidOperationException("IEmployeeService not registered in the service provider");
         }
     }
+
+    private void btnCreate_Click(object sender, RoutedEventArgs e)
+    {
+        EmployeeCreateWindow employeeCreateWindow = new EmployeeCreateWindow(employeeService);
+        employeeCreateWindow.ShowDialog();
+    }
 }
+

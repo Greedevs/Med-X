@@ -4,6 +4,7 @@ using MedX.Service.Helpers;
 using MedX.WebApi.Extensions;
 using MedX.WebApi.Middlewares;
 using Microsoft.EntityFrameworkCore;
+using MedX.Service.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +39,9 @@ builder.Services.AddJwt(builder.Configuration);
 PathHelper.WebRootPath = Path.GetFullPath("wwwroot");
 
 var app = builder.Build();
+
+// Init Accessor
+HttpContextExtensions.InitAccessor(app);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())

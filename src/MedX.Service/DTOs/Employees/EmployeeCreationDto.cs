@@ -6,22 +6,22 @@ namespace MedX.Service.DTOs.Doctors;
 
 public class EmployeeCreationDto
 {
-    [MinLength(3), MaxLength(20), Required]
+    //[MinLength(3), MaxLength(20), Required]
     public string FirstName { get; set; }
 
-    [MinLength(3), MaxLength(20), Required]
+//    [MinLength(3), MaxLength(20), Required]
     public string LastName { get; set; }
     
-    [MinLength(3), MaxLength(20), Required]
+  //  [MinLength(3), MaxLength(20), Required]
     public string Patronymic { get; set; }
 
-    [EmailAddress]
+   // [EmailAddress]
     public string Email { get; set; }
     
-    [CheckPhone, Required, Phone]
+    //[CheckPhone, Required, Phone]
     public string Phone { get; set; }
 
-    [MinLength(6), MaxLength(30), Required]
+    //[MinLength(6), MaxLength(30), Required]
     public string Password { get; set; }
 
 
