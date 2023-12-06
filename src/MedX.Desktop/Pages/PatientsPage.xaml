@@ -16,7 +16,7 @@
         <StackPanel Grid.Row="0"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
-            <Border Style="{DynamicResource BorderShadow}"
+            <Border Style="{DynamicResource PrimaryBorder}"
                     Background="{DynamicResource PrimaryBackground}"
                     Width="400">
                 <Grid>
