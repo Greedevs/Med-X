@@ -1,4 +1,6 @@
-﻿using MedX.Desktop.Windows.Employees;
+﻿using MedX.Desktop.Components.Employees;
+using MedX.Desktop.Windows.Employees;
+using MedX.Domain.Configurations;
 using MedX.Service.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -33,6 +35,24 @@ public partial class EmployeesPage : Page
     {
         EmployeeCreateWindow employeeCreateWindow = new EmployeeCreateWindow(employeeService);
         employeeCreateWindow.ShowDialog();
+    }
+
+    private async void PageLoaded(object sender, RoutedEventArgs e)
+    {
+        wrpEmployees.Children.Clear();
+        var paginationParams = new PaginationParams()
+        {
+            PageIndex = 1,
+            PageSize = 10
+        };
+
+        var employees = await employeeService.GetAllAsync(paginationParams);
+        foreach (var employee in employees)
+        {
+            var employeeCardUserControl = new EmployeeCardUserControl();
+            employeeCardUserControl.SetData(employee);
+            wrpEmployees.Children.Add(employeeCardUserControl);
+        }
     }
 }
 

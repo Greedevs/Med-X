@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:MedX.Desktop.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="EmployeesPage">
+      Title="EmployeesPage"
+      Loaded="PageLoaded">
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -46,5 +47,9 @@
                         Style="{DynamicResource SuccesssButton}"
                         Content="Add"/>
         </StackPanel>
+        <WrapPanel x:Name="wrpEmployees" 
+                   Grid.Row="1">
+            
+        </WrapPanel>
     </Grid>
 </Page>

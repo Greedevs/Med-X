@@ -5,9 +5,31 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MedX.Desktop.Components.Employees"
              mc:Ignorable="d" 
-             d:DesignHeight="150" d:DesignWidth="200">
-    <Border Background="Orange"
-            CornerRadius="10">
+             Height="200" Width="250"
+             Margin="10">
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="130"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0"
+                CornerRadius="10 10 0 0">
+            <Border.Background>
+                <ImageBrush x:Name="ImgBrush"/>
+            </Border.Background>
+        </Border>
+        <Border Grid.Row="1"
+                Background="Snow"
+                CornerRadius="0 0 10 10">
+            <StackPanel>
+              
+                <Label x:Name="lbName"
+                       FontSize="16"/>
+                
+                <TextBlock x:Name="tbDescription"/>
             
-    </Border>
+            </StackPanel>
+
+        </Border>
+    </Grid>
 </UserControl>
