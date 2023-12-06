@@ -2,7 +2,7 @@
 using MedX.Service.Services;
 using MedX.Service.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
-using MedX.Service.DTOs.Doctors;
+using MedX.Service.DTOs.Employees;
 using MedX.Service.Mappers;
 using MedX.Data.IRepositories;
 using MedX.Data.Repositories;

@@ -12,7 +12,7 @@
         Opacity="1"
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen">
-    <Border Style="{DynamicResource BorderShadow}"
+    <Border Style="{DynamicResource PrimaryBorder}"
             Background="{DynamicResource SecondaryBackground}">
         <Grid>
             <Grid.RowDefinitions>
@@ -20,7 +20,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Border Style="{DynamicResource BorderShadow}"
+            <Border Style="{DynamicResource PrimaryBorder}"
                     Background="{DynamicResource PrimaryBackground}"
                     MouseLeftButtonDown="Border_MouseLeftButtonDown"
                     BorderThickness="0 0 0 0.5"
@@ -55,7 +55,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0"
-                        Style="{DynamicResource BorderShadow}"
+                        Style="{DynamicResource PrimaryBorder}"
                         Background="{DynamicResource PrimaryBackground}"
                         CornerRadius="0 0 0 5" 
                         Padding="10">

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace MedX.Service.DTOs.Doctors;
+namespace MedX.Service.DTOs.Employees;
 
 public class EmployeeCreationDto
 {

@@ -1,7 +1,7 @@
 ﻿using MedX.Domain.Enums;
 using MedX.Service.DTOs.Assets;
 
-namespace MedX.Service.DTOs.Doctors;
+namespace MedX.Service.DTOs.Employees;
 
 public class EmployeeResultDto
 {

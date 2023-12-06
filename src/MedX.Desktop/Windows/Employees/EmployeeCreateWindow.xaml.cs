@@ -1,5 +1,5 @@
 ﻿using MedX.Domain.Enums;
-using MedX.Service.DTOs.Doctors;
+using MedX.Service.DTOs.Employees;
 using MedX.Service.Interfaces;
 using Microsoft.Win32;
 using System.Windows;
@@ -82,5 +82,6 @@ public partial class EmployeeCreateWindow : Window
         if (resultDto is not null)
             MessageBox.Show($"{resultDto.FirstName} {resultDto.LastName} employee created");
         else MessageBox.Show("Something goes wrong");
+        this.Close();
     }
 }

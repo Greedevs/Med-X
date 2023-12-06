@@ -14,14 +14,14 @@
     <Border CornerRadius="5"
             Background="{DynamicResource SecondaryBackground}"
             Margin="20"
-            Style="{DynamicResource BorderShadow}">
+            Style="{DynamicResource PrimaryBorder}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="27"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Border Grid.Row="0" Style="{DynamicResource BorderShadow}"
+            <Border Grid.Row="0" Style="{DynamicResource PrimaryBorder}"
                     Background="{DynamicResource PrimaryBackground}"
                     MouseLeftButtonDown="Border_MouseLeftButtonDown"
                     BorderThickness="0 0 0 0.5"

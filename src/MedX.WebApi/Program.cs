@@ -41,7 +41,7 @@ PathHelper.WebRootPath = Path.GetFullPath("wwwroot");
 var app = builder.Build();
 
 // Init Accessor
-HttpContextExtensions.InitAccessor(app);
+app.InitAccessor();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())

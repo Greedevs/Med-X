@@ -1,5 +1,5 @@
 ﻿using MedX.Domain.Configurations;
-using MedX.Service.DTOs.Doctors;
+using MedX.Service.DTOs.Employees;
 using MedX.Service.Interfaces;
 using MedX.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;

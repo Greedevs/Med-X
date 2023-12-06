@@ -4,7 +4,7 @@ using MedX.Domain.Configurations;
 using MedX.Domain.Entities;
 using MedX.Domain.Entities.Assets;
 using MedX.Service.DTOs.Assets;
-using MedX.Service.DTOs.Doctors;
+using MedX.Service.DTOs.Employees;
 using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
 using MedX.Service.Interfaces;
