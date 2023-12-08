@@ -1,18 +1,8 @@
-﻿using MedX.Service.DTOs.Employees;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows.Media;
+using MedX.Service.Helpers;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
+using MedX.Service.DTOs.Employees;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MedX.Desktop.Components.Employees;
 
@@ -29,8 +19,11 @@ public partial class EmployeeCardUserControl : UserControl
 
     public void SetData(EmployeeResultDto dto)
     {
+        var image = dto.Image is null ? "../../../Assets/Images/register-background-image.png"
+            : PathHelper.WebRootPath+"/Images/"+dto.Image.FileName;
         Id = dto.Id;
-        ImgBrush.ImageSource = new BitmapImage(new Uri("C:\\Users\\muqim\\source\\repos\\Med-X\\src\\MedX.Desktop\\Assets\\Images\\register-background-image.png", UriKind.Relative));
+        ImgBrush.ImageSource = new BitmapImage(new Uri(image, UriKind.Relative));
+        ImgBrush.Stretch = Stretch.UniformToFill;    
         lbName.Content = dto.FirstName;
         tbDescription.Text = $"{dto.FirstName} {dto.LastName}";
     }

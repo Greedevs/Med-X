@@ -1,9 +1,18 @@
-﻿using MedX.Domain.Enums;
-using MedX.Service.DTOs.Employees;
-using MedX.Service.Interfaces;
+﻿using System.Windows;
 using Microsoft.Win32;
-using System.Windows;
+using MedX.Domain.Enums;
 using System.Windows.Input;
+using MedX.Service.Interfaces;
+using MedX.Service.DTOs.Employees;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using System.Net.Http;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+using System.Text;
+using MedX.Desktop.Constants;
+using MedX.Desktop.Helpers;
+using System.Security.Policy;
 
 namespace MedX.Desktop.Windows.Employees;
 
@@ -12,12 +21,15 @@ namespace MedX.Desktop.Windows.Employees;
 /// </summary>
 public partial class EmployeeCreateWindow : Window
 {
-    private readonly IEmployeeService employeeService;
+    private string imagePath;
+    private string link;
+    private HttpClient httpClient;
 
-    public EmployeeCreateWindow(IEmployeeService employeeService)
+    public EmployeeCreateWindow()
     {
         InitializeComponent();
-        this.employeeService = employeeService ?? throw new ArgumentNullException(nameof(employeeService));
+        httpClient = new HttpClient();
+        link = HttpConstant.BaseLink + "api/employees/";
     }
 
     private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -37,8 +49,8 @@ public partial class EmployeeCreateWindow : Window
 
         if (openFileDialog.ShowDialog() == true)
         {
-            string path = openFileDialog.FileName;
-            btnSelectImage.Tag = path;
+            imagePath = openFileDialog.FileName;
+            btnSelectImage.Tag = imagePath;
         }
     }
 
@@ -78,7 +90,17 @@ public partial class EmployeeCreateWindow : Window
             employeeCreationDto.Salary = Convert.ToDecimal(tbSalary.Text);
         }
 
-        var resultDto = await employeeService.AddAsync(employeeCreationDto);
+        using FileStream stream = new FileStream(imagePath, FileMode.Open, FileAccess.Read);
+        employeeCreationDto.Image = new FormFile(stream, 0, stream.Length, null!, Path.GetFileName(stream.Name))
+        {
+            Headers = new HeaderDictionary(),
+            ContentType = "image/*"
+        };
+
+        var content = ContentHelper.GetContent(employeeCreationDto);
+        var response = await httpClient.PostAsync(link, content);
+        var resultDto = await ContentHelper.GetContentAsync<EmployeeResultDto>(response);
+
         if (resultDto is not null)
             MessageBox.Show($"{resultDto.FirstName} {resultDto.LastName} employee created");
         else MessageBox.Show("Something goes wrong");

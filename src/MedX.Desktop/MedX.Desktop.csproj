@@ -20,10 +20,13 @@
   <ItemGroup>
     <Folder Include="Assets\Logos\" />
     <Folder Include="Assets\Sounds\" />
-    <Folder Include="Constants\" />
     <Folder Include="Entities\" />
     <Folder Include="Enums\" />
     <Folder Include="ViewModels\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>

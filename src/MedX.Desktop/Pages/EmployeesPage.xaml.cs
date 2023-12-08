@@ -1,14 +1,11 @@
-﻿using MedX.Desktop.Components.Employees;
-using MedX.Desktop.Windows.Employees;
-using MedX.Domain.Configurations;
-using MedX.Service.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
+using System.Net.Http;
+using MedX.Desktop.Helpers;
+using MedX.Desktop.Constants;
 using System.Windows.Controls;
+using MedX.Service.DTOs.Employees;
+using MedX.Desktop.Windows.Employees;
+using MedX.Desktop.Components.Employees;
 
 namespace MedX.Desktop.Pages;
 
@@ -18,35 +15,33 @@ namespace MedX.Desktop.Pages;
 // EmployeesPage.xaml.cs
 public partial class EmployeesPage : Page
 {
-    private readonly IEmployeeService employeeService;
+
+    private string link;
+    private HttpClient httpClient;
 
     public EmployeesPage()
     {
         InitializeComponent();
-        // EmployeeService obyekti yaratilganda shu yerda o'rnating
-        this.employeeService = (IEmployeeService)App.ServiceProvider.GetService(typeof(IEmployeeService));
-        if (employeeService == null)
-        {
-            throw new InvalidOperationException("IEmployeeService not registered in the service provider");
-        }
+        httpClient = new HttpClient();
+        link = HttpConstant.BaseLink + "api/employees/";
     }
 
     private void btnCreate_Click(object sender, RoutedEventArgs e)
     {
-        EmployeeCreateWindow employeeCreateWindow = new EmployeeCreateWindow(employeeService);
+        EmployeeCreateWindow employeeCreateWindow = new EmployeeCreateWindow();
         employeeCreateWindow.ShowDialog();
     }
 
     private async void PageLoaded(object sender, RoutedEventArgs e)
     {
         wrpEmployees.Children.Clear();
-        var paginationParams = new PaginationParams()
-        {
-            PageIndex = 1,
-            PageSize = 10
-        };
 
-        var employees = await employeeService.GetAllAsync(paginationParams);
+        //http://localhost:5298/api/Employees/get-all?PageSize=10&PageIndex=1
+        string uri = $"{link}get-all?PageSize=10&PageIndex={1}";
+
+        var response = await httpClient.GetAsync(uri);
+        var employees = await ContentHelper.GetContentAsync<List<EmployeeResultDto>>(response);
+
         foreach (var employee in employees)
         {
             var employeeCardUserControl = new EmployeeCardUserControl();

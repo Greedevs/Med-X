@@ -3,8 +3,8 @@ using MedX.Data.Contexts;
 using MedX.Service.Helpers;
 using MedX.WebApi.Extensions;
 using MedX.WebApi.Middlewares;
-using Microsoft.EntityFrameworkCore;
 using MedX.Service.Extensions;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,8 +37,13 @@ builder.Logging.AddSerilog(logger);
 builder.Services.AddJwt(builder.Configuration);
 
 PathHelper.WebRootPath = Path.GetFullPath("wwwroot");
-
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
 
 // Init Accessor
 app.InitAccessor();

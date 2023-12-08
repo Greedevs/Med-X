@@ -16,7 +16,7 @@
             <Border Grid.Row="0"
                     CornerRadius="10 10 0 0">
                 <Border.Background>
-                    <ImageBrush x:Name="ImgBrush"/>
+                    <ImageBrush x:Name="ImgBrush" Stretch="UniformToFill"/>
                 </Border.Background>
             </Border>
             <Border Grid.Row="1"
