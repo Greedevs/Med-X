@@ -15,7 +15,7 @@ public class RoomsController : BaseController
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> PostAsync([FromForm] RoomCreationDto dto)
+    public async Task<IActionResult> PostAsync(RoomCreationDto dto)
     {
         return Ok(new Response
         {

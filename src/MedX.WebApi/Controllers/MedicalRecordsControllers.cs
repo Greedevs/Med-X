@@ -15,7 +15,7 @@ public class MedicalRecordsControllers : BaseController
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> PostAsync([FromForm] MedicalRecordCreationDto dto)
+    public async Task<IActionResult> PostAsync(MedicalRecordCreationDto dto)
     {
         return Ok(new Response
         {
@@ -37,7 +37,7 @@ public class MedicalRecordsControllers : BaseController
     }
 
     [HttpPut("update")]
-    public async Task<IActionResult> UpdateAsync([FromForm] MedicalRecordUpdateDto dto)
+    public async Task<IActionResult> UpdateAsync(MedicalRecordUpdateDto dto)
     {
         return Ok(new Response
         {

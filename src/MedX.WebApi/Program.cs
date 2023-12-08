@@ -26,12 +26,12 @@ builder.Services.AddServices();
 builder.Services.ConfigureSwagger();
 
 // Logger
-var logger = new LoggerConfiguration()
+/*var logger = new LoggerConfiguration()
                     .ReadFrom.Configuration(builder.Configuration)
                     .Enrich.FromLogContext()
                     .CreateLogger();
 builder.Logging.ClearProviders();
-builder.Logging.AddSerilog(logger);
+builder.Logging.AddSerilog(logger);*/
 
 // Add JWT
 builder.Services.AddJwt(builder.Configuration);

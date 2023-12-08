@@ -15,7 +15,7 @@ public class AffairItemController : BaseController
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> PostAsync([FromBody] AffairItemCreationDto dto)
+    public async Task<IActionResult> PostAsync(AffairItemCreationDto dto)
     {
         return Ok(new Response
         {

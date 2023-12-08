@@ -15,7 +15,7 @@ public class AdminsController : BaseController
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> PostAsync([FromForm] AdminCreationDto dto)
+    public async Task<IActionResult> PostAsync(AdminCreationDto dto)
     {
         return Ok(new Response
         {
@@ -37,7 +37,7 @@ public class AdminsController : BaseController
     }
 
     [HttpPut("update")]
-    public async Task<IActionResult> UpdateAsync([FromForm] AdminUpdateDto dto)
+    public async Task<IActionResult> UpdateAsync(AdminUpdateDto dto)
     {
         return Ok(new Response
         {
