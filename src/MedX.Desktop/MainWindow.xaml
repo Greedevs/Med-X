@@ -11,7 +11,8 @@
         Background="Transparent"
         Opacity="1"
         AllowsTransparency="True"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Loaded="WindowLoaded">
     <Border Style="{DynamicResource PrimaryBorder}"
             Background="{DynamicResource SecondaryBackground}">
         <Grid>
@@ -49,6 +50,7 @@
                     </StackPanel>
                 </Grid>
             </Border>
+            
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="250"/>
@@ -123,9 +125,9 @@
                     </StackPanel>
                 </Border>
                 <Frame x:Name="PageNavigator"
-                        Grid.Column="1"
-                        Padding="15"
-                        NavigationUIVisibility="Hidden"/>
+                       Grid.Column="1"
+                       Padding="0 15 0 0"
+                       NavigationUIVisibility="Hidden"/>
             </Grid>
 
         </Grid>

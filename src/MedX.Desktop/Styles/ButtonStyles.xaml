@@ -163,7 +163,7 @@
                             Style="{DynamicResource PrimaryBorder}"
                             Background="#05C880">
                         <Label FontSize="16"
-                               Margin="15 0"
+                               Margin="25 0"
                                FontFamily="jetbrains mono"
                                FontWeight="SemiBold"
                                Foreground="snow"

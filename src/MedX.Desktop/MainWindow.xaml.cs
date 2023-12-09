@@ -1,9 +1,7 @@
-﻿using MedX.Desktop.Pages;
-using MedX.Service.Interfaces;
-using System.Windows;
+﻿using System.Windows;
+using MedX.Desktop.Pages;
 using System.Windows.Input;
 using System.Windows.Threading;
-using System.Xml.XPath;
 
 namespace MedX.Desktop;
 
@@ -12,17 +10,10 @@ namespace MedX.Desktop;
 /// </summary>
 public partial class MainWindow : Window
 {
-    private readonly IEmployeeService employeeService;
 
     public MainWindow()
     {
         InitializeComponent();
-    }
-
-    public MainWindow(IEmployeeService employeeService)
-    {
-        InitializeComponent();
-        this.employeeService = employeeService ?? throw new ArgumentNullException(nameof(employeeService));
     }
 
     private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -45,8 +36,15 @@ public partial class MainWindow : Window
     private void MaximazeButton_Click(object sender, RoutedEventArgs e)
     {
         if (this.WindowState == WindowState.Maximized)
+        {
             this.WindowState = WindowState.Normal;
-        else this.WindowState = WindowState.Maximized;
+            PageNavigator.Margin = new Thickness(0);
+        }
+        else
+        {
+            this.WindowState = WindowState.Maximized;
+            PageNavigator.Margin = new Thickness(10, 0, 10, 0);
+        }
         this.WindowStyle = WindowStyle.None;
     }
 
@@ -58,61 +56,57 @@ public partial class MainWindow : Window
 
     private void rbDashboard_Click(object sender, RoutedEventArgs e)
     {
-        DashboardPage dashboardPage = new();
-        PageNavigator.Content = dashboardPage;
+        PageNavigator.Content = new DashboardPage();
     }
 
     private void rbDoctors_Click(object sender, RoutedEventArgs e)
     {
-        EmployeesPage employeesPage = new();
-        PageNavigator.Content = employeesPage;
+        PageNavigator.Content = new EmployeesPage();
     }
 
     private void rbPatients_Click(object sender, RoutedEventArgs e)
     {
-        PatientsPage patientsPage = new();
-        PageNavigator.Content = patientsPage;
+        PageNavigator.Content = new PatientsPage();
     }
 
     private void rbAffairs_Click(object sender, RoutedEventArgs e)
     {
-        ReportsPage reportsPage = new();
-        PageNavigator.Content = reportsPage;
+        PageNavigator.Content = new ReportsPage();
     }
 
     private void rbCashDesk_Click(object sender, RoutedEventArgs e)
     {
-        CashDesksPage cashPage = new();
-        PageNavigator.Content = cashPage;
+        PageNavigator.Content = new CashDesksPage();
     }
 
     private void rbRooms_Click(object sender, RoutedEventArgs e)
     {
-        RoomsPage roomsPage = new();
-        PageNavigator.Content = roomsPage;
+        PageNavigator.Content = new RoomsPage();
     }
 
     private void rbReports_Click(object sender, RoutedEventArgs e)
     {
-        ReportsPage reportsPage = new();
-        PageNavigator.Content = reportsPage;
+        PageNavigator.Content = new ReportsPage();
     }
 
     private void rbAbout_Click(object sender, RoutedEventArgs e)
     {
-        AboutPage aboutPage = new();
-        PageNavigator.Content = aboutPage;
+        PageNavigator.Content = new AboutPage();
     }
 
     private void rbEmployees_Click(object sender, RoutedEventArgs e)
     {
-        EmployeesPage employeesPage = new();
-        PageNavigator.Content = employeesPage;
+        PageNavigator.Content = new EmployeesPage();
     }
 
     private void rbInformation_Click(object sender, RoutedEventArgs e)
     {
-        InformationPage informationPage = new();
-        PageNavigator.Content = informationPage;
+        PageNavigator.Content = new InformationPage();
+    }
+
+    private void WindowLoaded(object sender, RoutedEventArgs e)
+    {
+        PageNavigator.Content = new EmployeesPage();
+        rbDoctors.IsChecked = true;
     }
 }

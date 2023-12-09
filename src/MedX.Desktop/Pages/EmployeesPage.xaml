@@ -9,13 +9,14 @@
       Title="EmployeesPage"
       Loaded="PageLoaded">
 
-    <Grid Margin="10">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0"
                     HorizontalAlignment="Right"
+                    Margin="0 0 15 0"
                     Orientation="Horizontal">
             <Border Style="{DynamicResource PrimaryBorder}"
                     Background="{DynamicResource PrimaryBackground}"
@@ -48,10 +49,12 @@
                         Content="Add"/>
         </StackPanel>
         <ScrollViewer Grid.Row="1">
-            <WrapPanel x:Name="wrpEmployees" 
-                       Grid.Row="1">
+            <Border Padding="15">
+                <WrapPanel x:Name="wrpEmployees" 
+                           Grid.Row="1">
 
-            </WrapPanel>
+                </WrapPanel>
+            </Border>
         </ScrollViewer>
     </Grid>
 </Page>
