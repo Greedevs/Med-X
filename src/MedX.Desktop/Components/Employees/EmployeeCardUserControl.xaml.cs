@@ -19,10 +19,12 @@ public partial class EmployeeCardUserControl : UserControl
 
     public void SetData(EmployeeResultDto dto)
     {
-        var image = dto.Image is null ? "../../../Assets/Images/register-background-image.png"
-            : PathHelper.WebRootPath+"/Images/"+dto.Image.FileName;
         Id = dto.Id;
-        ImgBrush.ImageSource = new BitmapImage(new Uri(image, UriKind.Relative));
+        if (dto.Image is null)
+            ImgBrush.ImageSource = new BitmapImage(new Uri("../../../Assets/Images/register-background-image.png", UriKind.Relative));
+        else
+            ImgBrush.ImageSource = new BitmapImage(new Uri(dto.Image.FilePath));
+
         ImgBrush.Stretch = Stretch.UniformToFill;    
         lbName.Content = dto.FirstName;
         tbDescription.Text = $"{dto.FirstName} {dto.LastName}";

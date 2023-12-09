@@ -6,6 +6,8 @@ using System.Windows.Controls;
 using MedX.Service.DTOs.Employees;
 using MedX.Desktop.Windows.Employees;
 using MedX.Desktop.Components.Employees;
+using Newtonsoft.Json;
+using MedX.WebApi.Models;
 
 namespace MedX.Desktop.Pages;
 
@@ -40,6 +42,7 @@ public partial class EmployeesPage : Page
         string uri = $"{link}get-all?PageSize=10&PageIndex={1}";
 
         var response = await httpClient.GetAsync(uri);
+
         var employees = await ContentHelper.GetContentAsync<List<EmployeeResultDto>>(response);
 
         foreach (var employee in employees)
@@ -47,7 +50,7 @@ public partial class EmployeesPage : Page
             var employeeCardUserControl = new EmployeeCardUserControl();
             employeeCardUserControl.SetData(employee);
             wrpEmployees.Children.Add(employeeCardUserControl);
-        }
+        } 
     }
 }
 

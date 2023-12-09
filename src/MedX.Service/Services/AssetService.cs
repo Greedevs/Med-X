@@ -33,12 +33,12 @@ public class AssetService : IAssetService
             await dto.FormFile.CopyToAsync(fileStream);
         }
 
-        //var imageUrl = $"{httpContextAccessor.HttpContext.Request.Scheme}://{httpContextAccessor.HttpContext.Request.Host}/Images/{fileName}";
+        var imageUrl = $"{httpContextAccessor.HttpContext.Request.Scheme}://{httpContextAccessor.HttpContext.Request.Host}/Images/{fileName}";
 
         var asset = new Asset()
         {
             FileName = fileName,
-            FilePath = fileName,
+            FilePath = imageUrl,
         };
 
         await this.repository.CreateAsync(asset);
