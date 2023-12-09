@@ -15,7 +15,7 @@ public class AppointmentsController : BaseController
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> PostAsync(AppointmentCreationDto dto)
+    public async Task<IActionResult> PostAsync([FromForm] AppointmentCreationDto dto)
     {
         return Ok(new Response
         {
@@ -37,7 +37,7 @@ public class AppointmentsController : BaseController
     }
 
     [HttpPut("update")]
-    public async Task<IActionResult> UpdateAsync(AppointmentUpdateDto dto)
+    public async Task<IActionResult> UpdateAsync([FromForm] AppointmentUpdateDto dto)
     {
         return Ok(new Response
         {

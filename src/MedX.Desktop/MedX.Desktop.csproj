@@ -31,7 +31,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MedX.Service\MedX.Service.csproj" />
-    <ProjectReference Include="..\MedX.WebApi\MedX.WebApi.csproj" />
   </ItemGroup>
 
 </Project>

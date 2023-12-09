@@ -1,13 +1,18 @@
-﻿using System.IO;
-using System.Windows;
+﻿using System.Windows;
 using Microsoft.Win32;
-using System.Net.Http;
 using MedX.Domain.Enums;
 using System.Windows.Input;
-using MedX.Desktop.Helpers;
-using MedX.Desktop.Constants;
-using Microsoft.AspNetCore.Http;
+using MedX.Service.Interfaces;
 using MedX.Service.DTOs.Employees;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using System.Net.Http;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+using System.Text;
+using MedX.Desktop.Constants;
+using MedX.Desktop.Helpers;
+using System.Security.Policy;
 
 namespace MedX.Desktop.Windows.Employees;
 

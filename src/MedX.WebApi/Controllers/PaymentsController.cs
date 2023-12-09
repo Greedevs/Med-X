@@ -16,7 +16,7 @@ public class PaymentsController : BaseController
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> PostAsync( PaymentCreationDto dto)
+    public async Task<IActionResult> PostAsync([FromForm] PaymentCreationDto dto)
     {
         return Ok(new Response
         {
@@ -39,7 +39,7 @@ public class PaymentsController : BaseController
     }
 
     [HttpPut("update")]
-    public async Task<IActionResult> UpdateAsync(PaymentUpdateDto dto)
+    public async Task<IActionResult> UpdateAsync([FromForm] PaymentUpdateDto dto)
     {
         return Ok(new Response
         {
