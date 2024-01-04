@@ -2,6 +2,14 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="BorderShadow" TargetType="{x:Type Border}">
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect Color="Black" BlurRadius="30" Opacity="0.2"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="PrimaryBorder" TargetType="{x:Type Border}">
         <Setter Property="CornerRadius" Value="5"/>
         <Setter Property="Background" Value="{DynamicResource PrimaryBackground}"/>
         <Setter Property="Effect">
@@ -22,32 +30,5 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <!--<Style x:Key="AddItemSelectImage" TargetType="Border">
-        <Setter Property="Height" Value="140"/>
-        <Setter Property="Width" Value="140"/>
-        <Setter Property="CornerRadius" Value="15"/>
-        <Setter Property="Margin" Value="25 0 0 0"/>
-        
-        <Setter Property="Effect">
-            <Setter.Value>
-                <DropShadowEffect Color="Black" BlurRadius="30" Opacity="0.2"/>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Background">
-            <Setter.Value>
-                <ImageBrush x:Name="ImbBImage" ImageSource="/Assets/Images/register-background-image.png"/>
-            </Setter.Value>
-        </Setter>
-        <
-    </Style>-->
+    
 </ResourceDictionary>
-
-<!--Height="140" Width="140"
-                                MouseLeftButtonDown="ImageBorder_Clicked"
-                                CornerRadius="14"
-                                Margin="25 0 0 0"
-                                Style="{DynamicResource BorderShadow}">
-<Border.Background>
-    <ImageBrush x:Name="ImbBImage" ImageSource="/Assets/Images/register-background-image.png"/>
-</Border.Background>-->

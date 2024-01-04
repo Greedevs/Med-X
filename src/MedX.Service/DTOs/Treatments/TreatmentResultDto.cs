@@ -1,4 +1,4 @@
-﻿using MedX.Service.DTOs.Doctors;
+﻿using MedX.Service.DTOs.Employees;
 using MedX.Service.DTOs.Patients;
 using MedX.Service.DTOs.Rooms;
 

@@ -11,8 +11,9 @@
         Background="Transparent"
         Opacity="1"
         AllowsTransparency="True"
-        WindowStartupLocation="CenterScreen">
-    <Border Style="{DynamicResource BorderShadow}"
+        WindowStartupLocation="CenterScreen"
+        Loaded="WindowLoaded">
+    <Border Style="{DynamicResource PrimaryBorder}"
             Background="{DynamicResource SecondaryBackground}">
         <Grid>
             <Grid.RowDefinitions>
@@ -20,7 +21,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Border Style="{DynamicResource BorderShadow}"
+            <Border Style="{DynamicResource PrimaryBorder}"
                     Background="{DynamicResource PrimaryBackground}"
                     MouseLeftButtonDown="Border_MouseLeftButtonDown"
                     BorderThickness="0 0 0 0.5"
@@ -49,13 +50,14 @@
                     </StackPanel>
                 </Grid>
             </Border>
+            
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="250"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0"
-                        Style="{DynamicResource BorderShadow}"
+                        Style="{DynamicResource PrimaryBorder}"
                         Background="{DynamicResource PrimaryBackground}"
                         CornerRadius="0 0 0 5" 
                         Padding="10">
@@ -123,9 +125,9 @@
                     </StackPanel>
                 </Border>
                 <Frame x:Name="PageNavigator"
-                        Grid.Column="1"
-                        Padding="15"
-                        NavigationUIVisibility="Hidden"/>
+                       Grid.Column="1"
+                       Padding="0 15 0 0"
+                       NavigationUIVisibility="Hidden"/>
             </Grid>
 
         </Grid>

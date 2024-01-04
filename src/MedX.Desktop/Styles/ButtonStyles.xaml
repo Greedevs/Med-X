@@ -143,7 +143,7 @@
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="B" Property="Cursor" Value="Hand"/>
-                            <Setter TargetName="B" Property="Style" Value="{DynamicResource BorderShadow}"/>
+                            <Setter TargetName="B" Property="Style" Value="{DynamicResource PrimaryBorder}"/>
                             <Setter TargetName="B" Property="Background" Value="{DynamicResource Selectedbackground}"/>
                             <Setter TargetName="Indicator" Property="Visibility" Value="Visible"/>
                         </Trigger>
@@ -160,10 +160,10 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="B"
-                            Style="{DynamicResource BorderShadow}"
+                            Style="{DynamicResource PrimaryBorder}"
                             Background="#05C880">
                         <Label FontSize="16"
-                               Margin="15 0"
+                               Margin="25 0"
                                FontFamily="jetbrains mono"
                                FontWeight="SemiBold"
                                Foreground="snow"

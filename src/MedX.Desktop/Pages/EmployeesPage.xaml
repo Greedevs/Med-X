@@ -6,17 +6,19 @@
       xmlns:local="clr-namespace:MedX.Desktop.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="EmployeesPage">
+      Title="EmployeesPage"
+      Loaded="PageLoaded">
 
-    <Grid Margin="10">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0"
                     HorizontalAlignment="Right"
+                    Margin="0 0 15 0"
                     Orientation="Horizontal">
-            <Border Style="{DynamicResource BorderShadow}"
+            <Border Style="{DynamicResource PrimaryBorder}"
                     Background="{DynamicResource PrimaryBackground}"
                     Width="400">
                 <Grid>
@@ -46,5 +48,13 @@
                         Style="{DynamicResource SuccesssButton}"
                         Content="Add"/>
         </StackPanel>
+        <ScrollViewer Grid.Row="1">
+            <Border Padding="15">
+                <WrapPanel x:Name="wrpEmployees" 
+                           Grid.Row="1">
+
+                </WrapPanel>
+            </Border>
+        </ScrollViewer>
     </Grid>
 </Page>

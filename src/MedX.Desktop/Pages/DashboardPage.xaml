@@ -15,10 +15,14 @@
         <StackPanel Grid.Row="0"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
-            <Border Style="{DynamicResource BorderShadow}"
+            <Border Style="{DynamicResource PrimaryBorder}"
                     Background="{DynamicResource PrimaryBackground}"
                     Width="400">
                 <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="11*"/>
+                        <RowDefinition Height="29*"/>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="40"/>
                         <ColumnDefinition Width="*"/>
@@ -28,16 +32,16 @@
                           Fill="{DynamicResource PrimaryForeground}"
                           Width="20"
                           Height="20"
-                          Stretch="Uniform"/>
+                          Stretch="Uniform" Margin="10,10,10,10" Grid.RowSpan="2"/>
                     <TextBox x:Name="tbSearch"
                              Grid.Column="1"
-                             VerticalAlignment="Center"
+                             VerticalAlignment="Top"
                              FontFamily="jetbrains mono"
                              FontSize="16"
                              BorderThickness="0"
-                             Margin="5 0 5 0"
+                             Margin="5,9,5,0"
                              Foreground="{DynamicResource PrimaryForeground}"
-                             Background="{DynamicResource PrimaryBackground}"/>
+                             Background="{DynamicResource PrimaryBackground}" Grid.RowSpan="2"/>
                 </Grid>
             </Border>
             <Button x:Name="btnCreate"

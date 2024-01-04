@@ -1,5 +1,5 @@
 ﻿using MedX.Domain.Configurations;
-using MedX.Service.DTOs.Doctors;
+using MedX.Service.DTOs.Employees;
 
 namespace MedX.Service.Interfaces;
 

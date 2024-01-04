@@ -3,6 +3,7 @@ using MedX.Data.Contexts;
 using MedX.Service.Helpers;
 using MedX.WebApi.Extensions;
 using MedX.WebApi.Middlewares;
+using MedX.Service.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,20 +25,28 @@ builder.Services.AddServices();
 // Add Authorization
 builder.Services.ConfigureSwagger();
 
-// Logger
+/*// Logger
 var logger = new LoggerConfiguration()
                     .ReadFrom.Configuration(builder.Configuration)
                     .Enrich.FromLogContext()
                     .CreateLogger();
 builder.Logging.ClearProviders();
-builder.Logging.AddSerilog(logger);
+builder.Logging.AddSerilog(logger);*/
 
 // Add JWT
 builder.Services.AddJwt(builder.Configuration);
 
 PathHelper.WebRootPath = Path.GetFullPath("wwwroot");
-
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
+
+// Init Accessor
+app.InitAccessor();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())

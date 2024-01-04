@@ -1,10 +1,15 @@
-﻿using MedX.Domain.Enums;
-using MedX.Service.DTOs.Doctors;
-using MedX.Service.Interfaces;
-using MedX.Service.Services;
-using Microsoft.Win32;
+﻿using System.IO;
 using System.Windows;
+using Microsoft.Win32;
+using System.Net.Http;
+using MedX.Domain.Enums;
 using System.Windows.Input;
+using MedX.Desktop.Helpers;
+using MedX.Desktop.Constants;
+using Microsoft.AspNetCore.Http;
+using MedX.Service.DTOs.Employees;
+using System.Net.Http.Headers;
+using System.Windows.Media;
 
 namespace MedX.Desktop.Windows.Employees;
 
@@ -13,9 +18,15 @@ namespace MedX.Desktop.Windows.Employees;
 /// </summary>
 public partial class EmployeeCreateWindow : Window
 {
+    private string imagePath;
+    private string link;
+    private HttpClient httpClient;
+
     public EmployeeCreateWindow()
     {
         InitializeComponent();
+        httpClient = new HttpClient();
+        link = HttpConstant.BaseLink + "api/employees/create/";
     }
 
     private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -35,8 +46,8 @@ public partial class EmployeeCreateWindow : Window
 
         if (openFileDialog.ShowDialog() == true)
         {
-            string path = openFileDialog.FileName;
-            btnSelectImage.Tag = path;
+            imagePath = openFileDialog.FileName;
+            btnSelectImage.Tag = imagePath;
         }
     }
 
@@ -52,38 +63,47 @@ public partial class EmployeeCreateWindow : Window
         tbSalary.IsReadOnly = false;
     }
 
-    /*    private async void btnCreateEmployee(object sender, RoutedEventArgs e)
-        {
-            EmployeeCreationDto employeeCreationDto = new()
-            {
-                FirstName = tbFirstName.Text,
-                LastName = tbLastName.Text,
-                Patronymic = tbPatronymic.Text,
-                Email = tbEmail.Text,
-                Phone = tbPhone.Text,
-                Professional = tbProfessional.Text,
-                Password = tbPassword.Text,
-            };
-
-            if(rbDegree1.IsChecked == true)
-            {
-                employeeCreationDto.Degree = Degree.Primary;
-                employeeCreationDto.Percentage = Convert.ToInt32(tbSalary.Text);
-            }
-            else if(rbDegree2.IsChecked == true)
-            {
-                employeeCreationDto.Degree = Degree.Secondary;
-                employeeCreationDto.Salary = Convert.ToDecimal(tbSalary.Text);
-            }
-
-    *//*        var resultDto = await employeeService.AddAsync(employeeCreationDto);
-            if (resultDto is not null)
-                MessageBox.Show($"{resultDto.FirstName} {resultDto.LastName} employee created");
-            else MessageBox.Show("Something goes wrong");*//*
-        }*/
-
-    private void CreateEmployee_Click(object sender, RoutedEventArgs e)
+    private async void btnCreateEmployee_Click(object sender, RoutedEventArgs e)
     {
+        EmployeeCreationDto employeeCreationDto = new();
+        using (var multipartFormContent = new MultipartFormDataContent())
+        {
+            multipartFormContent.Add(new StringContent(tbFirstName.Text), nameof(employeeCreationDto.FirstName));
+            multipartFormContent.Add(new StringContent(tbLastName.Text), nameof(employeeCreationDto.LastName));
+            multipartFormContent.Add(new StringContent(tbPatronymic.Text), nameof(employeeCreationDto.Patronymic));
+            multipartFormContent.Add(new StringContent(tbEmail.Text), nameof(employeeCreationDto.Email));
+            multipartFormContent.Add(new StringContent(tbPhone.Text), nameof(employeeCreationDto.Phone));
+            multipartFormContent.Add(new StringContent(tbProfessional.Text), nameof(employeeCreationDto.Professional));
+            multipartFormContent.Add(new StringContent(tbPassword.Text), nameof(employeeCreationDto.Password));
 
+            if(imagePath is not null)
+            {
+                var fileStreamContent = new StreamContent(File.OpenRead(imagePath));
+                fileStreamContent.Headers.ContentType = new MediaTypeHeaderValue("image/*");
+                multipartFormContent.Add(fileStreamContent, name: nameof(employeeCreationDto.Image), fileName: "image" + Path.GetExtension(imagePath));
+            }
+
+            if (rbDegree1.IsChecked == true)
+            {
+                multipartFormContent.Add(new StringContent(Degree.Primary.ToString()), nameof(employeeCreationDto.Degree));
+                multipartFormContent.Add(new StringContent(tbSalary.Text), nameof(employeeCreationDto.Percentage));
+            }
+            else if (rbDegree2.IsChecked == true)
+            {
+                multipartFormContent.Add(new StringContent(Degree.Secondary.ToString()), nameof(employeeCreationDto.Degree));
+                multipartFormContent.Add(new StringContent(tbSalary.Text), nameof(employeeCreationDto.Salary));
+            }
+
+            //var content = ContentHelper.GetContent(employeeCreationDto);
+            var response = await httpClient.PostAsync(link, multipartFormContent);
+            response.EnsureSuccessStatusCode();
+
+            //var resultDto = await ContentHelper.GetContentAsync<EmployeeResultDto>(response);
+
+            if (response is not null)
+                MessageBox.Show($"Employee created successfully");
+            else MessageBox.Show(await response.Content.ReadAsStringAsync());
+            this.Close();
+        }
     }
 }

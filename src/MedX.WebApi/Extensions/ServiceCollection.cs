@@ -1,12 +1,12 @@
-﻿using MedX.Data.IRepositories;
-using MedX.Data.Repositories;
-using MedX.Service.Interfaces;
+﻿using System.Text;
 using MedX.Service.Mappers;
 using MedX.Service.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
+using MedX.Data.Repositories;
+using MedX.Data.IRepositories;
+using MedX.Service.Interfaces;
 using Microsoft.OpenApi.Models;
-using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace MedX.WebApi.Extensions;
 
@@ -19,18 +19,19 @@ public static class ServiceCollection
         services.AddScoped<IRoomService, RoomService>();
         services.AddScoped<IAssetService, AssetService>();
         services.AddScoped<IAdminService, AdminService>();
-        services.AddScoped<IEmployeeService, EmployeeService>();
         services.AddScoped<IAffairService, AffairService>();
         services.AddScoped<IPaymentService, PaymentService>();
         services.AddScoped<IPatientService, PatientService>();
         services.AddScoped<ICashDeskService, CashDeskService>();
+        services.AddScoped<IEmployeeService, EmployeeService>();
         services.AddScoped<ITreatmentService, TreatmentService>();
         services.AddScoped<IAffairItemService, AffairItemService>();
         services.AddScoped<IAppointmentService, AppointmentService>();
-        services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IMedicalRecordService, MedicalRecordService>();
+        services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddHttpContextAccessor();
     }
+
     public static void AddJwt(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddAuthentication(x =>
@@ -44,8 +45,8 @@ public static class ServiceCollection
             o.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer = false,
-                ValidateAudience = false,
                 ValidateLifetime = true,
+                ValidateAudience = false,
                 ValidateIssuerSigningKey = true,
                 ValidIssuer = configuration["JWT:Issuer"],
                 ValidAudience = configuration["JWT:Audience"],

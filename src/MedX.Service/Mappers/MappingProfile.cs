@@ -9,7 +9,7 @@ using MedX.Service.DTOs.Administrators;
 using MedX.Service.DTOs.Appointments;
 using MedX.Service.DTOs.Assets;
 using MedX.Service.DTOs.CashDesks;
-using MedX.Service.DTOs.Doctors;
+using MedX.Service.DTOs.Employees;
 using MedX.Service.DTOs.MedicalRecords;
 using MedX.Service.DTOs.Patients;
 using MedX.Service.DTOs.Payments;
