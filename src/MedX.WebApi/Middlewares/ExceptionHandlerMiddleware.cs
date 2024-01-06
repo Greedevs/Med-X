@@ -1,7 +1,7 @@
 ﻿using MedX.Service.Exceptions;
-using MedX.WebApi.Models;
+using MedX.Desktop.Models;
 
-namespace MedX.WebApi.Middlewares;
+namespace MedX.Desktop.Middlewares;
 
 public class ExceptionHandlerMiddleware
 {

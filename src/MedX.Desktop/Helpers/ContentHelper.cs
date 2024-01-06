@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Windows;
-using MedX.WebApi.Models;
+using MedX.Desktop.Models;
 using MedX.Service.DTOs.Employees;
 
 namespace MedX.Desktop.Helpers;

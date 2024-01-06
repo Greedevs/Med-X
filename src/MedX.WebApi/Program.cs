@@ -1,8 +1,8 @@
 using Serilog;
 using MedX.Data.Contexts;
 using MedX.Service.Helpers;
-using MedX.WebApi.Extensions;
-using MedX.WebApi.Middlewares;
+using MedX.Desktop.Extensions;
+using MedX.Desktop.Middlewares;
 using MedX.Service.Extensions;
 using Microsoft.EntityFrameworkCore;
 
