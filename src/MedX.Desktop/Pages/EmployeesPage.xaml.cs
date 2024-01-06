@@ -7,7 +7,7 @@ using MedX.Service.DTOs.Employees;
 using MedX.Desktop.Windows.Employees;
 using MedX.Desktop.Components.Employees;
 using Newtonsoft.Json;
-using MedX.WebApi.Models;
+using MedX.Desktop.Models;
 
 namespace MedX.Desktop.Pages;
 

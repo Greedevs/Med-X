@@ -1,4 +1,4 @@
-﻿namespace MedX.WebApi.Models;
+﻿namespace MedX.Desktop.Models;
 
 public class Response
 {

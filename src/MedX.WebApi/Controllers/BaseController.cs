@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace MedX.WebApi.Controllers;
+namespace MedX.Desktop.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

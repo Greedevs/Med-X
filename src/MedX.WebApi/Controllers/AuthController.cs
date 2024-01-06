@@ -1,8 +1,8 @@
 ﻿using MedX.Service.Interfaces;
-using MedX.WebApi.Models;
+using MedX.Desktop.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MedX.WebApi.Controllers;
+namespace MedX.Desktop.Controllers;
 
 public class AuthController : BaseController
 {

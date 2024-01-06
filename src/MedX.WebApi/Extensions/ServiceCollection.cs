@@ -8,7 +8,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
-namespace MedX.WebApi.Extensions;
+namespace MedX.Desktop.Extensions;
 
 public static class ServiceCollection
 {
