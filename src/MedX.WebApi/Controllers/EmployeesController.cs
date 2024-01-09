@@ -18,13 +18,13 @@ public class EmployeesController : BaseController
     public async Task<IActionResult> PostAsync([FromForm] EmployeeCreationDto dto)
         => Ok(new Response { Data = await employeeService.AddAsync(dto) });
 
-    [HttpDelete("delete/{id:long}")]
-    public async Task<IActionResult> DeleteAsync(long id)
-        => Ok(new Response { Data = await employeeService.DeleteAsync(id) });
-
     [HttpPut("update")]
     public async Task<IActionResult> UpdateAsync([FromForm] EmployeeUpdateDto dto)
         => Ok(new Response { Data = await employeeService.UpdateAsync(dto) });
+
+    [HttpDelete("delete/{id:long}")]
+    public async Task<IActionResult> DeleteAsync(long id)
+        => Ok(new Response { Data = await employeeService.DeleteAsync(id) });
 
     [HttpGet("get/{id:long}")]
     public async Task<IActionResult> GetAsync(long id)

@@ -44,7 +44,7 @@
                 </Grid>
             </Border>
                 <Button x:Name="btnCreate"
-                        Click="btnCreate_Click"
+                        Click="BtnCreate_Click"
                         Style="{DynamicResource SuccesssButton}"
                         Content="Add"/>
         </StackPanel>

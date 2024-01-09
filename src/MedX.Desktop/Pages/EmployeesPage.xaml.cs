@@ -1,13 +1,8 @@
 ﻿using System.Windows;
-using System.Net.Http;
-using MedX.Desktop.Helpers;
-using MedX.Desktop.Constants;
+using MedX.Desktop.Services;
 using System.Windows.Controls;
-using MedX.Service.DTOs.Employees;
 using MedX.Desktop.Windows.Employees;
 using MedX.Desktop.Components.Employees;
-using Newtonsoft.Json;
-using MedX.Desktop.Models;
 
 namespace MedX.Desktop.Pages;
 
@@ -17,18 +12,15 @@ namespace MedX.Desktop.Pages;
 // EmployeesPage.xaml.cs
 public partial class EmployeesPage : Page
 {
-
-    private string link;
-    private HttpClient httpClient;
+    private readonly IEmployeeApiService employeeService;
 
     public EmployeesPage()
     {
         InitializeComponent();
-        httpClient = new HttpClient();
-        link = HttpConstant.BaseLink + "api/employees/";
+        employeeService = RestService.For<IEmployeeApiService>(HttpConstant.BaseLink);
     }
 
-    private void btnCreate_Click(object sender, RoutedEventArgs e)
+    private void BtnCreate_Click(object sender, RoutedEventArgs e)
     {
         EmployeeCreateWindow employeeCreateWindow = new EmployeeCreateWindow();
         employeeCreateWindow.ShowDialog();
@@ -38,14 +30,17 @@ public partial class EmployeesPage : Page
     {
         wrpEmployees.Children.Clear();
 
-        //http://localhost:5298/api/Employees/get-all?PageSize=10&PageIndex=1
-        string uri = $"{link}get-all?PageSize=10&PageIndex={1}";
+        #region Old Code with HttpClient
+        ////http://localhost:5298/api/Employees/get-all?PageSize=10&PageIndex=1
+        //string uri = $"{link}get-all?PageSize=10&PageIndex={1}";
+        //HttpClient httpClient = new();
+        //var response = await httpClient.GetAsync(uri);
+        //var employees = await ContentHelper.GetContentAsync<List<EmployeeResultDto>>(response);
+        #endregion
 
-        var response = await httpClient.GetAsync(uri);
+        var employees = await employeeService.GetAllAsync();
 
-        var employees = await ContentHelper.GetContentAsync<List<EmployeeResultDto>>(response);
-
-        foreach (var employee in employees)
+        foreach (var employee in employees.Data)
         {
             var employeeCardUserControl = new EmployeeCardUserControl();
             employeeCardUserControl.SetData(employee);

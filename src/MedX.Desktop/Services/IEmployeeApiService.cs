@@ -5,18 +5,18 @@ namespace MedX.Desktop.Services;
 
 public interface IEmployeeApiService
 {
-    [Post("/employees/create")]
-    Task<Response<EmployeeResultDto>> AddAsync(EmployeeCreationDto dto);
+    [Post("/api/employees/create")]
+    Task<Response<EmployeeResultDto>> AddAsync([Body(BodySerializationMethod.UrlEncoded)] EmployeeCreationDto dto);
 
-    [Put("/employees/update")]
+    [Put("/api/employees/update")]
     Task<Response<EmployeeResultDto>> UpdateAsync(EmployeeUpdateDto dto);
 
-    [Delete("/employees/delete/{id}")]
+    [Delete("/api/employees/delete/{id}")]
     Task<Response<bool>> DeleteAsync([AliasAs("id")] long id);
 
-    [Get("/employees/get/{id}")]
+    [Get("/api/employees/get/{id}")]
     Task<Response<EmployeeResultDto>> GetAsync([AliasAs("id")] long id);
 
-    [Get("/employees/get-all")]
-    Task<Response<IEnumerable<EmployeeResultDto>>> GetAllAsync([Query] PaginationParams @params, [Query] string search);
+    [Get("/api/employees/get-all")]
+    Task<Response<IEnumerable<EmployeeResultDto>>> GetAllAsync([Query] PaginationParams @params = default!, [Query] string? search = default!);
 }
