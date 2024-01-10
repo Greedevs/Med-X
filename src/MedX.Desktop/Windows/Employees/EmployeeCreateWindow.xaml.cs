@@ -1,13 +1,12 @@
 ﻿using System.IO;
 using System.Windows;
 using Microsoft.Win32;
+using System.Net.Http;
+using MedX.Domain.Enums;
 using System.Windows.Input;
 using MedX.Desktop.Services;
+using MedX.Desktop.Models.Employees;
 using Microsoft.AspNetCore.Http;
-using MedX.Service.DTOs.Employees;
-using MedX.Domain.Enums;
-using System.Net.Http;
-using System.Net.Http.Headers;
 
 namespace MedX.Desktop.Windows.Employees;
 
@@ -18,7 +17,6 @@ public partial class EmployeeCreateWindow : Window
 {
     private string? imagePath;
     private readonly IEmployeeApiService employeeService = RestService.For<IEmployeeApiService>(HttpConstant.BaseLink);
-    private readonly HttpClient httpClient = new HttpClient();
 
     public EmployeeCreateWindow()
     {
@@ -35,7 +33,7 @@ public partial class EmployeeCreateWindow : Window
         this.Close();
     }
 
-    private void btnSelectImage_Click(object sender, RoutedEventArgs e)
+    private void BtnSelectImage_Click(object sender, RoutedEventArgs e)
     {
         OpenFileDialog openFileDialog = new();
         openFileDialog.Filter = "PNG files (*.png)|*.png|JPEG files (*.jpeg)|*.jpeg|JPG files (*.jpg)|*.jpg|GIF files (*.gif)|*.gif|BMP files (*.bmp)|*.bmp";
@@ -47,30 +45,20 @@ public partial class EmployeeCreateWindow : Window
         }
     }
 
-    private void rbDegree1_Checked(object sender, RoutedEventArgs e)
+    private void RbDegree1_Checked(object sender, RoutedEventArgs e)
     {
         lSalary.Content = "Persentage";
         tbSalary.IsReadOnly = false;
     }
 
-    private void rbDegree2_Checked(object sender, RoutedEventArgs e)
+    private void RbDegree2_Checked(object sender, RoutedEventArgs e)
     {
         lSalary.Content = "Salary";
         tbSalary.IsReadOnly = false;
     }
 
-    private async void btnCreateEmployee_Click(object sender, RoutedEventArgs e)
+    private async void BtnCreateEmployee_Click(object sender, RoutedEventArgs e)
     {
-
-        var emps = await employeeService.GetAllAsync();
-
-        // Validate imagePath
-        if (string.IsNullOrEmpty(imagePath) || !File.Exists(imagePath))
-        {
-            MessageBox.Show("Invalid image file path.");
-            return;
-        }
-
         EmployeeCreationDto employeeCreationDto = new()
         {
             Email = tbEmail.Text,
@@ -87,9 +75,7 @@ public partial class EmployeeCreateWindow : Window
             if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
             {
                 byte[] imageBytes = File.ReadAllBytes(imagePath);
-                using MemoryStream stream = new(imageBytes);
-                IFormFile formFile = new FormFile(stream, 0, stream.Length, "Image", Path.GetFileName(imagePath));
-                employeeCreationDto.Image = formFile;
+                IFormFile formFile = ConvertToIFormFile(imageBytes, "image.jpg");
             }
 
             if (rbDegree1.IsChecked == true)
@@ -100,7 +86,7 @@ public partial class EmployeeCreateWindow : Window
             else if (rbDegree2.IsChecked == true)
             {
                 employeeCreationDto.Degree = Degree.Secondary;
-                employeeCreationDto.Salary = Convert.ToInt32(tbSalary.Text);
+                employeeCreationDto.Salary = Convert.ToInt64(tbSalary.Text);
             }
 
             var response = await employeeService.AddAsync(employeeCreationDto);
@@ -119,9 +105,11 @@ public partial class EmployeeCreateWindow : Window
     }
 
 
+    public static IFormFile ConvertToIFormFile(byte[] imageData, string fileName) 
+        => new FormFile(new MemoryStream(imageData), 0, imageData.Length, "Image", fileName);
 
 
-    //private async void btnCreateEmployee_Click(object sender, RoutedEventArgs e)
+    //private async void BtnCreateEmployee_Click(object sender, RoutedEventArgs e)
     //{
     //    EmployeeCreationDto employeeCreationDto = new();
     //    using var multipartFormContent = new MultipartFormDataContent

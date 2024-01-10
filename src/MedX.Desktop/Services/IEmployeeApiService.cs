@@ -1,13 +1,15 @@
 ﻿using MedX.Desktop.Models;
-using MedX.Service.DTOs.Employees;
+using MedX.Desktop.Models.Employees;
 
 namespace MedX.Desktop.Services;
 
 public interface IEmployeeApiService
 {
+    [Multipart]
     [Post("/api/employees/create")]
-    Task<Response<EmployeeResultDto>> AddAsync([Body(BodySerializationMethod.UrlEncoded)] EmployeeCreationDto dto);
+    Task<Response<EmployeeResultDto>> AddAsync(EmployeeCreationDto dto);
 
+    [Multipart]
     [Put("/api/employees/update")]
     Task<Response<EmployeeResultDto>> UpdateAsync(EmployeeUpdateDto dto);
 
