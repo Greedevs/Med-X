@@ -22,7 +22,7 @@ public partial class EmployeesPage : Page
 
     private void BtnCreate_Click(object sender, RoutedEventArgs e)
     {
-        EmployeeCreateWindow employeeCreateWindow = new EmployeeCreateWindow();
+        EmployeeCreateWindow employeeCreateWindow = new();
         employeeCreateWindow.ShowDialog();
     }
 
