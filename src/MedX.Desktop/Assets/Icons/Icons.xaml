@@ -20,5 +20,9 @@
     <PathGeometry x:Key="about" Figures="M2 12a10 10 0 1 0 20 0a10 10 0 1 0 -20 0 M12 10h0s1 0 1 1v5s0 1 -1 1h0s-1 0 -1 -1v-5s0 -1 1 -1 M12 7h0s1 0 1 1v0s0 1 -1 1h0s-1 0 -1 -1v0s0 -1 1 -1" />
 
     <!--end::controlWindows-->
+    
+    <!--begin::otherIcons-->
+    <PathGeometry x:Key="delete" Figures="M6,8 L18,8 L17.106535,19.6150447 C17.04642,20.3965405 16.3947578,21 15.6109533,21 L8.38904671,21 C7.60524225,21 6.95358004,20.3965405 6.89346498,19.6150447 L6,8 Z M8,10 L8.45438229,14.0894406 L15.5517885,14.0339036 L16,10 L8,10 Z"/>
+    <!--end::otherIcons-->
 
 </ResourceDictionary>

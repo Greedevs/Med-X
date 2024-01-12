@@ -2,6 +2,9 @@
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using MedX.Service.DTOs.Employees;
+using MedX.Service.Interfaces;
+using System.Windows;
+using MedX.Desktop.Pages;
 
 namespace MedX.Desktop.Components.Employees;
 
@@ -11,9 +14,11 @@ namespace MedX.Desktop.Components.Employees;
 public partial class EmployeeCardUserControl : UserControl
 {
     public long Id { get; private set; }
-    public EmployeeCardUserControl()
+    private readonly IEmployeeService employeeService;
+    public EmployeeCardUserControl(IEmployeeService employeeService)
     {
         InitializeComponent();
+        this.employeeService = employeeService;
     }
 
     public void SetData(EmployeeResultDto dto)
@@ -24,8 +29,23 @@ public partial class EmployeeCardUserControl : UserControl
         else
             ImgBrush.ImageSource = new BitmapImage(new Uri(dto.Image, UriKind.Relative));
 
-        ImgBrush.Stretch = Stretch.UniformToFill;    
-        lbName.Content = dto.FirstName;
-        tbDescription.Text = $"{dto.FirstName} {dto.LastName}";
+        ImgBrush.Stretch = Stretch.UniformToFill;
+        lbFullName.Content = $"{dto.FirstName} {dto.LastName}";
+        tbProfessional.Text = dto.Professional;
+        tbPatronymic.Text = dto.Patronymic;
+        tbPhone.Text = dto.Phone;
+        tbEmail.Text = dto.Email;
+    }
+
+    private async void DeleteItem_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+        var result = await this.employeeService.DeleteAsync(Id);
+        if (result)
+            MessageBox.Show("Employee deleted successfully!");
+        else
+            MessageBox.Show("Failed to delete employee. Please try again later.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        
+        EmployeesPage employeesPage = new EmployeesPage(employeeService);
+        await employeesPage.RefreshAsync();
     }
 }

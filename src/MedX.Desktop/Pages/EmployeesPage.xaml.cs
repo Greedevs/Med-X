@@ -20,13 +20,15 @@ public partial class EmployeesPage : Page
         this.employeeService = employeeService;
     }
 
-    private void BtnCreate_Click(object sender, RoutedEventArgs e)
+    private async void BtnCreate_Click(object sender, RoutedEventArgs e)
     {
         EmployeeCreateWindow employeeCreateWindow = new EmployeeCreateWindow(employeeService);
         employeeCreateWindow.ShowDialog();
+
+        await RefreshAsync();
     }
 
-    private async void PageLoaded(object sender, RoutedEventArgs e)
+    public async Task RefreshAsync()
     {
         wrpEmployees.Children.Clear();
 
@@ -49,11 +51,16 @@ public partial class EmployeesPage : Page
         {
             foreach (var employee in employees)
             {
-                var employeeCardUserControl = new EmployeeCardUserControl();
+                var employeeCardUserControl = new EmployeeCardUserControl(employeeService);
                 employeeCardUserControl.SetData(employee);
                 wrpEmployees.Children.Add(employeeCardUserControl);
             }
         }
+    }
+
+    private async void PageLoaded(object sender, RoutedEventArgs e)
+    {
+        await RefreshAsync();
     }
 }
 

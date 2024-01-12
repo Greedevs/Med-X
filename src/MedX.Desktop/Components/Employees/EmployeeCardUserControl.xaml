@@ -5,10 +5,20 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MedX.Desktop.Components.Employees"
              mc:Ignorable="d" 
-             Height="250" Width="214"
+             Height="260" Width="214"
              Margin="10">
     <Border Style="{DynamicResource BorderShadow}">
-        <Grid >
+        <Border.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Delete" Name="DeleteItem" 
+                          Click="DeleteItem_Click">
+                    <MenuItem.Icon>
+                        <Path Width="15" Height="15" Fill="Gray" Data="{DynamicResource delete}" Stretch="Uniform"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+        </Border.ContextMenu>
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="150"/>
                 <RowDefinition/>
@@ -22,15 +32,22 @@
             <Border Grid.Row="1"
                     Background="Snow"
                     CornerRadius="0 0 10 10">
-                <StackPanel>
-              
-                    <Label x:Name="lbName"
-                           FontSize="16"/>
-                
-                    <TextBlock x:Name="tbDescription"/>
-            
+                <StackPanel Grid.Column="0">
+                    <Label x:Name="lbFullName"
+                           FontSize="16"
+                           FontWeight="SemiBold"/>
+                    
+                    <TextBlock x:Name="tbProfessional"
+                               FontSize="14"
+                               FontWeight="Medium"
+                               Margin="10,1"/>
+                    <TextBlock x:Name="tbPatronymic"
+                               Margin="10,0.5"/>
+                    <TextBlock x:Name="tbPhone"
+                               Margin="10,0.5"/>
+                    <TextBlock x:Name="tbEmail"
+                               Margin="10,0.5"/>
                 </StackPanel>
-
             </Border>
         </Grid>
     </Border>
