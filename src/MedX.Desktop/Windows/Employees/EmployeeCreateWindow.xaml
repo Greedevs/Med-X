@@ -144,11 +144,11 @@
                                     <Label Content="Degree" Style="{DynamicResource TitleLable}"/>
                                     <StackPanel Orientation="Horizontal" Background="Transparent">
                                         <RadioButton x:Name="rbDegree1"
-                                                     Checked="rbDegree1_Checked"
+                                                     Checked="RbDegree1_Checked"
                                                      Content="1st"
                                                      Margin="25 7" 
                                                      Foreground="{DynamicResource PrimaryForeground}"/>
-                                        <RadioButton Checked="rbDegree2_Checked"
+                                        <RadioButton Checked="RbDegree2_Checked"
                                                      x:Name="rbDegree2" 
                                                      Content="2st"
                                                      Margin="25 7" 
@@ -195,7 +195,7 @@
                     <Button x:Name="CreateEmployee" 
                             Grid.Row="2" 
                             Height="45"
-                            Click="btnCreateEmployee_Click"
+                            Click="BtnCreateEmployee_Click"
                             Content="Add"
                             Width="200"
                             Margin="0 0 0 10"

@@ -1,7 +1,6 @@
 ﻿using System.Windows.Media;
-using MedX.Service.Helpers;
 using System.Windows.Controls;
-using MedX.Service.DTOs.Employees;
+using MedX.Desktop.Models.Employees;
 using System.Windows.Media.Imaging;
 
 namespace MedX.Desktop.Components.Employees;

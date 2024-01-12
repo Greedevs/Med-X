@@ -1,8 +1,11 @@
 ﻿using System.IO;
 using System.Windows;
 using Microsoft.Win32;
+using System.Net.Http;
+using MedX.Domain.Enums;
 using System.Windows.Input;
 using MedX.Desktop.Services;
+using MedX.Desktop.Models.Employees;
 using Microsoft.AspNetCore.Http;
 using MedX.Service.DTOs.Employees;
 using MedX.Domain.Enums;
@@ -37,7 +40,7 @@ public partial class EmployeeCreateWindow : Window
         this.Close();
     }
 
-    private void btnSelectImage_Click(object sender, RoutedEventArgs e)
+    private void BtnSelectImage_Click(object sender, RoutedEventArgs e)
     {
         OpenFileDialog openFileDialog = new();
         openFileDialog.Filter = "PNG files (*.png)|*.png|JPEG files (*.jpeg)|*.jpeg|JPG files (*.jpg)|*.jpg|GIF files (*.gif)|*.gif|BMP files (*.bmp)|*.bmp";
@@ -50,13 +53,13 @@ public partial class EmployeeCreateWindow : Window
         }
     }
 
-    private void rbDegree1_Checked(object sender, RoutedEventArgs e)
+    private void RbDegree1_Checked(object sender, RoutedEventArgs e)
     {
         lSalary.Content = "Persentage";
         tbSalary.IsReadOnly = false;
     }
 
-    private void rbDegree2_Checked(object sender, RoutedEventArgs e)
+    private void RbDegree2_Checked(object sender, RoutedEventArgs e)
     {
         lSalary.Content = "Salary";
         tbSalary.IsReadOnly = false;
@@ -126,9 +129,11 @@ public partial class EmployeeCreateWindow : Window
     }
 
 
+    public static IFormFile ConvertToIFormFile(byte[] imageData, string fileName) 
+        => new FormFile(new MemoryStream(imageData), 0, imageData.Length, "Image", fileName);
 
 
-    //private async void btnCreateEmployee_Click(object sender, RoutedEventArgs e)
+    //private async void BtnCreateEmployee_Click(object sender, RoutedEventArgs e)
     //{
     //    EmployeeCreationDto employeeCreationDto = new();
     //    using var multipartFormContent = new MultipartFormDataContent
