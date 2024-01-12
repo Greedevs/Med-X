@@ -8,6 +8,8 @@ using MedX.Service.DTOs.Employees;
 using MedX.Domain.Enums;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Windows.Media.Imaging;
+using MedX.Service.Interfaces;
 
 namespace MedX.Desktop.Windows.Employees;
 
@@ -17,12 +19,12 @@ namespace MedX.Desktop.Windows.Employees;
 public partial class EmployeeCreateWindow : Window
 {
     private string? imagePath;
-    private readonly IEmployeeApiService employeeService = RestService.For<IEmployeeApiService>(HttpConstant.BaseLink);
     private readonly HttpClient httpClient = new HttpClient();
-
-    public EmployeeCreateWindow()
+    private readonly IEmployeeService employeeService;
+    public EmployeeCreateWindow(IEmployeeService employeeService)
     {
         InitializeComponent();
+        this.employeeService = employeeService;
     }
 
     private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -43,6 +45,7 @@ public partial class EmployeeCreateWindow : Window
         if (openFileDialog.ShowDialog() == true)
         {
             imagePath = openFileDialog.FileName;
+            ImBImage.ImageSource = new BitmapImage(new Uri(imagePath, UriKind.Relative));
             btnSelectImage.Tag = imagePath;
         }
     }
@@ -61,8 +64,13 @@ public partial class EmployeeCreateWindow : Window
 
     private async void btnCreateEmployee_Click(object sender, RoutedEventArgs e)
     {
+        PaginationParams paginationParams = new PaginationParams()
+        {
+            PageIndex = 1,
+            PageSize = 20,
+        };
 
-        var emps = await employeeService.GetAllAsync();
+        var emps = await employeeService.GetAllAsync(paginationParams);
 
         // Validate imagePath
         if (string.IsNullOrEmpty(imagePath) || !File.Exists(imagePath))
@@ -84,23 +92,22 @@ public partial class EmployeeCreateWindow : Window
 
         try
         {
-            if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
+            string imagePath = ImBImage.ImageSource.ToString();
+
+            if (!string.IsNullOrEmpty(imagePath))
             {
-                byte[] imageBytes = File.ReadAllBytes(imagePath);
-                using MemoryStream stream = new(imageBytes);
-                IFormFile formFile = new FormFile(stream, 0, stream.Length, "Image", Path.GetFileName(imagePath));
-                employeeCreationDto.Image = formFile;
+                employeeCreationDto.Image = imagePath;
             }
 
             if (rbDegree1.IsChecked == true)
             {
                 employeeCreationDto.Degree = Degree.Primary;
-                employeeCreationDto.Percentage = Convert.ToInt32(tbSalary.Text);
+                employeeCreationDto.Percentage = int.Parse(tbSalary.Text);
             }
             else if (rbDegree2.IsChecked == true)
             {
                 employeeCreationDto.Degree = Degree.Secondary;
-                employeeCreationDto.Salary = Convert.ToInt32(tbSalary.Text);
+                employeeCreationDto.Salary = decimal.Parse(tbSalary.Text);
             }
 
             var response = await employeeService.AddAsync(employeeCreationDto);
@@ -108,7 +115,7 @@ public partial class EmployeeCreateWindow : Window
             if (response is not null)
                 MessageBox.Show($"Employee created successfully");
             else
-                MessageBox.Show(response!.Message);
+                MessageBox.Show("Employee no create");
         }
         catch (Exception ex)
         {

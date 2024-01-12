@@ -30,5 +30,5 @@ public class EmployeeUpdateDto
     public int? Percentage { get; set; }
     public Degree Degree { get; set; }
     public string Professional { get; set; }
-    public IFormFile Image { get; set; }
+    public string Image { get; set; }
 }

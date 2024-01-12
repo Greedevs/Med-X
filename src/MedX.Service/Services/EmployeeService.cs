@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
-using MedX.Domain.Entities;
 using MedX.Data.IRepositories;
+using MedX.Domain.Configurations;
+using MedX.Domain.Entities;
+using MedX.Service.DTOs.Employees;
+using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
 using MedX.Service.Interfaces;
-using MedX.Service.Exceptions;
-using MedX.Service.DTOs.Assets;
-using MedX.Domain.Configurations;
-using MedX.Domain.Entities.Assets;
-using MedX.Service.DTOs.Employees;
 using Microsoft.EntityFrameworkCore;
 
 namespace MedX.Service.Services;
@@ -23,6 +21,7 @@ public class EmployeeService : IEmployeeService
         this.assetService = assetService;
         this.doctorRepository = doctorRepository;
     }
+
     public async Task<EmployeeResultDto> AddAsync(EmployeeCreationDto dto)
     {
         var existDoctor = await this.doctorRepository.GetAsync(d => d.Phone.Equals(dto.Phone));
@@ -30,34 +29,17 @@ public class EmployeeService : IEmployeeService
             throw new AlreadyExistException($"This doctor already exist with phone: {dto.Phone}");
 
         string accountNumber = GenerateAccountNumber();
-        var mappedDoctor = new Employee
-        {
-            FirstName = dto.FirstName,
-            LastName = dto.LastName,
-            Patronymic = dto.Patronymic,
-            Email = dto.Email,
-            Phone = dto.Phone,
-            Professional = dto.Professional,
-            AccountNumber = accountNumber,
-        };
 
         if (dto.Image is not null)
         {
-            var uploadedImage = await this.assetService.UploadAsync(new AssetCreationDto { FormFile = dto.Image });
-            var createdImage = new Asset
-            {
-                FileName = uploadedImage.FileName,
-                FilePath = uploadedImage.FilePath,
-            };
-
-            mappedDoctor.ImageId = uploadedImage.Id;
-            mappedDoctor.Image = createdImage;
+            dto.Image = await this.assetService.UploadAsync(dto.Image);
         }
 
-        await this.doctorRepository.CreateAsync(mappedDoctor);
+        var mappedEmployee = this.mapper.Map<Employee>(dto);
+        await this.doctorRepository.CreateAsync(mappedEmployee);
         await this.doctorRepository.SaveChanges();
 
-        return this.mapper.Map<EmployeeResultDto>(mappedDoctor);
+        return this.mapper.Map<EmployeeResultDto>(mappedEmployee);
     }
 
     public async Task<bool> DeleteAsync(long id)
@@ -66,7 +48,6 @@ public class EmployeeService : IEmployeeService
             ?? throw new NotFoundException($"This doctor not found with id: {id}");
 
         this.doctorRepository.Delete(existDoctor);
-        await this.assetService.RemoveAsync(existDoctor.Image);
         await this.doctorRepository.SaveChanges();
 
         return true;
@@ -76,30 +57,12 @@ public class EmployeeService : IEmployeeService
         var existDoctor = await this.doctorRepository.GetAsync(r => r.Id == dto.Id)
             ?? throw new NotFoundException($"This doctor not found with id: {dto.Id}");
 
-        var uploadedImage = new Asset();
         if (dto.Image is not null)
         {
-            uploadedImage = await this.assetService.UploadAsync(new AssetCreationDto { FormFile = dto.Image });
-            await this.assetService.RemoveAsync(existDoctor.Image);
+            dto.Image = await this.assetService.UploadAsync(dto.Image);
         }
 
-        existDoctor.FirstName = dto.FirstName;
-        existDoctor.LastName = dto.LastName;
-        existDoctor.Patronymic = dto.Patronymic;
-        existDoctor.Email = dto.Email;
-        existDoctor.Phone = dto.Phone;
-        existDoctor.Professional = dto.Professional;
-
-        if (uploadedImage.Id > 0)
-        {
-            if (existDoctor.Image == null)
-            {
-                existDoctor.Image = new Asset();
-            }
-            existDoctor.ImageId = uploadedImage.Id;
-            existDoctor.Image.FileName = uploadedImage.FileName;
-            existDoctor.Image.FilePath = uploadedImage.FilePath;
-        }
+        this.mapper.Map<Employee>(dto);
 
         this.doctorRepository.Update(existDoctor);
         await this.doctorRepository.SaveChanges();
@@ -108,7 +71,7 @@ public class EmployeeService : IEmployeeService
     }
     public async Task<EmployeeResultDto> GetAsync(long id)
     {
-        var existDoctor = await this.doctorRepository.GetAsync(r => r.Id == id, includes: new[] { "Image" })
+        var existDoctor = await this.doctorRepository.GetAsync(r => r.Id == id)
             ?? throw new NotFoundException($"This doctor not found with id: {id}");
 
         return this.mapper.Map<EmployeeResultDto>(existDoctor);
@@ -116,7 +79,7 @@ public class EmployeeService : IEmployeeService
 
     public async Task<IEnumerable<EmployeeResultDto>> GetAllAsync(PaginationParams @params, string search = null)
     {
-        var allDoctors = await this.doctorRepository.GetAll(includes: new[] { "Image" })
+        var allDoctors = await this.doctorRepository.GetAll()
             .ToPaginate(@params)
             .ToListAsync();
 

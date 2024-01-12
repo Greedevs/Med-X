@@ -63,7 +63,11 @@
                         <Button x:Name="btnSelectImage" Style="{DynamicResource AddItemSelectImageButton}"
                                 Content="Select Image"
                                 Click="btnSelectImage_Click"
-                                Tag="/Assets/Images/register-background-image.png"/>
+                                Tag="/Assets/Images/register-background-image.png">
+                            <Button.Background>
+                                <ImageBrush x:Name="ImBImage"/>
+                            </Button.Background>
+                        </Button>
                     </Grid>
                     <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>

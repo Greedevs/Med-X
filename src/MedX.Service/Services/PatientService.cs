@@ -7,7 +7,6 @@ using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
 using MedX.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using MedX.Domain.Entities.Services;
 
 namespace MedX.Service.Services;
 

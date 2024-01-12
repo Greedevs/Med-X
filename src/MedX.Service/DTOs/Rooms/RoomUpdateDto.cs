@@ -10,5 +10,5 @@ public class RoomUpdateDto
     public int Quantity { get; set; }
     public int Busy { get; set; }
     public TypeOfRoom Type { get; set; }
-    public IFormFile Image { get; set; }
+    public string Image { get; set; }
 }

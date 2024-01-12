@@ -1,6 +1,5 @@
 ﻿using MedX.Domain.Commons;
 using MedX.Domain.Entities.Appointments;
-using MedX.Domain.Entities.Assets;
 using MedX.Domain.Entities.MedicalRecords;
 using MedX.Domain.Enums;
 
@@ -20,9 +19,7 @@ public class Employee : Auditable
     public decimal? Salary { get; set; }
     public int? Percentage { get; set; }
     public Degree Degree { get; set; }
-
-    public long? ImageId { get; set; }
-    public Asset Image { get; set; }
+    public string Image { get; set; }
 
     public ICollection<Treatment> Treatments { get; set; }
     public ICollection<Appointment> Appointments { get; set; }

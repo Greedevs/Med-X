@@ -1,6 +1,5 @@
 ﻿using MedX.Domain.Commons;
 using MedX.Domain.Entities.Appointments;
-using MedX.Domain.Entities.Assets;
 using MedX.Domain.Entities.MedicalRecords;
 using MedX.Domain.Entities.Services;
 using MedX.Domain.Enums;
@@ -19,9 +18,6 @@ public class Patient : Auditable
     public string Pinfl { get; set; }
     public decimal Balance { get; set; }
     public string AccountNumber { get; set; }
-
-    public long? ImageId { get; set; }
-    public Asset Image { get; set; }
 
     public ICollection<Payment> Payments { get; set; }
     public ICollection<Treatment> Treatments { get; set; }

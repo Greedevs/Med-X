@@ -2,6 +2,7 @@
 using MedX.Desktop.Pages;
 using System.Windows.Input;
 using System.Windows.Threading;
+using MedX.Service.Interfaces;
 
 namespace MedX.Desktop;
 
@@ -10,10 +11,11 @@ namespace MedX.Desktop;
 /// </summary>
 public partial class MainWindow : Window
 {
-
-    public MainWindow()
+    private readonly IEmployeeService employeeService;
+    public MainWindow(IEmployeeService employeeService)
     {
         InitializeComponent();
+        this.employeeService = employeeService;
     }
 
     private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -61,7 +63,7 @@ public partial class MainWindow : Window
 
     private void rbDoctors_Click(object sender, RoutedEventArgs e)
     {
-        PageNavigator.Content = new EmployeesPage();
+        PageNavigator.Content = new EmployeesPage(employeeService);
     }
 
     private void rbPatients_Click(object sender, RoutedEventArgs e)
@@ -96,7 +98,7 @@ public partial class MainWindow : Window
 
     private void rbEmployees_Click(object sender, RoutedEventArgs e)
     {
-        PageNavigator.Content = new EmployeesPage();
+        PageNavigator.Content = new EmployeesPage(employeeService);
     }
 
     private void rbInformation_Click(object sender, RoutedEventArgs e)
@@ -106,7 +108,7 @@ public partial class MainWindow : Window
 
     private void WindowLoaded(object sender, RoutedEventArgs e)
     {
-        PageNavigator.Content = new EmployeesPage();
+        PageNavigator.Content = new EmployeesPage(employeeService);
         rbDoctors.IsChecked = true;
     }
 }

@@ -22,5 +22,5 @@ public class AdminUpdateDto
 
     [Compare("Password", ErrorMessage = "The passwords do not match.")]
     public string ConfirmPassword { get; set; } = string.Empty;
-    public IFormFile Image { get; set; }
+    public string Image { get; set; }
 }

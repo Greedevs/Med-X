@@ -2,9 +2,7 @@
 using MedX.Data.IRepositories;
 using MedX.Domain.Configurations;
 using MedX.Domain.Entities.Administrators;
-using MedX.Domain.Entities.Assets;
 using MedX.Service.DTOs.Administrators;
-using MedX.Service.DTOs.Assets;
 using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
 using MedX.Service.Helpers;
@@ -32,29 +30,14 @@ public class AdminService : IAdminService
             throw new AlreadyExistException($"This Admin already exist with number: {dto.Phone}");
 
         string accountNumber = GenerateAccountNumber();
-        var mappedAdmin = new Administrator
-        {
-            FirstName = dto.FirstName,
-            LastName = dto.LastName,
-            Phone = dto.Phone,
-            Email = dto.Email,
-            Role = dto.Role,
-            AccountNumber = accountNumber
-        };
-        mappedAdmin.Password = PasswordHash.Encrypt(dto.Password);
-
         if (dto.Image is not null)
         {
-            var uploadedImage = await this.assetService.UploadAsync(new AssetCreationDto { FormFile = dto.Image });
-            var createdImage = new Asset
-            {
-                FileName = uploadedImage.FileName,
-                FilePath = uploadedImage.FilePath,
-            };
-
-            mappedAdmin.ImageId = uploadedImage.Id;
-            mappedAdmin.Image = createdImage;
+            dto.Image = await this.assetService.UploadAsync(dto.Image);
         }
+
+        var mappedAdmin = this.mapper.Map<Administrator>(dto);
+
+        mappedAdmin.Password = PasswordHash.Encrypt(dto.Password);
 
         await this.repository.CreateAsync(mappedAdmin);
         await this.repository.SaveChanges();
@@ -74,7 +57,6 @@ public class AdminService : IAdminService
             ?? throw new NotFoundException($"This Admin not found with id: {id}");
 
         this.repository.Delete(existAdmin);
-        await this.assetService.RemoveAsync(existAdmin.Image);
         await this.repository.SaveChanges();
 
         return true;
@@ -84,29 +66,12 @@ public class AdminService : IAdminService
         var existAdmin = await this.repository.GetAsync(r => r.Id == dto.Id)
             ?? throw new NotFoundException($"This Admin not found with id: {dto.Id}");
 
-        var uploadedImage = new Asset();
         if (dto.Image is not null)
         {
-            uploadedImage = await this.assetService.UploadAsync(new AssetCreationDto { FormFile = dto.Image });
-            await this.assetService.RemoveAsync(existAdmin.Image);
+            dto.Image = await this.assetService.UploadAsync(dto.Image);
         }
 
-        existAdmin.FirstName = dto.FirstName;
-        existAdmin.LastName = dto.LastName;
-        existAdmin.Phone = dto.Phone;
-        existAdmin.Email = dto.Email;
-        existAdmin.Role = dto.Role;
-
-        if (uploadedImage.Id > 0)
-        {
-            if (existAdmin.Image == null)
-            {
-                existAdmin.Image = new Asset();
-            }
-            existAdmin.ImageId = uploadedImage.Id;
-            existAdmin.Image.FileName = uploadedImage.FileName;
-            existAdmin.Image.FilePath = uploadedImage.FilePath;
-        }
+        this.mapper.Map<Administrator>(dto);
 
         this.repository.Update(existAdmin);
         await this.repository.SaveChanges();

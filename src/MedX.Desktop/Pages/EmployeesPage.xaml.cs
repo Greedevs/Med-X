@@ -3,6 +3,7 @@ using MedX.Desktop.Services;
 using System.Windows.Controls;
 using MedX.Desktop.Windows.Employees;
 using MedX.Desktop.Components.Employees;
+using MedX.Service.Interfaces;
 
 namespace MedX.Desktop.Pages;
 
@@ -12,17 +13,17 @@ namespace MedX.Desktop.Pages;
 // EmployeesPage.xaml.cs
 public partial class EmployeesPage : Page
 {
-    private readonly IEmployeeApiService employeeService;
+    private readonly IEmployeeService employeeService;
 
-    public EmployeesPage()
+    public EmployeesPage(IEmployeeService employeeService)
     {
         InitializeComponent();
-        employeeService = RestService.For<IEmployeeApiService>(HttpConstant.BaseLink);
+        this.employeeService = employeeService;
     }
 
     private void BtnCreate_Click(object sender, RoutedEventArgs e)
     {
-        EmployeeCreateWindow employeeCreateWindow = new EmployeeCreateWindow();
+        EmployeeCreateWindow employeeCreateWindow = new EmployeeCreateWindow(employeeService);
         employeeCreateWindow.ShowDialog();
     }
 
@@ -38,14 +39,22 @@ public partial class EmployeesPage : Page
         //var employees = await ContentHelper.GetContentAsync<List<EmployeeResultDto>>(response);
         #endregion
 
-        var employees = await employeeService.GetAllAsync();
-
-        foreach (var employee in employees.Data)
+        PaginationParams paginationParams = new PaginationParams()
         {
-            var employeeCardUserControl = new EmployeeCardUserControl();
-            employeeCardUserControl.SetData(employee);
-            wrpEmployees.Children.Add(employeeCardUserControl);
-        } 
+            PageIndex = 1,
+            PageSize = 20,
+        };
+
+        var employees = await employeeService.GetAllAsync(paginationParams);
+        if (employees is not null)
+        {
+            foreach (var employee in employees)
+            {
+                var employeeCardUserControl = new EmployeeCardUserControl();
+                employeeCardUserControl.SetData(employee);
+                wrpEmployees.Children.Add(employeeCardUserControl);
+            }
+        }
     }
 }
 

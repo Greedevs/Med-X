@@ -2,14 +2,11 @@
 using MedX.Data.IRepositories;
 using MedX.Domain.Configurations;
 using MedX.Domain.Entities;
-using MedX.Domain.Entities.Assets;
-using MedX.Service.DTOs.Assets;
 using MedX.Service.DTOs.Rooms;
 using MedX.Service.Exceptions;
 using MedX.Service.Extensions;
 using MedX.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 namespace MedX.Service.Services;
 
@@ -30,25 +27,12 @@ public class RoomService : IRoomService
         if (existRoom is not null)
             throw new AlreadyExistException($"This Room already exist with number: {dto.Number}");
 
-        var mappedRoom = new Room
-        {
-            Number = dto.Number,
-            Quantity = dto.Quantity,
-            Busy = dto.Busy
-        };
-
         if (dto.Image is not null)
         {
-            var uploadedImage = await this.assetService.UploadAsync(new AssetCreationDto { FormFile = dto.Image });
-            var createdImage = new Asset
-            {
-                FileName = uploadedImage.FileName,
-                FilePath = uploadedImage.FilePath,
-            };
-
-            mappedRoom.ImageId = uploadedImage.Id;
-            mappedRoom.Image = createdImage;
+            dto.Image = await this.assetService.UploadAsync(dto.Image);
         }
+
+        var mappedRoom = this.mapper.Map<Room>(dto);
 
         await this.repository.CreateAsync(mappedRoom);
         await this.repository.SaveChanges();
@@ -62,7 +46,6 @@ public class RoomService : IRoomService
             ?? throw new NotFoundException($"This Room not found with id: {id}");
 
         this.repository.Delete(existRoom);
-        await this.assetService.RemoveAsync(existRoom.Image);
         await this.repository.SaveChanges();
 
         return true;
@@ -73,27 +56,12 @@ public class RoomService : IRoomService
         var existRoom = await this.repository.GetAsync(r => r.Id == dto.Id)
             ?? throw new NotFoundException($"This Room not found with id: {dto.Id}");
 
-        var uploadedImage = new Asset();
         if (dto.Image is not null)
         {
-            uploadedImage = await this.assetService.UploadAsync(new AssetCreationDto { FormFile = dto.Image });
-            await this.assetService.RemoveAsync(existRoom.Image);
+            dto.Image = await this.assetService.UploadAsync(dto.Image);
         }
 
-        existRoom.Number = dto.Number;
-        existRoom.Quantity = dto.Quantity;
-        existRoom.Busy = dto.Busy;
-
-        if (uploadedImage.Id > 0)
-        {
-            if (existRoom.Image == null)
-            {
-                existRoom.Image = new Asset();
-            }
-            existRoom.ImageId = uploadedImage.Id;
-            existRoom.Image.FileName = uploadedImage.FileName;
-            existRoom.Image.FilePath = uploadedImage.FilePath;
-        }
+        this.mapper.Map<Room>(dto);
 
         this.repository.Update(existRoom);
         await this.repository.SaveChanges();
