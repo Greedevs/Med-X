@@ -1,18 +1,13 @@
-﻿using System.IO;
-using System.Windows;
-using Microsoft.Win32;
-using System.Net.Http;
-using MedX.Domain.Enums;
-using System.Windows.Input;
-using MedX.Desktop.Services;
-using MedX.Desktop.Models.Employees;
-using Microsoft.AspNetCore.Http;
+﻿using MedX.Domain.Enums;
 using MedX.Service.DTOs.Employees;
-using MedX.Domain.Enums;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Windows.Media.Imaging;
 using MedX.Service.Interfaces;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Win32;
+using System.IO;
+using System.Net.Http;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media.Imaging;
 
 namespace MedX.Desktop.Windows.Employees;
 
@@ -127,11 +122,6 @@ public partial class EmployeeCreateWindow : Window
 
         this.Close();
     }
-
-
-    public static IFormFile ConvertToIFormFile(byte[] imageData, string fileName) 
-        => new FormFile(new MemoryStream(imageData), 0, imageData.Length, "Image", fileName);
-
 
     //private async void BtnCreateEmployee_Click(object sender, RoutedEventArgs e)
     //{

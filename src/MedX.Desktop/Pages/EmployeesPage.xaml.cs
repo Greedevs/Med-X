@@ -1,9 +1,8 @@
-﻿using System.Windows;
-using MedX.Desktop.Services;
-using System.Windows.Controls;
+﻿using MedX.Desktop.Components.Employees;
 using MedX.Desktop.Windows.Employees;
-using MedX.Desktop.Components.Employees;
 using MedX.Service.Interfaces;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace MedX.Desktop.Pages;
 

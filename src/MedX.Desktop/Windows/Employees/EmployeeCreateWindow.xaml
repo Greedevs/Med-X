@@ -62,7 +62,7 @@
                     <Grid Grid.Row="0">
                         <Button x:Name="btnSelectImage" Style="{DynamicResource AddItemSelectImageButton}"
                                 Content="Select Image"
-                                Click="btnSelectImage_Click"
+                                Click="BtnSelectImage_Click"
                                 Tag="/Assets/Images/register-background-image.png">
                             <Button.Background>
                                 <ImageBrush x:Name="ImBImage"/>
@@ -195,7 +195,7 @@
                     <Button x:Name="CreateEmployee" 
                             Grid.Row="2" 
                             Height="45"
-                            Click="BtnCreateEmployee_Click"
+                            Click="btnCreateEmployee_Click"
                             Content="Add"
                             Width="200"
                             Margin="0 0 0 10"
