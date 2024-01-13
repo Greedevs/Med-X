@@ -38,7 +38,7 @@ public partial class EmployeeCreateWindow : Window
     private void BtnSelectImage_Click(object sender, RoutedEventArgs e)
     {
         OpenFileDialog openFileDialog = new();
-        openFileDialog.Filter = "PNG files (*.png)|*.png|JPEG files (*.jpeg)|*.jpeg|JPG files (*.jpg)|*.jpg|GIF files (*.gif)|*.gif|BMP files (*.bmp)|*.bmp";
+        openFileDialog.Filter = "PNG files (*.png)|*.png|JPEG files (*.jpeg)|*.jpeg|JPG files (*.jpg)|*.jpg|JFIF files (*.jfif)|*.jfif|GIF files (*.gif)|*.gif|BMP files (*.bmp)|*.bmp";
 
         if (openFileDialog.ShowDialog() == true)
         {

@@ -5,6 +5,7 @@ using MedX.Service.DTOs.Employees;
 using MedX.Service.Interfaces;
 using System.Windows;
 using MedX.Desktop.Pages;
+using MedX.Desktop.Windows.Employees;
 
 namespace MedX.Desktop.Components.Employees;
 
@@ -47,5 +48,13 @@ public partial class EmployeeCardUserControl : UserControl
         
         EmployeesPage employeesPage = new EmployeesPage(employeeService);
         await employeesPage.RefreshAsync();
+    }
+
+    private async void EditItem_Click(object sender, RoutedEventArgs e)
+    {
+        var existEmployee = await this.employeeService.GetAsync(Id);
+
+        EmployeeUpdateWindow updateWindow = new EmployeeUpdateWindow(employeeService, existEmployee);
+        updateWindow.ShowDialog();
     }
 }

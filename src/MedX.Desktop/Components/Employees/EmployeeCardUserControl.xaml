@@ -13,7 +13,17 @@
                 <MenuItem Header="Delete" Name="DeleteItem" 
                           Click="DeleteItem_Click">
                     <MenuItem.Icon>
-                        <Path Width="15" Height="15" Fill="Gray" Data="{DynamicResource delete}" Stretch="Uniform"/>
+                        <Path Width="16" Height="17" Fill="#7D7C7C" Data="{DynamicResource delete}" Stretch="Uniform"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Edit" Name="EditItem" 
+                          Click="EditItem_Click">
+                    <MenuItem.Icon>
+                        <Path Width="14" Height="17" Fill="#7D7C7C" Data="{DynamicResource edit}" Stretch="Uniform">
+                            <Path.RenderTransform>
+                                <RotateTransform Angle="-130" CenterY="9" CenterX="4"/>
+                            </Path.RenderTransform>
+                        </Path>
                     </MenuItem.Icon>
                 </MenuItem>
             </ContextMenu>

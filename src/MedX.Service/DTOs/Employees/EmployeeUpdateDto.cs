@@ -22,13 +22,10 @@ public class EmployeeUpdateDto
 
     [CheckPhone, Required, Phone]
     public string Phone { get; set; }
-
-    [MinLength(6), MaxLength(30), Required]
-    public string Password { get; set; }
-
     public decimal? Salary { get; set; }
     public int? Percentage { get; set; }
     public Degree Degree { get; set; }
     public string Professional { get; set; }
     public string Image { get; set; }
+    public bool IsSelectImage { get; set; }
 }

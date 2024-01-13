@@ -18,4 +18,5 @@ public class EmployeeResultDto
     public int? Percentage { get; set; }
     public Degree Degree { get; set; }
     public string Image { get; set; }
+    public bool IsSelectImage { get; set; }
 }

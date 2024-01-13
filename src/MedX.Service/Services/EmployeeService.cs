@@ -54,15 +54,15 @@ public class EmployeeService : IEmployeeService
     }
     public async Task<EmployeeResultDto> UpdateAsync(EmployeeUpdateDto dto)
     {
-        var existDoctor = await this.doctorRepository.GetAsync(r => r.Id == dto.Id)
+        var existDoctor = await this.doctorRepository.GetAsync(r => r.Id.Equals(dto.Id))
             ?? throw new NotFoundException($"This doctor not found with id: {dto.Id}");
 
-        if (dto.Image is not null)
+        if (dto.IsSelectImage)
         {
             dto.Image = await this.assetService.UploadAsync(dto.Image);
         }
 
-        this.mapper.Map<Employee>(dto);
+        this.mapper.Map(dto, existDoctor);
 
         this.doctorRepository.Update(existDoctor);
         await this.doctorRepository.SaveChanges();
