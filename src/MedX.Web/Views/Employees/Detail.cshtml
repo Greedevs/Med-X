@@ -1,0 +1,32 @@
+﻿
+
+@model EmployeeResultDto
+
+<div class="row justify-content-center m-3">
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-header">
+                <h1>@Model.FirstName @Model.LastName</h1>
+            </div>
+
+            <div class="card-body text-center">
+                <img class="card-img-top" src="@Model.Image.FilePath" alt="Employee Detail" asp-append-version="true" />
+
+                <h4>Staff ID : @Model.Id</h4>
+                <h4>Email : @Model.Email</h4>
+                <h4>Department : @Model.Professional</h4>
+
+            </div>
+            <div class="card-footer text-center">
+                <a asp-controller="employees" asp-action="index" class="btn btn-primary">Back</a>
+                <a href="#" class="btn btn-primary">Edit</a>
+                <a href="#" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/scripts/script1.js"></script>
+}

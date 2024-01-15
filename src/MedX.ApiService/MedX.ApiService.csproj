@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MedX.Domain\MedX.Domain.csproj" />
+    <ProjectReference Include="..\MedX.WebApi\MedX.WebApi.csproj" />
   </ItemGroup>
 
 </Project>

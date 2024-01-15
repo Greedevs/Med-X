@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MedX.ApiService.Services;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace MedX.ApiService
+namespace MedX.ApiService;
+
+public static class DependencyInjection
 {
-    internal class DependencyInjection
+    public static void AddApiServices(this IServiceCollection services)
     {
+        services.AddHttpClient<IEmployeeService, EmployeeService>(client =>
+        {
+            client.BaseAddress = new Uri($"{HttpConstant.BaseLink}api/Employees/");
+        });
     }
 }
