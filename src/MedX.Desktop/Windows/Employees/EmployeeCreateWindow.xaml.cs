@@ -1,12 +1,11 @@
 ﻿using System.IO;
 using System.Windows;
 using Microsoft.Win32;
-using System.Net.Http;
 using MedX.Domain.Enums;
 using System.Windows.Input;
 using MedX.Desktop.Services;
-using MedX.Desktop.Models.Employees;
 using Microsoft.AspNetCore.Http;
+using MedX.Desktop.Models.Employees;
 
 namespace MedX.Desktop.Windows.Employees;
 
@@ -75,7 +74,7 @@ public partial class EmployeeCreateWindow : Window
             if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
             {
                 byte[] imageBytes = File.ReadAllBytes(imagePath);
-                IFormFile formFile = ConvertToIFormFile(imageBytes, "image.jpg");
+                employeeCreationDto.Image = ConvertToIFormFile(imageBytes, "image.jpg") ?? default!;
             }
 
             if (rbDegree1.IsChecked == true)
@@ -107,48 +106,4 @@ public partial class EmployeeCreateWindow : Window
 
     public static IFormFile ConvertToIFormFile(byte[] imageData, string fileName) 
         => new FormFile(new MemoryStream(imageData), 0, imageData.Length, "Image", fileName);
-
-
-    //private async void BtnCreateEmployee_Click(object sender, RoutedEventArgs e)
-    //{
-    //    EmployeeCreationDto employeeCreationDto = new();
-    //    using var multipartFormContent = new MultipartFormDataContent
-    //    {
-    //        { new StringContent(tbFirstName.Text), nameof(employeeCreationDto.FirstName) },
-    //        { new StringContent(tbLastName.Text), nameof(employeeCreationDto.LastName) },
-    //        { new StringContent(tbPatronymic.Text), nameof(employeeCreationDto.Patronymic) },
-    //        { new StringContent(tbEmail.Text), nameof(employeeCreationDto.Email) },
-    //        { new StringContent(tbPhone.Text), nameof(employeeCreationDto.Phone) },
-    //        { new StringContent(tbProfessional.Text), nameof(employeeCreationDto.Professional) },
-    //        { new StringContent(tbPassword.Text), nameof(employeeCreationDto.Password) }
-    //    };
-
-    //    if (imagePath is not null)
-    //    {
-    //        var fileStreamContent = new StreamContent(File.OpenRead(imagePath));
-    //        fileStreamContent.Headers.ContentType = new MediaTypeHeaderValue("image/*");
-    //        multipartFormContent.Add(fileStreamContent, name: nameof(employeeCreationDto.Image), fileName: "image" + Path.GetExtension(imagePath));
-    //    }
-
-    //    if (rbDegree1.IsChecked == true)
-    //    {
-    //        multipartFormContent.Add(new StringContent(Degree.Primary.ToString()), nameof(employeeCreationDto.Degree));
-    //        multipartFormContent.Add(new StringContent(tbSalary.Text), nameof(employeeCreationDto.Percentage));
-    //    }
-    //    else if (rbDegree2.IsChecked == true)
-    //    {
-    //        multipartFormContent.Add(new StringContent(Degree.Secondary.ToString()), nameof(employeeCreationDto.Degree));
-    //        multipartFormContent.Add(new StringContent(tbSalary.Text), nameof(employeeCreationDto.Salary));
-    //    }
-
-
-    //    var response = await httpClient.PostAsync("http://52.221.226.79/api/Employees/create", multipartFormContent);
-    //    response.EnsureSuccessStatusCode();
-
-
-    //    if (response is not null)
-    //        MessageBox.Show($"Employee created successfully");
-    //    else MessageBox.Show(await response.Content.ReadAsStringAsync());
-    //    this.Close();
-    //}
 }

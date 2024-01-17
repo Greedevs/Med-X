@@ -1,9 +1,11 @@
 using Serilog;
+using MedX.Data;
+using MedX.Service;
 using MedX.Data.Contexts;
 using MedX.Service.Helpers;
 using MedX.Desktop.Extensions;
-using MedX.Desktop.Middlewares;
 using MedX.Service.Extensions;
+using MedX.Desktop.Middlewares;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,12 +17,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add DbContext
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+// Add Data Layer
+builder.Services.AddDataAccess(builder.Configuration);
 
-// Add Services
-builder.Services.AddServices();
+// Add Service Layer
+builder.Services.AddServices(builder.Configuration);
 
 // Add Authorization
 builder.Services.ConfigureSwagger();
@@ -32,9 +33,6 @@ var logger = new LoggerConfiguration()
                     .CreateLogger();
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger);*/
-
-// Add JWT
-builder.Services.AddJwt(builder.Configuration);
 
 PathHelper.WebRootPath = Path.GetFullPath("wwwroot");
 var app = builder.Build();

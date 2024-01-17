@@ -1,0 +1,59 @@
+﻿@model IEnumerable<EmployeeResultDto>
+
+<div class="card-deck">
+    @foreach (var employee in Model)
+    {
+        <div class="card m-3 w-25 h-25">
+            <div class="card-header">
+                <h3>@employee.FirstName @employee.LastName</h3>
+            </div>
+            <img class="card-img-top " src="@employee.Image?.FilePath" alt="Employee Image" />
+            <div class="card-footer text-center">
+                <a asp-controller="employees" asp-action="detail" asp-route-id=@employee.Id class="btn btn-primary">View</a>
+                <a href="#" class="btn btn-primary">Edit</a>
+                <a href="#" class="btn btn-danger">Delete</a>
+            </div>
+
+        </div>
+    }
+</div>
+
+
+
+@* @{
+    var modelcha = Model.FirstOrDefault();
+}
+
+<table class="table table-hover w-auto">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => modelcha!.FirstName)</th>
+            <th>@Html.DisplayNameFor(model => modelcha!.LastName)</th>
+            <th>@Html.DisplayNameFor(model => modelcha!.Patronymic)</th>
+            <th>@Html.DisplayNameFor(model => modelcha!.Professional)</th>
+            <th>@Html.DisplayNameFor(model => modelcha!.Phone)</th>
+            <th>@Html.DisplayNameFor(model => modelcha!.Email)</th>
+            <th>@Html.DisplayNameFor(model => modelcha!.Balance)</th>
+            <th>@Html.DisplayNameFor(model => modelcha!.AccountNumber)</th>
+            <th>@Html.DisplayNameFor(model => modelcha!.Image)</th>
+            <th>@Html.DisplayNameFor(model => modelcha!.Degree)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr>
+                <td>@employee.FirstName</td>
+                <td>@employee.LastName</td>
+                <td>@employee.Patronymic</td>
+                <td>@employee.Professional</td>
+                <td>@employee.Phone</td>
+                <td>@employee.Email</td>
+                <td>@employee.Balance</td>
+                <td>@employee.AccountNumber</td>
+                <td><img src="@employee.Image?.FilePath" alt="Employee Image" /></td>
+                <td>@employee.Degree</td>
+            </tr>
+        }
+    </tbody>
+</table> *@
