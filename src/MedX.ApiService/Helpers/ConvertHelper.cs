@@ -12,7 +12,6 @@ public class ConvertHelper
             var value = property.GetValue(dto);
 
             if (value != null)
-            {
                 if (property.PropertyType == typeof(IFormFile))
                 {
                     var formFile = (IFormFile)value;
@@ -20,10 +19,7 @@ public class ConvertHelper
                     multipartFormContent.Add(streamContent, property.Name, formFile.FileName);
                 }
                 else
-                {
                     multipartFormContent.Add(new StringContent(value.ToString()!), property.Name);
-                }
-            }
         }
 
         return multipartFormContent;

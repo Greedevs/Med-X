@@ -1,12 +1,11 @@
 ﻿using System.IO;
 using System.Windows;
 using Microsoft.Win32;
-using System.Net.Http;
 using MedX.Domain.Enums;
 using System.Windows.Input;
 using MedX.Desktop.Services;
-using MedX.Desktop.Models.Employees;
 using Microsoft.AspNetCore.Http;
+using MedX.Desktop.Models.Employees;
 
 namespace MedX.Desktop.Windows.Employees;
 
