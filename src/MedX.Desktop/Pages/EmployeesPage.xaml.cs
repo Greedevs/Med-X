@@ -1,8 +1,8 @@
 ﻿using System.Windows;
-using MedX.Desktop.Services;
 using System.Windows.Controls;
 using MedX.Desktop.Windows.Employees;
 using MedX.Desktop.Components.Employees;
+using MedX.ApiService.Interfaces;
 
 namespace MedX.Desktop.Pages;
 
@@ -12,17 +12,17 @@ namespace MedX.Desktop.Pages;
 // EmployeesPage.xaml.cs
 public partial class EmployeesPage : Page
 {
-    private readonly IEmployeeApiService employeeService;
+    private readonly IEmployeeService service;
 
-    public EmployeesPage()
+    public EmployeesPage(IEmployeeService service)
     {
         InitializeComponent();
-        employeeService = RestService.For<IEmployeeApiService>(HttpConstant.BaseLink);
+        this.service = service;
     }
 
     private void BtnCreate_Click(object sender, RoutedEventArgs e)
     {
-        EmployeeCreateWindow employeeCreateWindow = new();
+        EmployeeCreateWindow employeeCreateWindow = new(service);
         employeeCreateWindow.ShowDialog();
     }
 
@@ -38,7 +38,11 @@ public partial class EmployeesPage : Page
         //var employees = await ContentHelper.GetContentAsync<List<EmployeeResultDto>>(response);
         #endregion
 
-        var employees = await employeeService.GetAllAsync();
+        var employees = await service.GetAllAsync(new PaginationParams
+        {
+            PageSize = 1,
+            PageIndex = 10,
+        });
 
         foreach (var employee in employees.Data)
         {

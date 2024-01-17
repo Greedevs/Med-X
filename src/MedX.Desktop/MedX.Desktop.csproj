@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
@@ -27,12 +27,10 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Refit" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MedX.Service\MedX.Service.csproj" />
-    <ProjectReference Include="..\MedX.WebApi\MedX.WebApi.csproj" />
+    <ProjectReference Include="..\MedX.ApiService\MedX.ApiService.csproj" />
   </ItemGroup>
 
 </Project>
