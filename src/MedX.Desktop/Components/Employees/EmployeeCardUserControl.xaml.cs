@@ -1,7 +1,7 @@
 ﻿using System.Windows.Media;
 using System.Windows.Controls;
-using MedX.Desktop.Models.Employees;
 using System.Windows.Media.Imaging;
+using MedX.ApiService.Models.Employees;
 
 namespace MedX.Desktop.Components.Employees;
 

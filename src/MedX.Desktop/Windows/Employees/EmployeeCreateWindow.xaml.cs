@@ -1,11 +1,4 @@
-﻿using System.IO;
-using System.Windows;
-using Microsoft.Win32;
-using MedX.Domain.Enums;
-using System.Windows.Input;
-using MedX.Desktop.Services;
-using Microsoft.AspNetCore.Http;
-using MedX.Desktop.Models.Employees;
+﻿using MedX.ApiService.Models.Employees;
 
 namespace MedX.Desktop.Windows.Employees;
 
@@ -15,11 +8,12 @@ namespace MedX.Desktop.Windows.Employees;
 public partial class EmployeeCreateWindow : Window
 {
     private string? imagePath;
-    private readonly IEmployeeApiService employeeService = RestService.For<IEmployeeApiService>(HttpConstant.BaseLink);
+    private readonly IEmployeeService service;
 
-    public EmployeeCreateWindow()
+    public EmployeeCreateWindow(IEmployeeService service)
     {
         InitializeComponent();
+        this.service = service;
     }
 
     private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -34,8 +28,10 @@ public partial class EmployeeCreateWindow : Window
 
     private void BtnSelectImage_Click(object sender, RoutedEventArgs e)
     {
-        OpenFileDialog openFileDialog = new();
-        openFileDialog.Filter = "PNG files (*.png)|*.png|JPEG files (*.jpeg)|*.jpeg|JPG files (*.jpg)|*.jpg|GIF files (*.gif)|*.gif|BMP files (*.bmp)|*.bmp";
+        OpenFileDialog openFileDialog = new()
+        {
+            Filter = "PNG files (*.png)|*.png|JPEG files (*.jpeg)|*.jpeg|JPG files (*.jpg)|*.jpg|GIF files (*.gif)|*.gif|BMP files (*.bmp)|*.bmp"
+        };
 
         if (openFileDialog.ShowDialog() == true)
         {
@@ -69,41 +65,37 @@ public partial class EmployeeCreateWindow : Window
             Professional = tbProfessional.Text,
         };
 
-        try
+        if(!string.IsNullOrEmpty(imagePath))
+            employeeCreationDto.Image = GetFormFile(imagePath);
+
+        if (rbDegree1.IsChecked == true)
         {
-            if (!string.IsNullOrEmpty(imagePath) && File.Exists(imagePath))
-            {
-                byte[] imageBytes = File.ReadAllBytes(imagePath);
-                employeeCreationDto.Image = ConvertToIFormFile(imageBytes, "image.jpg") ?? default!;
-            }
-
-            if (rbDegree1.IsChecked == true)
-            {
-                employeeCreationDto.Degree = Degree.Primary;
-                employeeCreationDto.Percentage = Convert.ToInt32(tbSalary.Text);
-            }
-            else if (rbDegree2.IsChecked == true)
-            {
-                employeeCreationDto.Degree = Degree.Secondary;
-                employeeCreationDto.Salary = Convert.ToInt64(tbSalary.Text);
-            }
-
-            var response = await employeeService.AddAsync(employeeCreationDto);
-
-            if (response is not null)
-                MessageBox.Show($"Employee created successfully");
-            else
-                MessageBox.Show(response!.Message);
+            employeeCreationDto.Degree = Degree.Primary;
+            employeeCreationDto.Percentage = Convert.ToInt32(tbSalary.Text);
         }
-        catch (Exception ex)
+        else if (rbDegree2.IsChecked == true)
         {
-            MessageBox.Show($"An error occurred: {ex.Message}");
+            employeeCreationDto.Degree = Degree.Secondary;
+            employeeCreationDto.Salary = decimal.Parse(tbSalary.Text);
         }
+
+        var response = await service.AddAsync(employeeCreationDto);
+
+        if (response is not null)
+            MessageBox.Show($"Employee created successfully");
+        else
+            MessageBox.Show(response!.Message);
 
         this.Close();
     }
 
+    public static IFormFile GetFormFile(string imagePath)
+    {
+        if (!File.Exists(imagePath))
+            return default!;
 
-    public static IFormFile ConvertToIFormFile(byte[] imageData, string fileName) 
-        => new FormFile(new MemoryStream(imageData), 0, imageData.Length, "Image", fileName);
+        byte[] imageData = File.ReadAllBytes(imagePath);
+        string fileName = Path.GetFileName(imagePath);
+        return new FormFile(new MemoryStream(imageData), 0, imageData.Length, "Image", fileName);
+    }
 }

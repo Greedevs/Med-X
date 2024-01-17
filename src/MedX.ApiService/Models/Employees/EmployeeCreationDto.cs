@@ -1,5 +1,4 @@
 ﻿using MedX.Domain.Enums;
-using Microsoft.AspNetCore.Http;
 
 namespace MedX.ApiService.Models.Employees;
 
