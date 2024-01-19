@@ -7,11 +7,6 @@ public partial class MainWindow : Window
 {
     private readonly IEmployeeService service;
 
-    public MainWindow()
-    {
-        InitializeComponent();
-    }
-
     public MainWindow(IEmployeeService service)
     {
         InitializeComponent();

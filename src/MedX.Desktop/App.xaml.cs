@@ -1,34 +1,31 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using MedX.ApiService.Services; // Assuming this namespace contains your service interfaces and implementations
+﻿using MedX.ApiService.Services; // Assuming this namespace contains your service interfaces and implementations
 using MedX.ApiService;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace MedX.Desktop
+namespace MedX.Desktop;
+
+public partial class App : Application
 {
-    public partial class App : Application
+    private readonly IServiceProvider serviceProvider;
+    private readonly IServiceCollection services;
+    public App()
     {
-        public IServiceProvider ServiceProvider { get; private set; } = default!;
+        this.services = new ServiceCollection();
+        this.serviceProvider = this.services.BuildServiceProvider();
+        ConfigureService(services);
+    }
 
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            base.OnStartup(e);
+    private void ConfigureService(IServiceCollection services)
+    {
+        services.AddApiServices();
+        services.AddSingleton<MainWindow>();
+    }
 
-            // Configure services
-            ConfigureServices();
+    private void OnStartup(object sender, StartupEventArgs e)
+    {
+        base.OnStartup(e);
 
-            MainWindow mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
-            mainWindow.Show();
-        }
-
-        private void ConfigureServices()
-        {
-            var services = new ServiceCollection();
-
-            services.AddHttpClient();
-            services.AddApiServices();
-            services.AddTransient<MainWindow>();
-            services.AddScoped<IEmployeeService, EmployeeService>();
-
-            ServiceProvider = services.BuildServiceProvider();
-        }
+        var mainWindow = serviceProvider.GetRequiredService<MainWindow>();
+        mainWindow.Show();
     }
 }
