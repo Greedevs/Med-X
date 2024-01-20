@@ -10,6 +10,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Entities\**" />
+    <Compile Remove="Enums\**" />
+    <EmbeddedResource Remove="Entities\**" />
+    <EmbeddedResource Remove="Enums\**" />
+    <None Remove="Entities\**" />
+    <None Remove="Enums\**" />
+    <Page Remove="Entities\**" />
+    <Page Remove="Enums\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Assets\Images\register-background-image.png" />
   </ItemGroup>
 
@@ -20,8 +31,6 @@
   <ItemGroup>
     <Folder Include="Assets\Logos\" />
     <Folder Include="Assets\Sounds\" />
-    <Folder Include="Entities\" />
-    <Folder Include="Enums\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
 
