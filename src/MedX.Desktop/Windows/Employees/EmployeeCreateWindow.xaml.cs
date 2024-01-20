@@ -65,37 +65,38 @@ public partial class EmployeeCreateWindow : Window
             Professional = tbProfessional.Text,
         };
 
-        if(!string.IsNullOrEmpty(imagePath))
-            employeeCreationDto.Image = GetFormFile(imagePath);
+        if(!string.IsNullOrEmpty(value: imagePath))
+            employeeCreationDto.Image = GetFormFile(imagePath: imagePath);
 
         if (rbDegree1.IsChecked == true)
         {
             employeeCreationDto.Degree = Degree.Primary;
-            employeeCreationDto.Percentage = Convert.ToInt32(tbSalary.Text);
+            employeeCreationDto.Percentage = Convert.ToInt32(value: tbSalary.Text);
         }
         else if (rbDegree2.IsChecked == true)
         {
             employeeCreationDto.Degree = Degree.Secondary;
-            employeeCreationDto.Salary = decimal.Parse(tbSalary.Text);
+            employeeCreationDto.Salary = decimal.Parse(s: tbSalary.Text);
         }
 
-        var response = await service.AddAsync(employeeCreationDto);
-
-        if (response is not null)
-            MessageBox.Show($"Employee created successfully");
-        else
-            MessageBox.Show(response!.Message);
+        await service.AddAsync(dto: employeeCreationDto);
 
         this.Close();
     }
 
     public static IFormFile GetFormFile(string imagePath)
     {
-        if (!File.Exists(imagePath))
+        if (!File.Exists(path: imagePath))
             return default!;
 
-        byte[] imageData = File.ReadAllBytes(imagePath);
-        string fileName = Path.GetFileName(imagePath);
-        return new FormFile(new MemoryStream(imageData), 0, imageData.Length, "Image", fileName);
+        byte[] imageData = File.ReadAllBytes(path: imagePath);
+        string fileName = Path.GetFileName(path: imagePath);
+        MemoryStream stream = new(buffer: imageData);
+        return new FormFile(
+            baseStream: stream, 
+            baseStreamOffset: 0, 
+            length: imageData.Length, 
+            name: "Image", 
+            fileName: fileName);
     }
 }

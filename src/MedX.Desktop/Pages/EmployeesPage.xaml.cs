@@ -1,5 +1,4 @@
-﻿using System.Windows.Controls;
-using MedX.Desktop.Windows.Employees;
+﻿using MedX.Desktop.Windows.Employees;
 using MedX.Desktop.Components.Employees;
 
 namespace MedX.Desktop.Pages;
@@ -20,7 +19,7 @@ public partial class EmployeesPage : Page
 
     private void BtnCreate_Click(object sender, RoutedEventArgs e)
     {
-        EmployeeCreateWindow employeeCreateWindow = new(service);
+        EmployeeCreateWindow employeeCreateWindow = new(service: service);
         employeeCreateWindow.ShowDialog();
     }
 
@@ -36,14 +35,13 @@ public partial class EmployeesPage : Page
         //var employees = await ContentHelper.GetContentAsync<List<EmployeeResultDto>>(response);
         #endregion
 
-        if(service is null) return;
         var employees = await service.GetAllAsync(new PaginationParams());
 
-        foreach (var employee in employees.Data)
+        foreach(var employee in employees.Data)
         {
             var employeeCardUserControl = new EmployeeCardUserControl();
-            employeeCardUserControl.SetData(employee);
-            wrpEmployees.Children.Add(employeeCardUserControl);
+            employeeCardUserControl.SetData(dto: employee);
+            wrpEmployees.Children.Add(element: employeeCardUserControl);
         } 
     }
 }
