@@ -2,9 +2,9 @@
 
 public partial class App : Application
 {
-    protected override void OnStartup(StartupEventArgs e)
+    protected override void OnStartup(StartupEventArgs args)
     {
-        base.OnStartup(e);
+        base.OnStartup(e: args);
 
         new MainWindow(
             new ServiceCollection()
