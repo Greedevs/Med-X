@@ -1,8 +1,6 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using MedX.Desktop.Windows.Employees;
 using MedX.Desktop.Components.Employees;
-using MedX.ApiService.Interfaces;
 
 namespace MedX.Desktop.Pages;
 
@@ -38,11 +36,8 @@ public partial class EmployeesPage : Page
         //var employees = await ContentHelper.GetContentAsync<List<EmployeeResultDto>>(response);
         #endregion
 
-        var employees = await service.GetAllAsync(new PaginationParams
-        {
-            PageSize = 1,
-            PageIndex = 10,
-        });
+        if(service is null) return;
+        var employees = await service.GetAllAsync(new PaginationParams());
 
         foreach (var employee in employees.Data)
         {

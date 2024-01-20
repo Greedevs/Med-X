@@ -1,4 +1,4 @@
-﻿namespace MedX.ApiService.Models;
+﻿namespace MedX.ApiService.Models.Commons;
 
 public class Response<T>
 {

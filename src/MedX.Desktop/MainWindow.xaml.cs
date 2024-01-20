@@ -5,17 +5,12 @@
 /// </summary>
 public partial class MainWindow : Window
 {
-    private readonly IEmployeeService service;
+    private readonly IServiceProvider services;
 
-    public MainWindow()
+    public MainWindow(IServiceProvider services)
     {
         InitializeComponent();
-    }
-
-    public MainWindow(IEmployeeService service)
-    {
-        InitializeComponent();
-        this.service = service;
+        this.services = services;
     }
 
     private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -63,7 +58,8 @@ public partial class MainWindow : Window
 
     private void RbDoctors_Click(object sender, RoutedEventArgs e)
     {
-        PageNavigator.Content = new EmployeesPage(service);
+        PageNavigator.Content = new EmployeesPage(services.
+            GetRequiredService<IEmployeeService>());
     }
 
     private void RbPatients_Click(object sender, RoutedEventArgs e)
@@ -98,7 +94,8 @@ public partial class MainWindow : Window
 
     private void RbEmployees_Click(object sender, RoutedEventArgs e)
     {
-        PageNavigator.Content = new EmployeesPage(service);
+        PageNavigator.Content = new EmployeesPage(services.
+            GetRequiredService<IEmployeeService>());
     }
 
     private void RbInformation_Click(object sender, RoutedEventArgs e)
@@ -108,7 +105,16 @@ public partial class MainWindow : Window
 
     private void WindowLoaded(object sender, RoutedEventArgs e)
     {
-        PageNavigator.Content = new EmployeesPage(service);
-        rbDoctors.IsChecked = true;
+        if (services != null)
+        {
+            PageNavigator.Content = new EmployeesPage(services.GetRequiredService<IEmployeeService>());
+            rbDoctors.IsChecked = true;
+        }
+        else
+        {
+            // services obyekti null bo'lganida qandaydir xatolikni aniqlash va qo'shimcha qo'ng'iroq
+            Console.WriteLine("ServiceProvider is null");
+        }
     }
+
 }
