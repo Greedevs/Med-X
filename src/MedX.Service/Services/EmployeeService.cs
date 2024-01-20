@@ -30,7 +30,7 @@ public class EmployeeService : IEmployeeService
             throw new AlreadyExistException($"This doctor already exist with phone: {dto.Phone}");
 
         string accountNumber = GenerateAccountNumber();
-        var mappedDoctor = new Employee
+        var mappedDoctor = new Employee()
         {
             FirstName = dto.FirstName,
             LastName = dto.LastName,
@@ -39,6 +39,8 @@ public class EmployeeService : IEmployeeService
             Phone = dto.Phone,
             Professional = dto.Professional,
             AccountNumber = accountNumber,
+            Salary = dto.Salary,
+            Percentage = dto.Percentage,
         };
 
         if (dto.Image is not null)

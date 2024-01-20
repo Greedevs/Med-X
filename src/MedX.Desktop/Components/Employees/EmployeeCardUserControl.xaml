@@ -8,7 +8,7 @@
              Height="250" Width="214"
              Margin="10">
     <Border Style="{DynamicResource BorderShadow}">
-        <Grid >
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="150"/>
                 <RowDefinition/>
@@ -23,12 +23,14 @@
                     Background="Snow"
                     CornerRadius="0 0 10 10">
                 <StackPanel>
-              
                     <Label x:Name="lbName"
                            FontSize="16"/>
                 
                     <TextBlock x:Name="tbDescription"/>
-            
+                    <Button x:Name="btnUpdate"
+                            Height="10" Width="10" Margin="190,30, 10, 10"
+                            Click="btnUpdate_Click">
+                    </Button>
                 </StackPanel>
 
             </Border>

@@ -17,13 +17,19 @@ public partial class EmployeesPage : Page
         this.service = service;
     }
 
-    private void BtnCreate_Click(object sender, RoutedEventArgs e)
+    private async void BtnCreate_Click(object sender, RoutedEventArgs e)
     {
         EmployeeCreateWindow employeeCreateWindow = new(service: service);
         employeeCreateWindow.ShowDialog();
+        await RefreshAsync();
     }
 
     private async void PageLoaded(object sender, RoutedEventArgs e)
+    {
+        await RefreshAsync();
+    }
+
+    public async Task RefreshAsync()
     {
         wrpEmployees.Children.Clear();
 
@@ -34,15 +40,20 @@ public partial class EmployeesPage : Page
         //var response = await httpClient.GetAsync(uri);
         //var employees = await ContentHelper.GetContentAsync<List<EmployeeResultDto>>(response);
         #endregion
-
-        var employees = await service.GetAllAsync(new PaginationParams());
-
-        foreach(var employee in employees.Data)
+        PaginationParams paginationParams = new PaginationParams()
         {
-            var employeeCardUserControl = new EmployeeCardUserControl();
+            PageIndex = 1,
+            PageSize = 30
+        };
+
+        var employees = await service.GetAllAsync(paginationParams);
+
+        foreach (var employee in employees.Data)
+        {
+            var employeeCardUserControl = new EmployeeCardUserControl(service);
             employeeCardUserControl.SetData(dto: employee);
             wrpEmployees.Children.Add(element: employeeCardUserControl);
-        } 
+        }
     }
 }
 
