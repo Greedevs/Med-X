@@ -14,7 +14,34 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Border Grid.Row="0"
-                    CornerRadius="10 10 0 0">
+                    CornerRadius="10 10 0 0" 
+                    Style="{DynamicResource BorderOverMouse}">
+                <Button x:Name="btnMore" Background="{DynamicResource PrimaryBackground}"
+                        Padding="0"
+                        Height="Auto" Width="Auto"
+                        Margin="180,10,10,120"
+                        Tag="{DynamicResource OthersIcon2}"
+                        Style="{DynamicResource EditButton}"
+                        Opacity="0"
+                        Click="btnMore_Click">
+                    <Button.ContextMenu>
+                        <ContextMenu x:Name="contextMenu">
+                            <MenuItem Header="Delete" Name="DeleteItem" 
+                                      Click="DeleteItem_Click">
+                                <MenuItem.Icon>
+                                    <Path Width="16" Height="17" Fill="#7D7C7C" Data="{DynamicResource delete}" Stretch="Uniform"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Edit" Name="EditItem" 
+                                      Click="EditItem_Click">
+                                <MenuItem.Icon>
+                                    <Path Width="14" Height="17" Fill="#7D7C7C" Data="{DynamicResource edit}" Stretch="Uniform">
+                                    </Path>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Button.ContextMenu>
+                </Button>
                 <Border.Background>
                     <ImageBrush x:Name="ImgBrush" Stretch="UniformToFill"/>
                 </Border.Background>
@@ -27,13 +54,29 @@
                            FontSize="16"/>
                 
                     <TextBlock x:Name="tbDescription"/>
-                    <Button x:Name="btnUpdate"
-                            Height="10" Width="10" Margin="190,30, 10, 10"
-                            Click="btnUpdate_Click">
-                    </Button>
                 </StackPanel>
 
             </Border>
         </Grid>
     </Border>
+<UserControl.Triggers>
+    <EventTrigger RoutedEvent="MouseEnter">
+        <BeginStoryboard>
+            <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="btnMore"
+                                 Storyboard.TargetProperty="Opacity"
+                                 To="1" Duration="0:0:0.2"/>
+            </Storyboard>
+        </BeginStoryboard>
+    </EventTrigger>
+    <EventTrigger RoutedEvent="MouseLeave">
+        <BeginStoryboard>
+            <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="btnMore"
+                                 Storyboard.TargetProperty="Opacity"
+                                 To="0" Duration="0:0:0.2"/>
+            </Storyboard>
+        </BeginStoryboard>
+    </EventTrigger>
+</UserControl.Triggers>
 </UserControl>

@@ -28,4 +28,5 @@ public class EmployeeUpdateDto
     public Degree Degree { get; set; }
     public string Professional { get; set; } = string.Empty;
     public IFormFile Image { get; set; } = default!;
+    public bool IsChangedImage { get; set; } = false;
 }

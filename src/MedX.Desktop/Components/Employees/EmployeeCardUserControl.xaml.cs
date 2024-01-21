@@ -17,7 +17,6 @@ public partial class EmployeeCardUserControl : UserControl
         InitializeComponent();
         this.employeeService = employeeService;
     }
-
     public void SetData(EmployeeResultDto dto)
     {
         Id = dto.Id;
@@ -31,7 +30,7 @@ public partial class EmployeeCardUserControl : UserControl
         tbDescription.Text = $"{dto.FirstName} {dto.LastName}";
     }
 
-    private async void btnUpdate_Click(object sender, RoutedEventArgs e)
+    private async void EditItem_Click(object sender, RoutedEventArgs e)
     {
         var existEmployee = await this.employeeService.GetAsync(Id);
         if (existEmployee != null)
@@ -39,5 +38,25 @@ public partial class EmployeeCardUserControl : UserControl
             EmployeeUpdateWindow updateWindow = new EmployeeUpdateWindow(employeeService, existEmployee);
             updateWindow.ShowDialog();
         }
+    }
+
+    private async void DeleteItem_Click(object sender, RoutedEventArgs e)
+    {
+        MessageBoxResult messageResult = MessageBox.Show("Are you sure you want to delete?", "Confirmation", MessageBoxButton.OKCancel);
+        if (messageResult == MessageBoxResult.OK)
+        {
+            var result = await this.employeeService.DeleteAsync(Id);
+            if (result is null)
+            {
+                MessageBox.Show("Something went wrong!","Error",MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+           
+        }
+    }
+
+    private void btnMore_Click(object sender, RoutedEventArgs e)
+    {
+        contextMenu.IsOpen = true;
     }
 }

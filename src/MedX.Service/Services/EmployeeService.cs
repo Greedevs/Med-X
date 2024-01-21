@@ -75,7 +75,7 @@ public class EmployeeService : IEmployeeService
     }
     public async Task<EmployeeResultDto> UpdateAsync(EmployeeUpdateDto dto)
     {
-        var existDoctor = await this.doctorRepository.GetAsync(r => r.Id == dto.Id)
+        var existDoctor = await this.doctorRepository.GetAsync(r => r.Id.Equals(dto.Id))
             ?? throw new NotFoundException($"This doctor not found with id: {dto.Id}");
 
         var uploadedImage = new Asset();
@@ -91,6 +91,8 @@ public class EmployeeService : IEmployeeService
         existDoctor.Email = dto.Email;
         existDoctor.Phone = dto.Phone;
         existDoctor.Professional = dto.Professional;
+        existDoctor.Salary = dto.Salary;
+        existDoctor.Percentage = dto.Percentage;
 
         if (uploadedImage.Id > 0)
         {

@@ -55,7 +55,7 @@ public partial class EmployeeUpdateWindow : Window
     {
         OpenFileDialog openFileDialog = new()
         {
-            Filter = "PNG files (*.png)|*.png|JPEG files (*.jpeg)|*.jpeg|JPG files (*.jpg)|*.jpg|GIF files (*.gif)|*.gif|BMP files (*.bmp)|*.bmp"
+            Filter = "JPG files (*.jpg)|*.jpg|JPEG files (*.jpeg)|*.jpeg|PNG files (*.png)|*.png|GIF files (*.gif)|*.gif|BMP files (*.bmp)|*.bmp"
         };
 
         if (openFileDialog.ShowDialog() == true)
@@ -92,25 +92,34 @@ public partial class EmployeeUpdateWindow : Window
         };
 
         if (!string.IsNullOrEmpty(value: imagePath))
+        {
             employeeUpdateDto.Image = GetFormFile(imagePath: imagePath);
+            employeeUpdateDto.IsChangedImage = true;
+        }
 
         if (rbDegree1.IsChecked == true)
         {
-            employeeUpdateDto.Degree = Degree.Primary;
-            employeeUpdateDto.Percentage = Convert.ToInt32(value: tbSalary.Text);
+            if (!string.IsNullOrWhiteSpace(tbSalary.Text))
+            {
+                employeeUpdateDto.Degree = Degree.Primary;
+                employeeUpdateDto.Percentage = Convert.ToInt32(value: tbSalary.Text);
+            }
         }
         else if (rbDegree2.IsChecked == true)
         {
-            employeeUpdateDto.Degree = Degree.Secondary;
-            employeeUpdateDto.Salary = decimal.Parse(s: tbSalary.Text);
+            if (!string.IsNullOrWhiteSpace(tbSalary.Text))
+            {
+                employeeUpdateDto.Degree = Degree.Secondary;
+                employeeUpdateDto.Salary = decimal.Parse(s: tbSalary.Text);
+            }
         }
 
         await service.UpdateAsync(dto: employeeUpdateDto);
-
-        this.Close();
+        await service.DeleteAsync(dto.Data.Id);
 
         EmployeesPage employeesPage = new EmployeesPage(service);
         await employeesPage.RefreshAsync();
+        this.Close();
     }
 
     public static IFormFile GetFormFile(string imagePath)
