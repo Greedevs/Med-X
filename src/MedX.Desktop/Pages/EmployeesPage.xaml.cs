@@ -1,5 +1,7 @@
 ﻿using MedX.Desktop.Windows.Employees;
 using MedX.Desktop.Components.Employees;
+using MedX.ApiService.Models.Commons;
+using MedX.ApiService.Models.Employees;
 
 namespace MedX.Desktop.Pages;
 
@@ -29,7 +31,7 @@ public partial class EmployeesPage : Page
         await RefreshAsync();
     }
 
-    public async Task RefreshAsync()
+    public async Task RefreshAsync(string search = null)
     {
         wrpEmployees.Children.Clear();
 
@@ -45,8 +47,19 @@ public partial class EmployeesPage : Page
             PageIndex = 1,
             PageSize = 30
         };
+        var employees = new Response<IEnumerable<EmployeeResultDto>>();
 
-        var employees = await service.GetAllAsync(paginationParams);
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            employees = await service.GetAllAsync(paginationParams, search);
+            wrpEmployees.Children.Clear();
+        }
+        else
+        {
+            employees = await service.GetAllAsync(paginationParams);
+            wrpEmployees.Children.Clear();
+        }
+
 
         foreach (var employee in employees.Data)
         {
@@ -54,6 +67,11 @@ public partial class EmployeesPage : Page
             employeeCardUserControl.SetData(dto: employee);
             wrpEmployees.Children.Add(element: employeeCardUserControl);
         }
+    }
+
+    private async void tbSearch_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        await RefreshAsync(tbSearch.Text);
     }
 }
 

@@ -38,7 +38,8 @@ public partial class EmployeeUpdateWindow : Window
             tbSalary.IsReadOnly = false;
             tbSalary.Text = dto.Data.Salary.ToString();
         }
-        btnSelectImage.Tag = new BitmapImage(new Uri(dto.Data.Image.FilePath));
+        if(dto.Data.Image != null) 
+            btnSelectImage.Tag = new BitmapImage(new Uri(dto.Data.Image.FilePath));
     }
 
     private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -114,11 +115,17 @@ public partial class EmployeeUpdateWindow : Window
             }
         }
 
-        await service.UpdateAsync(dto: employeeUpdateDto);
-        await service.DeleteAsync(dto.Data.Id);
+        var result = await service.UpdateAsync(dto: employeeUpdateDto);
+        
+        if (result != null)
+        {
+            MessageBox.Show("Employee updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        else
+        {
+            MessageBox.Show("Failed to update employee.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
 
-        EmployeesPage employeesPage = new EmployeesPage(service);
-        await employeesPage.RefreshAsync();
         this.Close();
     }
 

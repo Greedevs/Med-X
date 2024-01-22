@@ -40,7 +40,8 @@
                              BorderThickness="0"
                              Margin="5 0 5 0"
                              Foreground="{DynamicResource PrimaryForeground}"
-                             Background="{DynamicResource PrimaryBackground}"/>
+                             Background="{DynamicResource PrimaryBackground}"
+                             TextChanged="tbSearch_TextChanged"/>
                 </Grid>
             </Border>
                 <Button x:Name="btnCreate"

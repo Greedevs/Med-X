@@ -1,6 +1,8 @@
 ﻿using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using MedX.ApiService.Models.Employees;
+using MedX.Desktop.Helpers;
+using MedX.Desktop.Pages;
 using MedX.Desktop.Windows.Employees;
 
 namespace MedX.Desktop.Components.Employees;
@@ -25,9 +27,13 @@ public partial class EmployeeCardUserControl : UserControl
         else
             ImgBrush.ImageSource = new BitmapImage(new Uri(dto.Image.FilePath));
 
-        ImgBrush.Stretch = Stretch.UniformToFill;    
-        lbName.Content = dto.FirstName;
-        tbDescription.Text = $"{dto.FirstName} {dto.LastName}";
+        ImgBrush.Stretch = Stretch.UniformToFill;
+        lbFullName.Content = $"{dto.FirstName} {dto.LastName}";
+        tbProfessional.Text = dto.Professional;
+        tbPhone.Text = dto.Phone;
+        tbEmail.Text = dto.Email;
+        tbSalary.Text = dto.Salary.ToString();
+        tbPersentage.Text = dto.Percentage.ToString() + "%";
     }
 
     private async void EditItem_Click(object sender, RoutedEventArgs e)
@@ -37,6 +43,10 @@ public partial class EmployeeCardUserControl : UserControl
         {
             EmployeeUpdateWindow updateWindow = new EmployeeUpdateWindow(employeeService, existEmployee);
             updateWindow.ShowDialog();
+
+            var employeesPage = HelperMethod.FindParent<EmployeesPage>(this);
+            if (employeesPage != null)
+                await employeesPage.RefreshAsync();
         }
     }
 
@@ -48,10 +58,14 @@ public partial class EmployeeCardUserControl : UserControl
             var result = await this.employeeService.DeleteAsync(Id);
             if (result is null)
             {
-                MessageBox.Show("Something went wrong!","Error",MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Something went wrong!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-           
+            else
+            {
+                var employeesPage = HelperMethod.FindParent<EmployeesPage>(this);
+                if (employeesPage != null)
+                    await employeesPage.RefreshAsync();
+            }
         }
     }
 

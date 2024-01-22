@@ -17,7 +17,7 @@ public class EmployeeService(HttpClient client) : IEmployeeService
     public async Task<Response<EmployeeResultDto>> UpdateAsync(EmployeeUpdateDto dto)
     {
         using var multipartFormContent = ConvertHelper.ConvertToMultipartFormContent(dto);
-        using var response = await client.PutAsync("update", multipartFormContent);
+        using var response = await client.PutAsync($"update", multipartFormContent);
         if (!response.IsSuccessStatusCode)
             return default!;
 
