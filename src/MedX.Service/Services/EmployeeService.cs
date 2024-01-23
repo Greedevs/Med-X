@@ -9,6 +9,7 @@ using MedX.Domain.Configurations;
 using MedX.Domain.Entities.Assets;
 using MedX.Service.DTOs.Employees;
 using Microsoft.EntityFrameworkCore;
+using MedX.Domain.Enums;
 
 namespace MedX.Service.Services;
 
@@ -120,7 +121,27 @@ public class EmployeeService : IEmployeeService
 
     public async Task<IEnumerable<EmployeeResultDto>> GetAllAsync(PaginationParams @params, string search = null)
     {
-        var allDoctors = await this.doctorRepository.GetAll(includes: new[] { "Image" })
+        var allEmployees = await this.doctorRepository.GetAll(includes: new[] { "Image" })
+            .ToPaginate(@params)
+            .ToListAsync();
+
+        if (search is not null)
+        {
+            allEmployees = allEmployees.Where(d => d.Professional.Contains(search, StringComparison.OrdinalIgnoreCase)
+            || d.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)
+            || d.LastName.Contains(search, StringComparison.OrdinalIgnoreCase)
+            || d.Patronymic.Contains(search, StringComparison.OrdinalIgnoreCase)
+            || d.Phone.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+
+        return this.mapper.Map<IEnumerable<EmployeeResultDto>>(allEmployees);
+    }
+
+
+    public async Task<IEnumerable<EmployeeResultDto>> GetAllDoctorAsync(PaginationParams @params, string search = null)
+    {
+        var allDoctors = await this.doctorRepository.GetAll(d => d.Degree.Equals(Degree.Primary),
+             includes: new[] { "Image" })
             .ToPaginate(@params)
             .ToListAsync();
 
@@ -135,7 +156,6 @@ public class EmployeeService : IEmployeeService
 
         return this.mapper.Map<IEnumerable<EmployeeResultDto>>(allDoctors);
     }
-
     private string GenerateAccountNumber()
     {
         Random random = new Random();

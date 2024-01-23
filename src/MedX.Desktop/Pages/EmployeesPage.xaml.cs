@@ -12,8 +12,7 @@ namespace MedX.Desktop.Pages;
 public partial class EmployeesPage : Page
 {
     private readonly IEmployeeService service;
-
-    public EmployeesPage(IEmployeeService service)
+    public EmployeesPage(IEmployeeService service, bool isDoctor)
     {
         InitializeComponent();
         this.service = service;
@@ -34,31 +33,15 @@ public partial class EmployeesPage : Page
     public async Task RefreshAsync(string search = null)
     {
         wrpEmployees.Children.Clear();
-
-        #region Old Code with HttpClient
-        ////http://localhost:5298/api/Employees/get-all?PageSize=10&PageIndex=1
-        //string uri = $"{link}get-all?PageSize=10&PageIndex={1}";
-        //HttpClient httpClient = new();
-        //var response = await httpClient.GetAsync(uri);
-        //var employees = await ContentHelper.GetContentAsync<List<EmployeeResultDto>>(response);
-        #endregion
         PaginationParams paginationParams = new PaginationParams()
         {
             PageIndex = 1,
             PageSize = 30
         };
-        var employees = new Response<IEnumerable<EmployeeResultDto>>();
 
-        if (!string.IsNullOrWhiteSpace(search))
-        {
-            employees = await service.GetAllAsync(paginationParams, search);
-            wrpEmployees.Children.Clear();
-        }
-        else
-        {
-            employees = await service.GetAllAsync(paginationParams);
-            wrpEmployees.Children.Clear();
-        }
+        var employees = await service.GetAllAsync(paginationParams, search);
+
+        wrpEmployees.Children.Clear();
 
 
         foreach (var employee in employees.Data)

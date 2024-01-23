@@ -59,7 +59,7 @@ public partial class MainWindow : Window
     private void RbDoctors_Click(object sender, RoutedEventArgs e)
     {
         PageNavigator.Content = new EmployeesPage(services.
-            GetRequiredService<IEmployeeService>());
+            GetRequiredService<IEmployeeService>(), isDoctor:true);
     }
 
     private void RbPatients_Click(object sender, RoutedEventArgs e)
@@ -95,7 +95,7 @@ public partial class MainWindow : Window
     private void RbEmployees_Click(object sender, RoutedEventArgs e)
     {
         PageNavigator.Content = new EmployeesPage(services.
-            GetRequiredService<IEmployeeService>());
+            GetRequiredService<IEmployeeService>(), isDoctor:false);
     }
 
     private void RbInformation_Click(object sender, RoutedEventArgs e)
@@ -107,7 +107,7 @@ public partial class MainWindow : Window
     {
         if (services != null)
         {
-            PageNavigator.Content = new EmployeesPage(services.GetRequiredService<IEmployeeService>());
+            PageNavigator.Content = new EmployeesPage(services.GetRequiredService<IEmployeeService>(),isDoctor:true);
             rbDoctors.IsChecked = true;
         }
         else

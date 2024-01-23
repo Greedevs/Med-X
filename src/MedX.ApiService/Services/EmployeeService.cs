@@ -59,4 +59,22 @@ public class EmployeeService(HttpClient client) : IEmployeeService
 
         return (await response.Content.ReadFromJsonAsync<Response<IEnumerable<EmployeeResultDto>>>())!;
     }
+
+    public async Task<Response<IEnumerable<EmployeeResultDto>>> GetAllDoctorAsync(PaginationParams @params, string search = null)
+    {
+        var queryParams = new Dictionary<string, string>
+        {
+            { nameof(@params.PageIndex), @params.PageIndex.ToString() },
+            { nameof(@params.PageSize), @params.PageSize.ToString() },
+            { nameof(search), search }
+        };
+
+        var queryString = string.Join("&", queryParams.Where(p => !string.IsNullOrEmpty(p.Value)).Select(p => $"{p.Key}={p.Value}"));
+        using var response = await client.GetAsync($"get-all-doctor?{queryString}");
+
+        if (!response.IsSuccessStatusCode)
+            return default!;
+
+        return (await response.Content.ReadFromJsonAsync<Response<IEnumerable<EmployeeResultDto>>>())!;
+    }
 }
