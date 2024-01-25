@@ -7,7 +7,8 @@
              mc:Ignorable="d" 
              Height="260" Width="214"
              Margin="10">
-    <Border Style="{DynamicResource BorderShadow}">
+    <Border Style="{DynamicResource BorderShadow}"
+            MouseRightButtonDown="Border_MouseRightButtonDown">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="150"/>
@@ -24,18 +25,21 @@
                         Opacity="0"
                         Click="btnMore_Click">
                     <Button.ContextMenu>
-                        <ContextMenu x:Name="contextMenu">
-                            <MenuItem Header="Delete" Name="DeleteItem" 
-                                      Click="DeleteItem_Click">
+                        <ContextMenu x:Name="contextMenu" Style="{DynamicResource ContextMenuStyle}">
+                            <MenuItem Header="Edit" Name="EditItem" FontSize="13"
+                                      Click="EditItem_Click" Margin="5 3 0 5"
+                                      Height="28">
                                 <MenuItem.Icon>
-                                    <Path Width="16" Height="17" Fill="#7D7C7C" Data="{DynamicResource delete}" Stretch="Uniform"/>
+                                    <Path Width="15" Height="17" Fill="#7D7C7C" Data="{DynamicResource edit}" Stretch="Uniform">
+                                    </Path>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="Edit" Name="EditItem" 
-                                      Click="EditItem_Click">
+                            <MenuItem Header="Delete" Name="DeleteItem" FontSize="13" 
+                                      Click="DeleteItem_Click" Margin="5 0 0 3"
+                                      Height="28">
                                 <MenuItem.Icon>
-                                    <Path Width="14" Height="17" Fill="#7D7C7C" Data="{DynamicResource edit}" Stretch="Uniform">
-                                    </Path>
+                                    <Path Width="15" Height="18" Fill="#7D7C7C"
+                                          Data="{DynamicResource delete}" Stretch="Uniform"/>
                                 </MenuItem.Icon>
                             </MenuItem>
                         </ContextMenu>

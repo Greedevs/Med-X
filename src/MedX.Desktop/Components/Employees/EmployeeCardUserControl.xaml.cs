@@ -52,7 +52,7 @@ public partial class EmployeeCardUserControl : UserControl
 
     private async void DeleteItem_Click(object sender, RoutedEventArgs e)
     {
-        MessageBoxResult messageResult = MessageBox.Show("Are you sure you want to delete?", "Confirmation", MessageBoxButton.OKCancel);
+        MessageBoxResult messageResult = MessageBox.Show("Are you sure you want to delete?", "Confirmation", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
         if (messageResult == MessageBoxResult.OK)
         {
             var result = await this.employeeService.DeleteAsync(Id);
@@ -70,6 +70,11 @@ public partial class EmployeeCardUserControl : UserControl
     }
 
     private void btnMore_Click(object sender, RoutedEventArgs e)
+    {
+        contextMenu.IsOpen = true;
+    }
+
+    private void Border_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
     {
         contextMenu.IsOpen = true;
     }

@@ -127,6 +127,7 @@ public class EmployeeService : IEmployeeService
 
         if (search is not null)
         {
+            search = search.Replace("+", "%2B");
             allEmployees = allEmployees.Where(d => d.Professional.Contains(search, StringComparison.OrdinalIgnoreCase)
             || d.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)
             || d.LastName.Contains(search, StringComparison.OrdinalIgnoreCase)
@@ -147,6 +148,7 @@ public class EmployeeService : IEmployeeService
 
         if (search is not null)
         {
+            search = search.Replace("+", "%2B");
             allDoctors = allDoctors.Where(d => d.Professional.Contains(search, StringComparison.OrdinalIgnoreCase)
             || d.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)
             || d.LastName.Contains(search, StringComparison.OrdinalIgnoreCase)
