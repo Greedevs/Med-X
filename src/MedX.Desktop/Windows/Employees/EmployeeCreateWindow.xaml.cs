@@ -79,7 +79,16 @@ public partial class EmployeeCreateWindow : Window
             employeeCreationDto.Salary = decimal.Parse(s: tbSalary.Text);
         }
 
-        await service.AddAsync(dto: employeeCreationDto);
+        var result = await service.AddAsync(dto: employeeCreationDto);
+
+        if (result != null)
+        {
+            MessageBox.Show("Employee created successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        else
+        {
+            MessageBox.Show("Failed to create employee.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
 
         this.Close();
     }

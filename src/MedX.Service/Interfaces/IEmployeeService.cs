@@ -10,4 +10,5 @@ public interface IEmployeeService
     Task<bool> DeleteAsync(long id);
     Task<EmployeeResultDto> GetAsync(long id);
     Task<IEnumerable<EmployeeResultDto>> GetAllAsync(PaginationParams @params, string search = null);
+    Task<IEnumerable<EmployeeResultDto>> GetAllDoctorAsync(PaginationParams @params, string search = null);
 }

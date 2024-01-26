@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
 	<EnableWindowsTargeting>true</EnableWindowsTargeting>
@@ -12,12 +12,16 @@
   <ItemGroup>
     <Compile Remove="Entities\**" />
     <Compile Remove="Enums\**" />
+    <Compile Remove="ViewModels\**" />
     <EmbeddedResource Remove="Entities\**" />
     <EmbeddedResource Remove="Enums\**" />
+    <EmbeddedResource Remove="ViewModels\**" />
     <None Remove="Entities\**" />
     <None Remove="Enums\**" />
+    <None Remove="ViewModels\**" />
     <Page Remove="Entities\**" />
     <Page Remove="Enums\**" />
+    <Page Remove="ViewModels\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,7 +35,6 @@
   <ItemGroup>
     <Folder Include="Assets\Logos\" />
     <Folder Include="Assets\Sounds\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
 
   <ItemGroup>

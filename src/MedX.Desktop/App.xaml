@@ -21,6 +21,7 @@
                 <ResourceDictionary Source="/Styles/LabelStyles.xaml"/>
                 <ResourceDictionary Source="/Styles/TextBoxStyles.xaml"/>
                 <ResourceDictionary Source="/Styles/ComboBoxStyles.xaml"/>
+                <ResourceDictionary Source="/Styles/ContextMenuStyles.xaml"/>
                 <!--end::Styles-->
 
             </ResourceDictionary.MergedDictionaries>

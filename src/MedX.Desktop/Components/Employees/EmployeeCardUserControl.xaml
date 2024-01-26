@@ -5,16 +5,49 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MedX.Desktop.Components.Employees"
              mc:Ignorable="d" 
-             Height="250" Width="214"
+             Height="260" Width="214"
              Margin="10">
-    <Border Style="{DynamicResource BorderShadow}">
-        <Grid >
+    <Border Style="{DynamicResource BorderShadow}"
+            MouseRightButtonDown="Border_MouseRightButtonDown">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="150"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Border Grid.Row="0"
                     CornerRadius="10 10 0 0">
+                <Button x:Name="btnMore" Background="{DynamicResource PrimaryBackground}"
+                        Padding="0"
+                        Height="30" Width="30"
+                        Margin="170,5,5,110"
+                        Tag="{DynamicResource OthersIcon2}"
+                        Style="{DynamicResource EditButton}"
+                        Opacity="0"
+                        Click="btnMore_Click">
+                    <Button.ContextMenu>
+                        <ContextMenu x:Name="contextMenu" Style="{DynamicResource ContextMenuStyle}">
+                            <MenuItem Header="Edit" Name="EditItem" FontSize="13"
+                                      Click="EditItem_Click" Margin="5 3 0 5"
+                                      Height="28">
+                                <MenuItem.Icon>
+                                    <Path Width="15" Height="17" Fill="#7D7C7C" Data="{DynamicResource edit}" Stretch="Uniform">
+                                    </Path>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Delete" Name="DeleteItem" FontSize="13" 
+                                      Click="DeleteItem_Click" Margin="5 0 0 3"
+                                      Height="28">
+                                <MenuItem.Icon>
+                                    <Path Width="15" Height="18" Fill="#7D7C7C"
+                                          Data="{DynamicResource delete}" Stretch="Uniform"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </Button.ContextMenu>
+                    <Button.Effect>
+                        <DropShadowEffect Color="Black" Direction="0" ShadowDepth="1" BlurRadius="10" Opacity="0.3"/>
+                    </Button.Effect>
+                </Button>
                 <Border.Background>
                     <ImageBrush x:Name="ImgBrush" Stretch="UniformToFill"/>
                 </Border.Background>
@@ -23,15 +56,40 @@
                     Background="Snow"
                     CornerRadius="0 0 10 10">
                 <StackPanel>
-              
-                    <Label x:Name="lbName"
+                    <Label x:Name="lbFullName"
                            FontSize="16"/>
                 
-                    <TextBlock x:Name="tbDescription"/>
-            
+                    <TextBlock x:Name="tbProfessional" FontSize="14"
+                               FontFamily="Jetbrains Mono"
+                               FontWeight="SemiBold"
+                               Margin="10,5,3,0"/>
+                    <TextBlock x:Name="tbPhone" Margin="10,3,3,0"/>
+                    <TextBlock x:Name="tbEmail" Margin="10,3,3,0"/>
+                    <TextBlock x:Name="tbSalary" Margin="10,3,3,0"/>
+                    <TextBlock x:Name="tbPersentage" Margin="10,3,3,0"/>
                 </StackPanel>
 
             </Border>
         </Grid>
     </Border>
+<UserControl.Triggers>
+    <EventTrigger RoutedEvent="MouseEnter">
+        <BeginStoryboard>
+            <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="btnMore"
+                                 Storyboard.TargetProperty="Opacity"
+                                 To="1" Duration="0:0:0.0"/>
+            </Storyboard>
+        </BeginStoryboard>
+    </EventTrigger>
+    <EventTrigger RoutedEvent="MouseLeave">
+        <BeginStoryboard>
+            <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="btnMore"
+                                 Storyboard.TargetProperty="Opacity"
+                                 To="0" Duration="0:0:0.0"/>
+            </Storyboard>
+        </BeginStoryboard>
+    </EventTrigger>
+</UserControl.Triggers>
 </UserControl>

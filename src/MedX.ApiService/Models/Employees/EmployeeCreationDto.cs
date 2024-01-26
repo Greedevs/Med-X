@@ -22,7 +22,6 @@ public class EmployeeCreationDto
     //[MinLength(6), MaxLength(30), Required]
     public string Password { get; set; } = string.Empty;
 
-
     public decimal? Salary { get; set; }
     public int? Percentage { get; set; }
     public Degree Degree { get; set; }

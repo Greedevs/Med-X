@@ -17,7 +17,7 @@ public class EmployeesController : BaseController
     [HttpPost("create")]
     public async Task<IActionResult> PostAsync([FromForm] EmployeeCreationDto dto)
         => Ok(new Response { Data = await employeeService.AddAsync(dto) });
-
+    
     [HttpPut("update")]
     public async Task<IActionResult> UpdateAsync([FromForm] EmployeeUpdateDto dto)
         => Ok(new Response { Data = await employeeService.UpdateAsync(dto) });
@@ -33,4 +33,8 @@ public class EmployeesController : BaseController
     [HttpGet("get-all")]
     public async Task<IActionResult> GetAllAsync([FromQuery] PaginationParams @params, string search)
     => Ok(new Response { Data = await employeeService.GetAllAsync(@params, search) });
+    
+    [HttpGet("get-all-doctor")]
+    public async Task<IActionResult> GetAllDoctorAsync([FromQuery] PaginationParams @params, string search)
+    => Ok(new Response { Data = await employeeService.GetAllDoctorAsync(@params, search) });
 }
