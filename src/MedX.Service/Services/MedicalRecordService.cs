@@ -95,6 +95,7 @@ public class MedicalRecordService : IMedicalRecordService
 
         if (search is not null)
         {
+            search = search.Replace("+", "%2B");
             allMedicalRecords = allMedicalRecords
                 .Where(d => d.Doctor.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)
                 || d.Patient.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)

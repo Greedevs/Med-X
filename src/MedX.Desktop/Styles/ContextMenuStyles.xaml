@@ -9,9 +9,9 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ContextMenu}">
-                    <Border x:Name="Border" Background="#fff" BorderThickness="1">
+                    <Border x:Name="Border" Background="{DynamicResource PrimaryBackground}" BorderThickness="1">
                         <Border.BorderBrush>
-                            <SolidColorBrush Color="#fff" />
+                            <StaticResource ResourceKey="PrimaryBackground"/>
                         </Border.BorderBrush>
                         <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
                     </Border>

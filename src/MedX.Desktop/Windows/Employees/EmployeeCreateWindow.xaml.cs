@@ -7,7 +7,7 @@ namespace MedX.Desktop.Windows.Employees;
 /// </summary>
 public partial class EmployeeCreateWindow : Window
 {
-    private string? imagePath;
+    private string imagePath;
     private readonly IEmployeeService service;
 
     public EmployeeCreateWindow(IEmployeeService service)

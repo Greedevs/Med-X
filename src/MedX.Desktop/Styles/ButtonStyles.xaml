@@ -153,6 +153,54 @@
         </Setter>
     </Style>
 
+
+    <Style x:Key="NightModeButton" TargetType="ToggleButton">
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="Width" Value="200"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Margin" Value="0 8 0 3"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border x:Name="B"
+                        CornerRadius="5">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="60"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Path x:Name="icon"
+                              Grid.Column="1"
+                              Data="{Binding Tag, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
+                              Fill="{DynamicResource PrimaryForeground}"
+                              Height="20"
+                              Width="20"
+                              Stretch="Uniform"/>
+
+                            <TextBlock x:Name="tb"
+                                   Grid.Column="2"
+                                   Text="{TemplateBinding Content}"
+                                   FontFamily="Segoi UI"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource PrimaryForeground}"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="icon" Property="Fill" Value="{DynamicResource SelectedBorderColor}"/>
+                            <Setter TargetName="B" Property="Cursor" Value="Hand"/>
+                            <Setter TargetName="B" Property="Background" Value="{DynamicResource Selectedbackground}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="SuccesssButton" TargetType="Button">
         <Setter Property="Margin" Value="10 0"/>
         <Setter Property="Cursor" Value="Hand"/>
@@ -170,6 +218,37 @@
                                VerticalAlignment="Center"
                                HorizontalAlignment="Center"
                                Content="{TemplateBinding Content}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="B" Property="Background" Value="#04AA6D"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="B" Property="Background" Value="#038C5A"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SwitchButton" TargetType="Button">
+        <Setter Property="Margin" Value="0 0 160 0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="B"
+            Style="{DynamicResource PrimaryBorder}"
+            Background="#05C880">
+                        <Label FontSize="16"
+               Margin="25 0"
+               FontFamily="jetbrains mono"
+               FontWeight="SemiBold"
+               Foreground="snow"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Center"
+               Content="{TemplateBinding Content}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -272,6 +351,52 @@
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="EditButtonBorder" Property="Background" Value="{DynamicResource PrimaryBackground}"/>
 
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="View_Profile2" TargetType="Button">
+        <Setter Property="Template">
+
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="CreateButtonBorder"
+                    CornerRadius="5"
+                        BorderBrush="{DynamicResource PrimaryBackground}"
+                           BorderThickness="1"
+                            Width="150"
+                        Height="30"
+                        >
+                        <Label x:Name="Createlbl"
+                           FontSize="16"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"                               
+                           Padding="0"
+                           Content="{TemplateBinding Content}">
+                        </Label>
+
+                    </Border>
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="CreateButtonBorder" Property="Cursor" Value="Hand" />
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter TargetName="CreateButtonBorder" Property="Background" Value="{DynamicResource SecondaryBackground}"/>
+                            <Setter TargetName="Createlbl" Property="Foreground" Value="{DynamicResource SecondaryBorder}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="CreateButtonBorder" Property="Background" Value="{DynamicResource PrimaryBackground}"/>
+                            <Setter TargetName="Createlbl" Property="Foreground" Value="{DynamicResource SecondaryBorder}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="CreateButtonBorder" Property="Background" Value="{DynamicResource SecondaryBorder}"/>
+                            <Setter TargetName="Createlbl" Property="Foreground" Value="{DynamicResource PrimaryBackground}"/>
                         </Trigger>
 
                     </ControlTemplate.Triggers>

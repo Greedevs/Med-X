@@ -130,6 +130,7 @@ public class AdminService : IAdminService
 
         if (search != null)
         {
+            search = search.Replace("+", "%2B");
             allAdmins = allAdmins.Where(d => d.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)
             || d.LastName.Contains(search, StringComparison.OrdinalIgnoreCase)
             || d.Phone.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();

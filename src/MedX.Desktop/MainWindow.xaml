@@ -75,30 +75,30 @@
                                      Content="Dashboard"
                                      Click="RbDashboard_Click"/>
 
-                        <RadioButton x:Name="rbDoctors" 
-                                     Tag="{DynamicResource doctors}" 
-                                     Style="{DynamicResource MenuButton}" 
-                                     Content="Doctors"
-                                     Click="RbDoctors_Click"/>
-
                         <RadioButton x:Name="rbPatients" 
                                      Tag="{DynamicResource patients}" 
                                      Style="{DynamicResource MenuButton}" 
                                      Content="Patients"
                                      Click="RbPatients_Click"/>
 
-                        <RadioButton x:Name="rbRooms" 
-                                     Tag="{DynamicResource rooms}" 
-                                     Style="{DynamicResource MenuButton}" 
-                                     Content="Rooms"
-                                     Click="RbRooms_Click"/>
 
+                        <RadioButton x:Name="rbDoctors" 
+                                     Tag="{DynamicResource doctors}" 
+                                     Style="{DynamicResource MenuButton}" 
+                                     Content="Doctors"
+                                     Click="RbDoctors_Click"/>
+                        
                         <RadioButton x:Name="rbEmployees" 
                                      Tag="{DynamicResource employees}" 
                                      Style="{DynamicResource MenuButton}" 
                                      Content="Employees"
                                      Click="RbEmployees_Click"/>
 
+                        <RadioButton x:Name="rbRooms" 
+                                     Tag="{DynamicResource rooms}" 
+                                     Style="{DynamicResource MenuButton}" 
+                                     Content="Rooms"
+                                     Click="RbRooms_Click"/>
                         <RadioButton x:Name="rbReports" 
                                      Tag="{DynamicResource reports}" 
                                      Style="{DynamicResource MenuButton}" 
@@ -122,6 +122,30 @@
                                      Style="{DynamicResource MenuButton}" 
                                      Content="About"
                                      Click="RbAbout_Click"/>
+
+                        <StackPanel Orientation="Horizontal">
+                            <ToggleButton x:Name="btnNightMode" 
+                                          Tag="{DynamicResource nightMode}" 
+                                          Style="{DynamicResource NightModeButton}"
+                                          Content="Night mode"
+                                          Click="RbNightMode_Click"
+                                          Margin="16 0 -30 0"/>
+                            <Border Margin="0 1 0 0"
+                                    Height="15"
+                                    Width="35"
+                                    CornerRadius="8"
+                                    Background="{DynamicResource PrimaryForeground}">
+                                <Border x:Name="ToggleSwitch" Height="18"
+                                        Width="18"
+                                        Margin="0 -5.1 17 -5"
+                                        CornerRadius="15"
+                                        Background="{DynamicResource PrimaryBackground}"
+                                        BorderBrush="{DynamicResource PrimaryForeground}"
+                                        BorderThickness="0.8">
+                                </Border>
+                            </Border>
+                        </StackPanel>
+
                     </StackPanel>
                 </Border>
                 <Frame x:Name="PageNavigator"

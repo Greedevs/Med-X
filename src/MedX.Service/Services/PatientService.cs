@@ -42,9 +42,8 @@ public class PatientService : IPatientService
 
     public async Task<bool> DeleteAsync(long id)
     {
-        Patient patient = await this.repository.GetAsync(p => p.Id.Equals(id));
-        if (patient is not null)
-            throw new NotFoundException($"This patient is not found {id}");
+        Patient patient = await this.repository.GetAsync(p => p.Id.Equals(id))
+            ?? throw new NotFoundException($"This patient is not found {id}");
 
         this.repository.Delete(patient);
         await this.repository.SaveChanges();
@@ -82,6 +81,7 @@ public class PatientService : IPatientService
 
         if (search is not null)
         {
+            search = search.Replace("+", "%2B");
             patients = patients.Where(d => d.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)
             || d.LastName.Contains(search, StringComparison.OrdinalIgnoreCase)
             || d.Patronymic.Contains(search, StringComparison.OrdinalIgnoreCase)

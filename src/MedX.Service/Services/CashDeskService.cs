@@ -76,6 +76,7 @@ public class CashDeskService : ICashDeskService
 
         if (search is not null)
         {
+            search = search.Replace("+", "%2B");
             allCashDesks = allCashDesks.Where(d => d.AccountNumber.Contains(search, StringComparison.OrdinalIgnoreCase)
             || d.Description.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
         }

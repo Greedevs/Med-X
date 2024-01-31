@@ -15,4 +15,9 @@
 
     <SolidColorBrush x:Key="ShadowColor" Color="black"/>
 
+    <LinearGradientBrush x:Key="Gradient">
+        <GradientStop Color="#334D66" Offset="0"/>
+        <GradientStop Color="#131626" Offset="1"/>
+    </LinearGradientBrush>
+
 </ResourceDictionary>

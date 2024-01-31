@@ -15,18 +15,18 @@ namespace MedX.Service.Services;
 
 public class EmployeeService : IEmployeeService
 {
-    private readonly IRepository<Employee> doctorRepository;
+    private readonly IRepository<Employee> employeeRepository;
     private readonly IAssetService assetService;
     private readonly IMapper mapper;
-    public EmployeeService(IMapper mapper, IRepository<Employee> doctorRepository, IAssetService assetService)
+    public EmployeeService(IMapper mapper, IRepository<Employee> employeeRepository, IAssetService assetService)
     {
         this.mapper = mapper;
         this.assetService = assetService;
-        this.doctorRepository = doctorRepository;
+        this.employeeRepository = employeeRepository;
     }
     public async Task<EmployeeResultDto> AddAsync(EmployeeCreationDto dto)
     {
-        var existDoctor = await this.doctorRepository.GetAsync(d => d.Phone.Equals(dto.Phone));
+        var existDoctor = await this.employeeRepository.GetAsync(d => d.Phone.Equals(dto.Phone));
         if (existDoctor is not null)
             throw new AlreadyExistException($"This doctor already exist with phone: {dto.Phone}");
 
@@ -57,26 +57,26 @@ public class EmployeeService : IEmployeeService
             mappedDoctor.Image = createdImage;
         }
 
-        await this.doctorRepository.CreateAsync(mappedDoctor);
-        await this.doctorRepository.SaveChanges();
+        await this.employeeRepository.CreateAsync(mappedDoctor);
+        await this.employeeRepository.SaveChanges();
 
         return this.mapper.Map<EmployeeResultDto>(mappedDoctor);
     }
 
     public async Task<bool> DeleteAsync(long id)
     {
-        var existDoctor = await this.doctorRepository.GetAsync(r => r.Id == id)
+        var existDoctor = await this.employeeRepository.GetAsync(r => r.Id == id)
             ?? throw new NotFoundException($"This doctor not found with id: {id}");
 
-        this.doctorRepository.Delete(existDoctor);
+        this.employeeRepository.Delete(existDoctor);
         await this.assetService.RemoveAsync(existDoctor.Image);
-        await this.doctorRepository.SaveChanges();
+        await this.employeeRepository.SaveChanges();
 
         return true;
     }
     public async Task<EmployeeResultDto> UpdateAsync(EmployeeUpdateDto dto)
     {
-        var existDoctor = await this.doctorRepository.GetAsync(r => r.Id.Equals(dto.Id))
+        var existDoctor = await this.employeeRepository.GetAsync(r => r.Id.Equals(dto.Id))
             ?? throw new NotFoundException($"This doctor not found with id: {dto.Id}");
 
         var uploadedImage = new Asset();
@@ -106,14 +106,14 @@ public class EmployeeService : IEmployeeService
             existDoctor.Image.FilePath = uploadedImage.FilePath;
         }
 
-        this.doctorRepository.Update(existDoctor);
-        await this.doctorRepository.SaveChanges();
+        this.employeeRepository.Update(existDoctor);
+        await this.employeeRepository.SaveChanges();
 
         return this.mapper.Map<EmployeeResultDto>(existDoctor);
     }
     public async Task<EmployeeResultDto> GetAsync(long id)
     {
-        var existDoctor = await this.doctorRepository.GetAsync(r => r.Id == id, includes: new[] { "Image" })
+        var existDoctor = await this.employeeRepository.GetAsync(r => r.Id == id, includes: new[] { "Image" })
             ?? throw new NotFoundException($"This doctor not found with id: {id}");
 
         return this.mapper.Map<EmployeeResultDto>(existDoctor);
@@ -121,7 +121,7 @@ public class EmployeeService : IEmployeeService
 
     public async Task<IEnumerable<EmployeeResultDto>> GetAllAsync(PaginationParams @params, string search = null)
     {
-        var allEmployees = await this.doctorRepository.GetAll(includes: new[] { "Image" })
+        var allEmployees = await this.employeeRepository.GetAll(includes: new[] { "Image" })
             .ToPaginate(@params)
             .ToListAsync();
 
@@ -141,7 +141,7 @@ public class EmployeeService : IEmployeeService
 
     public async Task<IEnumerable<EmployeeResultDto>> GetAllDoctorAsync(PaginationParams @params, string search = null)
     {
-        var allDoctors = await this.doctorRepository.GetAll(d => d.Degree.Equals(Degree.Primary),
+        var allDoctors = await this.employeeRepository.GetAll(d => d.Degree.Equals(Degree.Primary),
              includes: new[] { "Image" })
             .ToPaginate(@params)
             .ToListAsync();

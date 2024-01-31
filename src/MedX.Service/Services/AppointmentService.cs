@@ -94,6 +94,7 @@ public class AppointmentService : IAppointmentService
 
         if (search is not null)
         {
+            search = search.Replace("+", "%2B");
             allAppointments = allAppointments
                 .Where(d => d.Doctor.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)
                 || d.Patient.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)

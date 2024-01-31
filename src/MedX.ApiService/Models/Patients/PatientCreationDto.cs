@@ -1,11 +1,9 @@
 ﻿using MedX.Domain.Enums;
-using Microsoft.AspNetCore.Http;
 
-namespace MedX.Service.DTOs.Patients;
+namespace MedX.ApiService.Models.Patients;
 
-public class PatientUpdateDto
+public class PatientCreationDto
 {
-    public long Id { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public string Patronymic { get; set; }

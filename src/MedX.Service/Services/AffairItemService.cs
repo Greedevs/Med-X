@@ -131,6 +131,7 @@ public class AffairItemService : IAffairItemService
         {
             affairs = affairs.Where(d => d.Patient.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)
             || d.Patient.LastName.Contains(search, StringComparison.OrdinalIgnoreCase)
+            || d.Patient.Phone.Contains(search, StringComparison.OrdinalIgnoreCase)
             || d.Affair.Name.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
         }
 
@@ -148,8 +149,10 @@ public class AffairItemService : IAffairItemService
 
         if (search is not null)
         {
+            search = search.Replace("+", "%2B");
             patients = patients.Where(d => d.Patient.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)
             || d.Patient.LastName.Contains(search, StringComparison.OrdinalIgnoreCase)
+            || d.Patient.Phone.Contains(search, StringComparison.OrdinalIgnoreCase)
             || d.Affair.Name.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
         }
 

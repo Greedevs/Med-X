@@ -128,11 +128,14 @@ public class TreatmentService : ITreatmentService
 
         if (search is not null)
         {
+            search = search.Replace("+", "%2B");
             allTreatments = allTreatments
                 .Where(d => d.Doctor.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)
                 || d.Patient.FirstName.Contains(search, StringComparison.OrdinalIgnoreCase)
                 || d.Patient.LastName.Contains(search, StringComparison.OrdinalIgnoreCase)
+                || d.Patient.Phone.Contains(search, StringComparison.OrdinalIgnoreCase)
                 || d.Doctor.LastName.Contains(search, StringComparison.OrdinalIgnoreCase)
+                || d.Doctor.Phone.Contains(search, StringComparison.OrdinalIgnoreCase)
                 || d.Room.Number.Equals(search)
                 || d.Room.Quantity.Equals(search)).ToList();
         }

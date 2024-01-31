@@ -1,0 +1,176 @@
+﻿<Window x:Class="MedX.Desktop.Windows.Patients.PatientUpdateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MedX.Desktop.Windows.Patients"
+        mc:Ignorable="d"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Height="535" Width="550">
+    <Border CornerRadius="5"
+            Background="{DynamicResource SecondaryBackground}"
+            Margin="20"
+            Style="{DynamicResource PrimaryBorder}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="27"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" Style="{DynamicResource PrimaryBorder}"
+                    Background="{DynamicResource PrimaryBackground}"
+                    MouseLeftButtonDown="Border_MouseLeftButtonDown"
+                    BorderThickness="0 0 0 0.5"
+                    CornerRadius="5 5 0 0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="27"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" Click="CloseButton_Click" Style="{DynamicResource CloseButton}"/>
+
+                    <Label Grid.Column="1"
+                           Content="Med-X"
+                           FontFamily="Arial"
+                           FontWeight="SemiBold"
+                           FontSize="15"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Right"
+                           Margin="0 0 5 0"
+                           Width="Auto"
+                           Foreground="{DynamicResource PrimaryForeground}"/>
+                </Grid>
+            </Border>
+            <Border Grid.Row="1"
+                    BorderThickness="2 0 2 2"
+                    Background="Transparent"
+                    CornerRadius="0 0 5 5"
+                    BorderBrush="{DynamicResource PrimaryBackground}">
+
+                <Grid Background="Transparent">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="340"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Grid.Row="1">
+
+                            <Border Style="{DynamicResource AddItemBorder}">
+                                <StackPanel>
+                                    <Label Content="First name" Style="{DynamicResource TitleLable}"/>
+                                    <TextBox x:Name="tbFirstName"
+                                     Grid.Column="1"
+                                     Style="{DynamicResource AddItemTextBox}"
+                                     Foreground="{DynamicResource PrimaryForeground}"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Style="{DynamicResource AddItemBorder}">
+                                <StackPanel>
+                                    <Label Content="Last name" Style="{DynamicResource TitleLable}"/>
+                                    <TextBox x:Name="tbLastName"
+                                     Grid.Column="1"
+                                     Style="{DynamicResource AddItemTextBox}"
+                                     Foreground="{DynamicResource PrimaryForeground}"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Style="{DynamicResource AddItemBorder}">
+                                <StackPanel>
+                                    <Label Content="Patronymic" Style="{DynamicResource TitleLable}"/>
+                                    <TextBox x:Name="tbPatronymic"
+                                     Grid.Column="1"
+                                     Style="{DynamicResource AddItemTextBox}"
+                                     Foreground="{DynamicResource PrimaryForeground}"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Style="{DynamicResource AddItemBorder}">
+                                <StackPanel>
+                                    <Label Content="Phone" Style="{DynamicResource TitleLable}"/>
+                                    <TextBox x:Name="tbPhone"
+                                     Grid.Column="1"
+                                     Style="{DynamicResource AddItemTextBox}"
+                                     Foreground="{DynamicResource PrimaryForeground}"/>
+                                </StackPanel>
+                            </Border>
+
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Grid.Row="1">
+
+                            <Border Style="{DynamicResource AddItemBorder}">
+                                <StackPanel>
+                                    <Label Content="Address" Style="{DynamicResource TitleLable}"/>
+                                    <TextBox x:Name="tbAddress"
+                                         Grid.Column="1"
+                                         Style="{DynamicResource AddItemTextBox}"
+                                         Foreground="{DynamicResource PrimaryForeground}"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Style="{DynamicResource AddItemBorder}">
+                                <StackPanel>
+                                    <Label Content="DateOfBirth" Style="{DynamicResource TitleLable}"/>
+                                    <DatePicker x:Name="dpDateOfBirth"
+                                            Grid.Column="1"
+                                            Foreground="{DynamicResource PrimaryForeground}"
+                                            FontSize="14"
+                                            Background="{DynamicResource PrimaryBackground}"/>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Style="{DynamicResource AddItemBorder}">
+                                <StackPanel>
+                                    <Label Content="Gender" Style="{DynamicResource TitleLable}"/>
+                                    <StackPanel Orientation="Horizontal" Background="Transparent">
+                                        <RadioButton x:Name="rbMale"
+                                             Checked="rbMale_Checked"
+                                             Content="Male"
+                                             Margin="25 7" 
+                                             Foreground="{DynamicResource PrimaryForeground}"/>
+                                        <RadioButton Checked="rbFemale_Checked"
+                                             x:Name="rbFemale" 
+                                             Content="Female"
+                                             Margin="25 7" 
+                                             Foreground="{DynamicResource PrimaryForeground}"/>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Style="{DynamicResource AddItemBorder}">
+                                <StackPanel>
+                                    <Label x:Name="lbPinfl"
+                                   Content="Pinfl"
+                                   Style="{DynamicResource TitleLable}"/>
+                                    <TextBox x:Name="tbPinfl"
+                                     Grid.Column="1"
+                                     Style="{DynamicResource AddItemTextBox}"
+                                     Foreground="{DynamicResource PrimaryForeground}"
+                                     />
+                                </StackPanel>
+                            </Border>
+
+                        </StackPanel>
+                    </Grid>
+                    <Button x:Name="UpdatePatient" 
+                            Grid.Row="2" 
+                            Height="45"
+                            Click="BtnUpdatePatient_Click"
+                            Content="Update"
+                            Width="200"
+                            Margin="0 0 0 10"
+                            Style="{DynamicResource SuccesssButton}"/>
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>
