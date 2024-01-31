@@ -67,6 +67,7 @@ public class AffairService : IAffairService
 
         if (search is not null)
         {
+            search = search.Replace("+", "%2B");
             allAffairs = allAffairs.Where(d => d.Name.Contains(search, StringComparison.OrdinalIgnoreCase)
             || d.Price.ToString().Equals(search, StringComparison.OrdinalIgnoreCase)).ToList();
         }

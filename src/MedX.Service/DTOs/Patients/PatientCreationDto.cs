@@ -1,4 +1,5 @@
 ﻿using MedX.Domain.Enums;
+using Microsoft.AspNetCore.Http;
 
 namespace MedX.Service.DTOs.Patients;
 
@@ -13,4 +14,5 @@ public class PatientCreationDto
     public Gender Gender { get; set; }
     public string Pinfl { get; set; }
     public decimal Balance { get; set; }
+    public IFormFile Image { get; set; }
 }

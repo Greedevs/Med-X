@@ -1,7 +1,5 @@
-﻿using MedX.Desktop.Windows.Employees;
-using MedX.Desktop.Components.Employees;
-using MedX.ApiService.Models.Commons;
-using MedX.ApiService.Models.Employees;
+﻿using MedX.Desktop.Components.Employees;
+using MedX.Desktop.Windows.Employees;
 
 namespace MedX.Desktop.Pages;
 
@@ -12,7 +10,7 @@ namespace MedX.Desktop.Pages;
 public partial class EmployeesPage : Page
 {
     private readonly IEmployeeService service;
-    public EmployeesPage(IEmployeeService service, bool isDoctor)
+    public EmployeesPage(IEmployeeService service)
     {
         InitializeComponent();
         this.service = service;

@@ -1,7 +1,6 @@
 ﻿using MedX.Domain.Enums;
-using Microsoft.AspNetCore.Http;
 
-namespace MedX.Service.DTOs.Patients;
+namespace MedX.ApiService.Models.Patients;
 
 public class PatientUpdateDto
 {

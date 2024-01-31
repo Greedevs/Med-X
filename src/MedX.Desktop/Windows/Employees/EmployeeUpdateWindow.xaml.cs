@@ -9,7 +9,7 @@ namespace MedX.Desktop.Windows.Employees;
 /// </summary>
 public partial class EmployeeUpdateWindow : Window
 {
-    private string? imagePath;
+    private string imagePath;
     private readonly IEmployeeService service;
     private readonly Response<EmployeeResultDto> dto;
     public EmployeeUpdateWindow(IEmployeeService service,
@@ -95,7 +95,6 @@ public partial class EmployeeUpdateWindow : Window
         if (!string.IsNullOrEmpty(value: imagePath))
         {
             employeeUpdateDto.Image = GetFormFile(imagePath: imagePath);
-            employeeUpdateDto.IsChangedImage = true;
         }
 
         if (rbDegree1.IsChecked == true)

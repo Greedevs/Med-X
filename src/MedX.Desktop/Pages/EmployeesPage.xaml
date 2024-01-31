@@ -44,17 +44,18 @@
                              TextChanged="tbSearch_TextChanged"/>
                 </Grid>
             </Border>
-                <Button x:Name="btnCreate"
+            <Button x:Name="btnCreate"
                         Click="BtnCreate_Click"
                         Style="{DynamicResource SuccesssButton}"
                         Content="Add"/>
         </StackPanel>
         <ScrollViewer Grid.Row="1">
             <Border Padding="15">
-                <WrapPanel x:Name="wrpEmployees" 
-                           Grid.Row="1">
-
-                </WrapPanel>
+                <Grid>
+                    <WrapPanel x:Name="wrpEmployees" 
+                       Grid.Row="1">
+                    </WrapPanel>
+                </Grid>
             </Border>
         </ScrollViewer>
     </Grid>

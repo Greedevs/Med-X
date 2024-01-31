@@ -1,4 +1,6 @@
-﻿namespace MedX.Desktop;
+﻿using System.Windows.Controls.Primitives;
+
+namespace MedX.Desktop;
 
 /// <summary>
 /// Interaction logic for MainWindow.xaml
@@ -59,12 +61,13 @@ public partial class MainWindow : Window
     private void RbDoctors_Click(object sender, RoutedEventArgs e)
     {
         PageNavigator.Content = new EmployeesPage(services.
-            GetRequiredService<IEmployeeService>(), isDoctor:true);
+            GetRequiredService<IEmployeeService>());
     }
 
     private void RbPatients_Click(object sender, RoutedEventArgs e)
     {
-        PageNavigator.Content = new PatientsPage();
+        PageNavigator.Content = new PatientsPage(services.
+            GetRequiredService<IPatientService>());
     }
 
     private void RbAffairs_Click(object sender, RoutedEventArgs e)
@@ -95,7 +98,7 @@ public partial class MainWindow : Window
     private void RbEmployees_Click(object sender, RoutedEventArgs e)
     {
         PageNavigator.Content = new EmployeesPage(services.
-            GetRequiredService<IEmployeeService>(), isDoctor:false);
+            GetRequiredService<IEmployeeService>());
     }
 
     private void RbInformation_Click(object sender, RoutedEventArgs e)
@@ -107,7 +110,7 @@ public partial class MainWindow : Window
     {
         if (services != null)
         {
-            PageNavigator.Content = new EmployeesPage(services.GetRequiredService<IEmployeeService>(),isDoctor:true);
+            PageNavigator.Content = new EmployeesPage(services.GetRequiredService<IEmployeeService>());
             rbDoctors.IsChecked = true;
         }
         else
@@ -115,6 +118,30 @@ public partial class MainWindow : Window
             // services obyekti null bo'lganida qandaydir xatolikni aniqlash va qo'shimcha qo'ng'iroq
             Console.WriteLine("ServiceProvider is null");
         }
+
     }
 
+    private void RbNightMode_Click(object sender, RoutedEventArgs e)
+    {
+        if (btnNightMode.IsChecked == true)
+        {
+            // Apply DarkTheme
+            Application.Current.Resources.MergedDictionaries[0] = new ResourceDictionary
+            {
+                Source = new Uri("/Themes/DarkTheme.xaml", UriKind.Relative)
+            };
+
+            ToggleSwitch.Margin = new Thickness(0, -5.1, -17, -5);
+        }
+        else
+        {
+            // Apply LightTheme
+            Application.Current.Resources.MergedDictionaries[0] = new ResourceDictionary
+            {
+                Source = new Uri("/Themes/LightTheme.xaml", UriKind.Relative)
+            };
+
+            ToggleSwitch.Margin = new Thickness(0, -5.1, 17, -5);
+        }
+    }
 }

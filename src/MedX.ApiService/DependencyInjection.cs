@@ -11,6 +11,11 @@ public static class DependencyInjection
         {
             client.BaseAddress = new Uri($"{HttpConstant.BaseLink}api/Employees/");
         });
+        
+        services.AddHttpClient<IPatientService, PatientService>(client =>
+        {
+            client.BaseAddress = new Uri($"{HttpConstant.BaseLink}api/Patients/");
+        });
 
         return services;
     }
